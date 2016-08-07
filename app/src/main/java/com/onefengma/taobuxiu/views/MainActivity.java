@@ -1,10 +1,13 @@
-package com.onefengma.taobuxiu;
+package com.onefengma.taobuxiu.views;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
-import android.widget.FrameLayout;
 
-import com.onefengma.taobuxiu.views.TabIndicatorView;
+import com.onefengma.taobuxiu.manager.BuyManager;
+import com.onefengma.taobuxiu.views.buys.BuyFragment;
+import com.onefengma.taobuxiu.views.mine.MineFragment;
+import com.onefengma.taobuxiu.views.offers.OffersFragment;
+import com.onefengma.taobuxiu.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +31,13 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initTabs();
+
+        tab.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                BuyManager.demo();
+            }
+        }, 2000);
     }
 
     private void initTabs() {

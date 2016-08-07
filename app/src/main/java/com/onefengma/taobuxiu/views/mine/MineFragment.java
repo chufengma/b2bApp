@@ -1,4 +1,4 @@
-package com.onefengma.taobuxiu;
+package com.onefengma.taobuxiu.views.mine;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.onefengma.taobuxiu.R;
 
 /**
  * Created by chufengma on 16/8/7.
