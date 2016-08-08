@@ -1,12 +1,11 @@
-package com.onefengma.taobuxiu.views;
+package com.onefengma.taobuxiu.views.core;
 
-import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.onefengma.taobuxiu.utils.ViewUtils;
+import com.onefengma.taobuxiu.model.EventBusHelper;
 
 /**
  * Created by chufengma on 16/8/7.
@@ -36,4 +35,5 @@ public class BaseFragment extends Fragment {
 //            }
 //        }
     }
+
 }

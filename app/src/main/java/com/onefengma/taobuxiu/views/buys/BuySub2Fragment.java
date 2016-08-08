@@ -12,12 +12,12 @@ import com.onefengma.taobuxiu.views.core.BaseFragment;
 /**
  * Created by chufengma on 16/8/7.
  */
-public class BuySubFragment extends BaseFragment {
+public class BuySub2Fragment extends BaseFragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_buy_sub, container, false);
+        return inflater.inflate(R.layout.fragment_buy_sub2, container, false);
     }
 
 }

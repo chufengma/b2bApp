@@ -1,4 +1,4 @@
-package com.onefengma.taobuxiu.views;
+package com.onefengma.taobuxiu.views.core;
 
 import android.support.v7.app.AppCompatActivity;
 

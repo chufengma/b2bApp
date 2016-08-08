@@ -1,13 +1,21 @@
 package com.onefengma.taobuxiu.views;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTabHost;
+import android.widget.TabHost;
 
 import com.onefengma.taobuxiu.manager.BuyManager;
+import com.onefengma.taobuxiu.model.EventBusHelper;
+import com.onefengma.taobuxiu.model.events.OnBuyTabEvent;
+import com.onefengma.taobuxiu.model.events.OnMineTabEvent;
+import com.onefengma.taobuxiu.model.events.OnOfferTabEvent;
+import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.views.buys.BuyFragment;
+import com.onefengma.taobuxiu.views.core.BaseActivity;
+import com.onefengma.taobuxiu.views.core.FragmentTabHost;
 import com.onefengma.taobuxiu.views.mine.MineFragment;
 import com.onefengma.taobuxiu.views.offers.OffersFragment;
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.views.widgets.TabIndicatorView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +43,7 @@ public class MainActivity extends BaseActivity {
         tab.postDelayed(new Runnable() {
             @Override
             public void run() {
-                BuyManager.demo();
+                BuyManager.demoGet();
             }
         }, 2000);
     }
@@ -50,6 +58,19 @@ public class MainActivity extends BaseActivity {
         tab.addTab(tab.newTabSpec(TAB_FLAG_OFFERS).setIndicator(offerIndicatorView), OffersFragment.class, null);
         tab.addTab(tab.newTabSpec(TAB_FLAG_MINE).setIndicator(mineIndicatorView), MineFragment.class, null);
         tab.getTabWidget().setDividerDrawable(null);
+
+        tab.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                if (StringUtils.equals(TAB_FLAG_BUYS, tabId)) {
+                    EventBusHelper.post(new OnBuyTabEvent());
+                } else if (StringUtils.equals(TAB_FLAG_OFFERS, tabId)) {
+                    EventBusHelper.post(new OnOfferTabEvent());
+                } else if (StringUtils.equals(TAB_FLAG_MINE, tabId)) {
+                    EventBusHelper.post(new OnMineTabEvent());
+                }
+            }
+        });
     }
 
 }

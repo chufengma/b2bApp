@@ -1,4 +1,4 @@
-package com.onefengma.taobuxiu.views;
+package com.onefengma.taobuxiu.views.widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;

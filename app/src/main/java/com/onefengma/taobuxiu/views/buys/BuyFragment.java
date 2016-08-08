@@ -3,7 +3,6 @@ package com.onefengma.taobuxiu.views.buys;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
-import com.onefengma.taobuxiu.views.ToolBar;
+import com.onefengma.taobuxiu.model.EventBusHelper;
+import com.onefengma.taobuxiu.model.events.OnBuyTabEvent;
+import com.onefengma.taobuxiu.views.core.BaseFragment;
+import com.onefengma.taobuxiu.views.widgets.ToolBar;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +24,7 @@ import butterknife.ButterKnife;
 /**
  * Created by chufengma on 16/8/7.
  */
-public class BuyFragment extends Fragment {
+public class BuyFragment extends BaseFragment {
 
     @BindView(R.id.toolbar)
     ToolBar toolbar;
@@ -54,5 +59,23 @@ public class BuyFragment extends Fragment {
             tab.setCustomView(text);
             buyTab.addTab(tab);
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onTabEvent(OnBuyTabEvent onBuyTabEvent) {
+        System.out.println("-----------------onBuyTabEvent");
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBusHelper.register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusHelper.unregister(this);
     }
 }

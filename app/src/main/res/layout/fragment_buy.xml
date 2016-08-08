@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.onefengma.taobuxiu.views.ToolBar
+    <com.onefengma.taobuxiu.views.widgets.ToolBar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dip" />
