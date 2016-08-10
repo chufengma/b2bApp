@@ -7,6 +7,11 @@
     <color name="gray">#cccccc</color>
     <color name="dark_gray">#888888</color>
     <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
 
     <color name="title_color">#ffffff</color>
+
+    <color name="login_bg">#213942</color>
+    <color name="login_btn_border">#35A790</color>
+    <color name="login_btn_border_a">#8f35A790</color>
 </resources>
