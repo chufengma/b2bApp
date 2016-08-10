@@ -5,6 +5,7 @@ import com.onefengma.taobuxiu.MainApplication;
 import com.onefengma.taobuxiu.model.HttpHelper;
 import com.onefengma.taobuxiu.model.HttpHelper.BaseHttpResponse;
 import com.onefengma.taobuxiu.model.HttpHelper.NetworkSubscriber;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -31,12 +32,12 @@ public class BuyManager {
             @Override
             public void onFailed(Data data, Throwable e) {
                 e.printStackTrace();
-                System.out.println("-------------------------" + data);
+                Logger.e("-------------------------" + data);
             }
 
             @Override
             public void onSuccess(Data data) {
-                System.out.println("-------------------------" + data.data);
+                Logger.i("-------------------------" + data.data);
             }
         });
     }
@@ -47,12 +48,12 @@ public class BuyManager {
             @Override
             public void onFailed(Data data, Throwable e) {
                 e.printStackTrace();
-                System.out.println("-------------------------" + data);
+                Logger.e("-------------------------" + data);
             }
 
             @Override
             public void onSuccess(Data data) {
-                System.out.println("-------------------------" + data.data);
+                Logger.i("-------------------------" + data.data);
             }
         });
     }
@@ -63,12 +64,12 @@ public class BuyManager {
             @Override
             public void onFailed(Data data, Throwable e) {
                 e.printStackTrace();
-                System.out.println("-------------------------" + data);
+                Logger.e("-------------------------" + data);
             }
 
             @Override
             public void onSuccess(Data data) {
-                System.out.println("-------------------------" + data.data);
+                Logger.i("-------------------------" + data.data);
             }
         });
     }
@@ -91,12 +92,12 @@ public class BuyManager {
             @Override
             public void onFailed(Data data, Throwable e) {
                 e.printStackTrace();
-                System.out.println("-------------------------" + data);
+                Logger.e("-------------------------" + data);
             }
 
             @Override
             public void onSuccess(Data data) {
-                System.out.println("-------------------------" + data.data);
+                Logger.i("-------------------------" + data.data);
             }
         });
     }
