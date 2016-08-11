@@ -32,6 +32,13 @@ public class SPHelper {
         return instance;
     }
 
+    public static SharedPreferences sp() {
+        if (instance == null) {
+            instance = new SPHelper();
+        }
+        return instance.sp;
+    }
+
     public void save(String key, Object value) {
         if (StringUtils.isEmpty(key) || value == null) {
             return;
@@ -58,4 +65,38 @@ public class SPHelper {
 
         return JSON.parseObject(sp.getString(key, ""), clazz);
     }
+
+
+    public int getInt(String key, int defValue) {
+        try {
+            return Integer.parseInt(sp().getString(key, defValue + ""));
+        } catch (Exception e) {
+            return defValue;
+        }
+    }
+
+    public long getLong(String key, long defValue) {
+        try {
+            return Long.parseLong(sp().getString(key, defValue + ""));
+        } catch (Exception e) {
+            return defValue;
+        }
+    }
+
+    public float getFloat(String key, float defValue) {
+        try {
+            return Float.parseFloat(sp().getString(key, defValue + ""));
+        } catch (Exception e) {
+            return defValue;
+        }
+    }
+
+    public boolean getBoolean(String key, boolean defValue) {
+        try {
+            return Boolean.parseBoolean(sp().getString(key, defValue + ""));
+        } catch (Exception e) {
+            return defValue;
+        }
+    }
+
 }

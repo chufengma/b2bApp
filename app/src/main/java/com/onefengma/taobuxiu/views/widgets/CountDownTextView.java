@@ -36,7 +36,7 @@ public class CountDownTextView extends TextView {
             }
         });
 
-        long lastGetVerifyCodeTime = SPHelper.instance().get(GET_VERIFY_CODE_TIME, Long.class);
+        long lastGetVerifyCodeTime = SPHelper.instance().getLong(GET_VERIFY_CODE_TIME, 0);
         if (lastGetVerifyCodeTime > 0 && System.currentTimeMillis() - lastGetVerifyCodeTime < 60 * 1000) {
             startCountDown((int) ((System.currentTimeMillis() - lastGetVerifyCodeTime) / 1000));
         }
@@ -54,7 +54,7 @@ public class CountDownTextView extends TextView {
 
             @Override
             public void onTick(long millisUntilFinished) {
-                setText(getContext().getString(R.string.get_verify_code_desc, millisUntilFinished / 1000 + currentValue));
+                setText(getContext().getString(R.string.get_verify_code_desc, millisUntilFinished / 1000));
             }
 
             @Override
