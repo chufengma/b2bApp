@@ -1,19 +1,17 @@
 package com.onefengma.taobuxiu.views;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.views.core.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginMainActivity extends AppCompatActivity {
+public class LoginMainActivity extends BaseActivity {
 
     @BindView(R.id.logo)
     ImageView logo;
@@ -39,7 +37,11 @@ public class LoginMainActivity extends AppCompatActivity {
 
     @OnClick(R.id.goto_login)
     public void onGotoLoginClick() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        LoginActivity.start(this);
+    }
+
+    @OnClick(R.id.goto_register)
+    public void onGotoRegisterClick() {
+        RegisterActivity.start(this);
     }
 }

@@ -13,6 +13,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshRecyclerView;
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,6 +57,31 @@ public class BuySubFragment extends BaseFragment {
         recyclerView.getRefreshableView().setLayoutManager(new LinearLayoutManager(getContext()));
 
         recyclerView.setMode(PullToRefreshBase.Mode.BOTH);
+
+        recyclerView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<RecyclerView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
+                TastyToast.makeText(getContext(), "刷新中", TastyToast.LENGTH_LONG, TastyToast.WARNING);
+                refreshView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView.onRefreshComplete();
+                    }
+                }, 2000);
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
+                TastyToast.makeText(getContext(), "下拉更新中", TastyToast.LENGTH_LONG, TastyToast.DEFAULT);
+                refreshView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView.onRefreshComplete();
+                    }
+                }, 2000);
+            }
+        });
+
     }
 
     public static class SimpleTextHolder extends RecyclerView.ViewHolder {

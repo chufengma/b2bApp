@@ -2,14 +2,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:minHeight="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
     android:gravity="center_vertical"
     android:layout_height="56dip">
 
-    <ImageView
+    <FrameLayout
         android:id="@+id/left_image"
         android:layout_width="56dip"
-        android:layout_height="match_parent" />
+        style="@style/Widget.AppCompat.ActionButton"
+        android:clickable="true"
+        android:layout_height="56dip">
+        <ImageView
+            android:layout_width="24dip"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_arrow_back"
+            android:layout_height="24dip" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/title"

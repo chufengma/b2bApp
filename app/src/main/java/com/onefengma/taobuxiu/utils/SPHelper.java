@@ -32,7 +32,7 @@ public class SPHelper {
         return instance;
     }
 
-    public static void save(String key, Object value) {
+    public void save(String key, Object value) {
         if (StringUtils.isEmpty(key) || value == null) {
             return;
         }
@@ -44,17 +44,18 @@ public class SPHelper {
         }
     }
 
-    public static String get(String key) {
+    public String get(String key) {
         if (StringUtils.isEmpty(key)) {
             return "";
         }
         return sp.getString(key, "");
     }
 
-    public static <T> T get(String key, Class<T> clazz) {
+    public <T> T get(String key, Class<T> clazz) {
         if (StringUtils.isEmpty(key)) {
             return null;
         }
+
         return JSON.parseObject(sp.getString(key, ""), clazz);
     }
 }

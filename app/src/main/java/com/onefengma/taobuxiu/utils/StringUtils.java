@@ -14,12 +14,7 @@ public class StringUtils {
         return str1 == null ? str2 == null : str1.equalsIgnoreCase(str2);
     }
 
-    public static boolean isEmpty(String... arrStr) {
-        for (String str : arrStr) {
-            if (isEmpty(str)) {
-                return true;
-            }
-        }
-        return false;
+    public static boolean isEmpty(String str) {
+        return str == null || str.equals("");
     }
 }
