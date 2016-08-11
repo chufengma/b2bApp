@@ -22,24 +22,21 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'com.android.support:design:23.3.0'
-
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'org.greenrobot:eventbus:3.0.0'
-
     compile 'com.jakewharton:butterknife:8.2.1'
-
     // https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-jackson
-    compile group: 'com.squareup.retrofit2', name: 'converter-jackson', version: '2.1.0'
-
+    compile 'com.squareup.retrofit2:converter-jackson:2.1.0'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
-
     compile 'com.orhanobut:logger:1.15'
-    compile 'homhomlin.lib:ptrrv-library:1.3.1'
+    // https://mvnrepository.com/artifact/com.alibaba/fastjson
+    compile 'com.alibaba:fastjson:1.2.15'
+    compile project(':list')
 }

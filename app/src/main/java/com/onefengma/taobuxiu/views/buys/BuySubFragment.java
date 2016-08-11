@@ -1,6 +1,5 @@
 package com.onefengma.taobuxiu.views.buys;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.lhh.ptrrv.library.PullToRefreshRecyclerView;
-import com.lhh.ptrrv.library.footer.loadmore.BaseLoadMoreView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshRecyclerView;
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 
@@ -37,13 +36,7 @@ public class BuySubFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView loadView = new TextView(getContext());
-        loadView.setText("加载更多");
-
-        TextView pullView = new TextView(getContext());
-        pullView.setText("下拉刷新");
-
-        recyclerView.setAdapter(new RecyclerView.Adapter() {
+        recyclerView.getRefreshableView().setAdapter(new RecyclerView.Adapter() {
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 return new SimpleTextHolder(new TextView(parent.getContext()));
@@ -60,8 +53,9 @@ public class BuySubFragment extends BaseFragment {
             }
         });
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.getRefreshableView().setLayoutManager(new LinearLayoutManager(getContext()));
 
+        recyclerView.setMode(PullToRefreshBase.Mode.BOTH);
     }
 
     public static class SimpleTextHolder extends RecyclerView.ViewHolder {
@@ -70,12 +64,4 @@ public class BuySubFragment extends BaseFragment {
         }
     }
 
-    public static class LoadMoreView extends BaseLoadMoreView {
-
-        public LoadMoreView(Context context, RecyclerView recyclerView) {
-            super(context, recyclerView);
-        }
-
-
-    }
 }
