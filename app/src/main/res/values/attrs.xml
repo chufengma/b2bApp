@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="TaoToolBar">
         <attr name="tool_bar_title"  format="string|reference" />
+        <attr name="tool_bar_bg"  format="color|reference" />
     </declare-styleable>
 </resources>

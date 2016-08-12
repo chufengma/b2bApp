@@ -6,10 +6,15 @@ import com.onefengma.taobuxiu.MainApplication;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.HttpHelper;
 import com.onefengma.taobuxiu.manager.helpers.HttpHelper.SimpleNetworkSubscriber;
+import com.onefengma.taobuxiu.manager.helpers.JSONHelper;
 import com.onefengma.taobuxiu.manager.helpers.VerifyHelper;
 import com.onefengma.taobuxiu.model.BaseResponse;
+import com.onefengma.taobuxiu.model.Constant;
+import com.onefengma.taobuxiu.model.entities.UserProfile;
 import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
+import com.onefengma.taobuxiu.model.events.LoginEvent;
 import com.onefengma.taobuxiu.model.events.OnGetMsgCodeEvent;
+import com.onefengma.taobuxiu.utils.SPHelper;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
 import com.onefengma.taobuxiu.views.LoginActivity;
@@ -47,10 +52,19 @@ public class AuthManager {
             return;
         }
 
+        EventBusHelper.post(new LoginEvent());
         HttpHelper.wrap(HttpHelper.create(AuthService.class).login(mobile, password)).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse baseResponse) {
-                ToastUtils.showSuccessTasty("登陆成功");
+                UserProfile userProfile = JSONHelper.parse(baseResponse.data.toString(), UserProfile.class);
+                SPHelper.instance().save(Constant.StorageKeys.USER_PROFILE, userProfile);
+                EventBusHelper.post(new LoginEvent(BaseStatusEvent.SUCCESS));
+            }
+
+            @Override
+            public void onFailed(BaseResponse baseResponse, Throwable e) {
+                super.onFailed(baseResponse, e);
+                EventBusHelper.post(new LoginEvent(BaseStatusEvent.FAILED));
             }
         });
     }

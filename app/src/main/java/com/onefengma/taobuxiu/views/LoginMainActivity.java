@@ -21,18 +21,10 @@ public class LoginMainActivity extends BaseActivity {
     TextView gotoLogin;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_main);
         ButterKnife.bind(this);
-
-//        gotoLogin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(LoginMainActivity.this, LoginActivity.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     @OnClick(R.id.goto_login)

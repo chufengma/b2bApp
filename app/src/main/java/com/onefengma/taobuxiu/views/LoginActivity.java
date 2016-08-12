@@ -7,11 +7,18 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.onefengma.taobuxiu.MainApplication;
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.AuthManager;
+import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
+import com.onefengma.taobuxiu.model.events.LoginEvent;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
+import com.onefengma.taobuxiu.views.widgets.ProgressDialog;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,14 +35,18 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
     @BindView(R.id.login)
     TextView login;
 
+    ProgressDialog progressDialog;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
         mobile.addTextChangedListener(this);
         password.addTextChangedListener(this);
+        EventBusHelper.register(this);
+        progressDialog = new ProgressDialog(this);
     }
 
     public static void start(BaseActivity activity) {
@@ -48,9 +59,28 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
         AuthManager.instance().doLogin(mobile.getText().toString(), password.getText().toString());
     }
 
+    @Subscribe
+    public void onLoginEvent(LoginEvent event) {
+        if (event.status == BaseStatusEvent.STARTED) {
+            progressDialog.show("登陆中...");
+            return;
+        }
+        progressDialog.hide();
+        if (event.status == BaseStatusEvent.SUCCESS) {
+            MainApplication.getContext().finishActivities();
+            MainActivity.start(this);
+        }
+    }
+
     @OnClick(R.id.register)
     public void doRegister() {
         RegisterActivity.start(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBusHelper.unregister(this);
     }
 
     private void updateRegisterEnable() {

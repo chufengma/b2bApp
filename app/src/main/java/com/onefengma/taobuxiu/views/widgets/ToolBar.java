@@ -25,6 +25,7 @@ public class ToolBar extends RelativeLayout {
     View rightImage;
 
     String title;
+    int color;
 
     public ToolBar(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -38,9 +39,11 @@ public class ToolBar extends RelativeLayout {
         // Styleables from XML
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TaoToolBar);
         title = a.getString(R.styleable.TaoToolBar_tool_bar_title);
+        color = a.getColor(R.styleable.TaoToolBar_tool_bar_bg, getContext().getResources().getColor(R.color.colorPrimary));
         a.recycle();
 
         setTitle(title);
+        setBackgroundColor(color);
     }
 
     public void setTitle(CharSequence title) {

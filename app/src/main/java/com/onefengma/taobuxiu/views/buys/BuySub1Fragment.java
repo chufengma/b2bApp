@@ -18,7 +18,6 @@ import butterknife.OnClick;
  */
 public class BuySub1Fragment extends BaseFragment {
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,23 +26,4 @@ public class BuySub1Fragment extends BaseFragment {
         return view;
     }
 
-    @OnClick(R.id.get)
-    public void onGetClick() {
-        BuyManager.demoGet();
-    }
-
-    @OnClick(R.id.get_params)
-    public void onGeParamstClick() {
-        BuyManager.demoGetWithParams();
-    }
-
-    @OnClick(R.id.post)
-    public void onPostClick() {
-        BuyManager.demoPost();
-    }
-
-    @OnClick(R.id.file)
-    public void onFileClick() {
-        BuyManager.demoFile();
-    }
 }

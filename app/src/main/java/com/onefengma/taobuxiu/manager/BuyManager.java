@@ -1,15 +1,17 @@
 package com.onefengma.taobuxiu.manager;
 
 
-import com.onefengma.taobuxiu.MainApplication;
+import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.HttpHelper;
-import com.onefengma.taobuxiu.manager.helpers.HttpHelper.NetworkSubscriber;
+import com.onefengma.taobuxiu.manager.helpers.HttpHelper.SimpleNetworkSubscriber;
+import com.onefengma.taobuxiu.manager.helpers.JSONHelper;
 import com.onefengma.taobuxiu.model.BaseResponse;
-import com.orhanobut.logger.Logger;
+import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
+import com.onefengma.taobuxiu.model.entities.MyIronsResponse;
+import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
+import com.onefengma.taobuxiu.model.events.MyIronsEvent;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.http.Field;
@@ -26,83 +28,62 @@ import rx.Observable;
  */
 public class BuyManager {
 
-    public static void demoGet() {
-        HttpHelper.wrap(HttpHelper.create(DemoService.class).shopRecommend()).subscribe(new NetworkSubscriber<Data>() {
+    private int currentPage = 0;
+    private int pageCount = 15;
 
-            @Override
-            public void onFailed(BaseResponse data, Throwable e) {
-                e.printStackTrace();
-                Logger.e("-------------------------" + data);
-            }
+    private static BuyManager instance;
 
-            @Override
-            public void onSuccess(Data data) {
-                Logger.i("-------------------------" + data.data);
-            }
-        });
-    }
+    public List<IronBuyBrief> ironBuys;
 
-    public static void demoGetWithParams() {
-        HttpHelper.wrap(HttpHelper.create(DemoService.class).irons(2, 3)).subscribe(new NetworkSubscriber<Data>() {
-
-            @Override
-            public void onFailed(BaseResponse data, Throwable e) {
-                e.printStackTrace();
-                Logger.e("-------------------------" + data);
-            }
-
-            @Override
-            public void onSuccess(Data data) {
-                Logger.i("-------------------------" + data.data);
-            }
-        });
-    }
-
-    public static void demoPost() {
-        HttpHelper.wrap(HttpHelper.create(DemoService.class).postDemo("4YtrTWjVbVUa", 0)).subscribe(new NetworkSubscriber<Data>() {
-
-            @Override
-            public void onFailed(BaseResponse data, Throwable e) {
-                e.printStackTrace();
-                Logger.e("-------------------------" + data);
-            }
-
-            @Override
-            public void onSuccess(Data data) {
-                Logger.i("-------------------------" + data.data);
-            }
-        });
-    }
-
-
-    public static void demoFile() {
-        // use the FileUtils to get the actual file by uri
-        File file = new File(MainApplication.getContext().getFilesDir() + "/demo.txt");
-        try {
-            file.createNewFile();
-            new FileWriter(file).append("adfasdfasdf").flush();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static BuyManager instance() {
+        if (instance == null) {
+            instance = new BuyManager();
         }
+        return instance;
+    }
 
-        HttpHelper.wrap(HttpHelper.create(DemoService.class).
-                fileDemo(HttpHelper.preparePart("test", "Fengma is Greate"), HttpHelper.preparePart("file", file)))
-                .subscribe(new NetworkSubscriber<Data>() {
-
+    public void reloadMyIronBuys() {
+        EventBusHelper.post(new MyIronsEvent(BaseStatusEvent.STARTED, MyIronsEvent.RELOAD));
+        HttpHelper.wrap(HttpHelper.create(BuyService.class).myIronBuy(currentPage, pageCount)).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
             @Override
-            public void onFailed(BaseResponse data, Throwable e) {
-                e.printStackTrace();
-                Logger.e("-------------------------" + data);
+            public void onSuccess(BaseResponse data) {
+                MyIronsResponse myIronsResponse = JSONHelper.parse(data.data.toString(), MyIronsResponse.class);
+                ironBuys = myIronsResponse.buys;
+                EventBusHelper.post(new MyIronsEvent(BaseStatusEvent.SUCCESS, MyIronsEvent.RELOAD));
             }
 
             @Override
-            public void onSuccess(Data data) {
-                Logger.i("-------------------------" + data.data);
+            public void onFailed(BaseResponse baseResponse, Throwable e) {
+                EventBusHelper.post(new MyIronsEvent(BaseStatusEvent.FAILED, MyIronsEvent.RELOAD));
+                super.onFailed(baseResponse, e);
             }
         });
     }
 
-    public interface DemoService {
+    public void lodeMoreMyIronBuys() {
+        EventBusHelper.post(new MyIronsEvent(BaseStatusEvent.STARTED, MyIronsEvent.LOAD_MORE));
+        HttpHelper.wrap(HttpHelper.create(BuyService.class).myIronBuy(currentPage + 1, pageCount)).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
+            @Override
+            public void onSuccess(BaseResponse data) {
+                MyIronsResponse myIronsResponse = JSONHelper.to(data.data, MyIronsResponse.class);
+                BuyManager.this.currentPage = myIronsResponse.currentPage;
+                BuyManager.this.pageCount = myIronsResponse.pageCount;
+                ironBuys.addAll(myIronsResponse.buys);
+                EventBusHelper.post(new MyIronsEvent(BaseStatusEvent.SUCCESS, MyIronsEvent.LOAD_MORE));
+            }
+
+            @Override
+            public void onFailed(BaseResponse baseResponse, Throwable e) {
+                super.onFailed(baseResponse, e);
+                EventBusHelper.post(new MyIronsEvent(BaseStatusEvent.FAILED, MyIronsEvent.LOAD_MORE));
+            }
+        });
+    }
+
+    public interface BuyService {
+        @GET("iron/myBuy")
+        Observable<BaseResponse> myIronBuy(@Query(("currentPage")) int currentPage, @Query("pageCount") int pageCount);
+
         @GET("iron/shopRecommend")
         Observable<Data> shopRecommend();
 

@@ -62,8 +62,11 @@ public class SPHelper {
         if (StringUtils.isEmpty(key)) {
             return null;
         }
-
-        return JSON.parseObject(sp.getString(key, ""), clazz);
+        try {
+            return JSON.parseObject(sp.getString(key, ""), clazz);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 

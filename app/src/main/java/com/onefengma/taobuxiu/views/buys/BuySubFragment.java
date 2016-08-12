@@ -10,10 +10,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshRecyclerView;
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.manager.BuyManager;
+import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
+import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
+import com.onefengma.taobuxiu.model.events.MyIronsEvent;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
-import com.sdsmdg.tastytoast.TastyToast;
+import com.onefengma.taobuxiu.views.widgets.XRecyclerView;
+
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,8 +31,23 @@ import butterknife.ButterKnife;
  * Created by chufengma on 16/8/7.
  */
 public class BuySubFragment extends BaseFragment {
+
+    CustomAdapter customAdapter;
+
     @BindView(R.id.recycler_view)
-    PullToRefreshRecyclerView recyclerView;
+    XRecyclerView recyclerView;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBusHelper.register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBusHelper.unregister(this);
+    }
 
     @Nullable
     @Override
@@ -37,52 +61,63 @@ public class BuySubFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView.getRefreshableView().setAdapter(new RecyclerView.Adapter() {
-            @Override
-            public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                return new SimpleTextHolder(new TextView(parent.getContext()));
-            }
+        customAdapter = new CustomAdapter();
+        recyclerView.setAdapter(customAdapter);
 
-            @Override
-            public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-                ((TextView)holder.itemView).setText("Item " + position);
-            }
+        recyclerView.getRecyclerView().setLayoutManager(new LinearLayoutManager(getContext()));
 
-            @Override
-            public int getItemCount() {
-                return 240;
-            }
-        });
+        recyclerView.getPullToRefreshRecyclerView().setMode(PullToRefreshBase.Mode.BOTH);
 
-        recyclerView.getRefreshableView().setLayoutManager(new LinearLayoutManager(getContext()));
-
-        recyclerView.setMode(PullToRefreshBase.Mode.BOTH);
-
-        recyclerView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<RecyclerView>() {
+        recyclerView.getPullToRefreshRecyclerView().setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<RecyclerView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
-                TastyToast.makeText(getContext(), "刷新中", TastyToast.LENGTH_LONG, TastyToast.WARNING);
-                refreshView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        recyclerView.onRefreshComplete();
-                    }
-                }, 2000);
+                BuyManager.instance().reloadMyIronBuys();
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
-                TastyToast.makeText(getContext(), "下拉更新中", TastyToast.LENGTH_LONG, TastyToast.DEFAULT);
-                refreshView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        recyclerView.onRefreshComplete();
-                    }
-                }, 2000);
+                BuyManager.instance().lodeMoreMyIronBuys();
             }
         });
 
     }
+
+    @Subscribe
+    public void onLoadMyIronBuys(MyIronsEvent myIronsEvent) {
+        if (myIronsEvent.status == BaseStatusEvent.STARTED) {
+            return;
+        }
+        recyclerView.getPullToRefreshRecyclerView().onRefreshComplete();
+        customAdapter.setMyBuys(BuyManager.instance().ironBuys);
+    }
+
+    public static class CustomAdapter extends RecyclerView.Adapter {
+
+        public List<IronBuyBrief> myBuys = new ArrayList<>();
+
+        public void setMyBuys(List<IronBuyBrief> myBuys) {
+            this.myBuys.clear();
+            this.myBuys.addAll(myBuys);
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new SimpleTextHolder(new TextView(parent.getContext()));
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            ((TextView) holder.itemView).setText(myBuys.get(position).userId + ":" + myBuys.get(position).id);
+        }
+
+        @Override
+        public int getItemCount() {
+            return this.myBuys.size();
+        }
+    }
+
+    ;
 
     public static class SimpleTextHolder extends RecyclerView.ViewHolder {
         public SimpleTextHolder(TextView itemView) {
