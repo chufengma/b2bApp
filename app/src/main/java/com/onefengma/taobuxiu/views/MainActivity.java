@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.TabHost;
 
 import com.onefengma.taobuxiu.manager.BuyManager;
-import com.onefengma.taobuxiu.model.EventBusHelper;
+import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.events.OnBuyTabEvent;
 import com.onefengma.taobuxiu.model.events.OnMineTabEvent;
 import com.onefengma.taobuxiu.model.events.OnOfferTabEvent;

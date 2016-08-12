@@ -1,10 +1,13 @@
 package com.onefengma.taobuxiu.views.core;
 
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.onefengma.taobuxiu.MainApplication;
 import com.onefengma.taobuxiu.R;
 
 /**
@@ -28,4 +31,21 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+        MainApplication.getContext().addActivity(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MainApplication.getContext().setCurrentActivity(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MainApplication.getContext().removeActivity(this);
+    }
 }

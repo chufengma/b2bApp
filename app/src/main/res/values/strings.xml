@@ -18,6 +18,7 @@
     <string name="user_doc_title">同意用户协议</string>
 
     <string name="get_verify_code">获取验证码</string>
+    <string name="get_verify_code_started">获取中...</string>
     <string name="get_verify_code_desc">%1$s后重新获取</string>
 
 </resources>

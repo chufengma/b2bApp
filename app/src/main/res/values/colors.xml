@@ -12,6 +12,7 @@
     <color name="title_color">#ffffff</color>
 
     <color name="login_bg">#213942</color>
+    <color name="login_bg_disable">#4f35A790</color>
     <color name="login_btn_border">#35A790</color>
     <color name="login_btn_border_a">#8f35A790</color>
 

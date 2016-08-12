@@ -2,9 +2,9 @@ package com.onefengma.taobuxiu.manager;
 
 
 import com.onefengma.taobuxiu.MainApplication;
-import com.onefengma.taobuxiu.model.HttpHelper;
-import com.onefengma.taobuxiu.model.HttpHelper.BaseHttpResponse;
-import com.onefengma.taobuxiu.model.HttpHelper.NetworkSubscriber;
+import com.onefengma.taobuxiu.manager.helpers.HttpHelper;
+import com.onefengma.taobuxiu.manager.helpers.HttpHelper.NetworkSubscriber;
+import com.onefengma.taobuxiu.model.BaseResponse;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
@@ -30,7 +30,7 @@ public class BuyManager {
         HttpHelper.wrap(HttpHelper.create(DemoService.class).shopRecommend()).subscribe(new NetworkSubscriber<Data>() {
 
             @Override
-            public void onFailed(Data data, Throwable e) {
+            public void onFailed(BaseResponse data, Throwable e) {
                 e.printStackTrace();
                 Logger.e("-------------------------" + data);
             }
@@ -46,7 +46,7 @@ public class BuyManager {
         HttpHelper.wrap(HttpHelper.create(DemoService.class).irons(2, 3)).subscribe(new NetworkSubscriber<Data>() {
 
             @Override
-            public void onFailed(Data data, Throwable e) {
+            public void onFailed(BaseResponse data, Throwable e) {
                 e.printStackTrace();
                 Logger.e("-------------------------" + data);
             }
@@ -62,7 +62,7 @@ public class BuyManager {
         HttpHelper.wrap(HttpHelper.create(DemoService.class).postDemo("4YtrTWjVbVUa", 0)).subscribe(new NetworkSubscriber<Data>() {
 
             @Override
-            public void onFailed(Data data, Throwable e) {
+            public void onFailed(BaseResponse data, Throwable e) {
                 e.printStackTrace();
                 Logger.e("-------------------------" + data);
             }
@@ -90,7 +90,7 @@ public class BuyManager {
                 .subscribe(new NetworkSubscriber<Data>() {
 
             @Override
-            public void onFailed(Data data, Throwable e) {
+            public void onFailed(BaseResponse data, Throwable e) {
                 e.printStackTrace();
                 Logger.e("-------------------------" + data);
             }
@@ -118,7 +118,7 @@ public class BuyManager {
         Observable<Data> fileDemo(@Part MultipartBody.Part test, @Part MultipartBody.Part file);
     }
 
-    public static class Data extends BaseHttpResponse{
+    public static class Data extends BaseResponse {
 
     }
 

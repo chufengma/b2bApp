@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.onefengma.taobuxiu.MainApplication;
 import com.onefengma.taobuxiu.R;
+import com.sdsmdg.tastytoast.TastyToast;
 
 public class ToastUtils {
 
@@ -57,5 +58,29 @@ public class ToastUtils {
      */
     public static void show(String msg, int duration) {
         applicationToast = show(applicationToast, msg, duration);
+    }
+
+    public static void showTasty(String msg, int type) {
+        TastyToast.makeText(MainApplication.getContext(), msg, Toast.LENGTH_SHORT, type);
+    }
+
+    public static void showErrorTasty(String msg) {
+        TastyToast.makeText(MainApplication.getContext(), msg, Toast.LENGTH_SHORT, TastyToast.ERROR);
+    }
+
+    public static void showInfoTasty(String msg) {
+        TastyToast.makeText(MainApplication.getContext(), msg, Toast.LENGTH_SHORT, TastyToast.INFO);
+    }
+
+    public static void showSuccessTasty(String msg) {
+        TastyToast.makeText(MainApplication.getContext(), msg, Toast.LENGTH_SHORT, TastyToast.SUCCESS);
+    }
+
+    public static void showWarnTasty(String msg) {
+        TastyToast.makeText(MainApplication.getContext(), msg, Toast.LENGTH_SHORT, TastyToast.WARNING);
+    }
+
+    public static void showTasty(String msg) {
+        TastyToast.makeText(MainApplication.getContext(), msg, Toast.LENGTH_SHORT, TastyToast.DEFAULT);
     }
 }

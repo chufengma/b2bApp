@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.onefengma.taobuxiu.R;
-import com.onefengma.taobuxiu.model.EventBusHelper;
+import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.events.OnMineTabEvent;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 

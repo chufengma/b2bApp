@@ -1,11 +1,8 @@
 package com.onefengma.taobuxiu.views.core;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
-
-import com.onefengma.taobuxiu.model.EventBusHelper;
 
 /**
  * Created by chufengma on 16/8/7.

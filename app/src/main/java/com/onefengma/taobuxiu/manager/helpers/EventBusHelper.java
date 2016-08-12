@@ -1,4 +1,4 @@
-package com.onefengma.taobuxiu.model;
+package com.onefengma.taobuxiu.manager.helpers;
 
 import com.onefengma.taobuxiu.utils.ThreadUtils;
 
