@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
+import com.onefengma.taobuxiu.views.widgets.ProgressDialog;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
 
 import butterknife.BindView;
