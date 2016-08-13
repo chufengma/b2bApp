@@ -1,8 +1,17 @@
 package com.onefengma.taobuxiu;
 
+import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Context;
+import android.os.*;
+import android.os.Process;
+import android.util.Log;
 
+import com.onefengma.taobuxiu.manager.PushManager;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
+import com.xiaomi.channel.commonutils.logger.LoggerInterface;
+import com.xiaomi.mipush.sdk.Logger;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +25,14 @@ public class MainApplication extends Application {
     private List<BaseActivity> activities = new ArrayList<>();
     private boolean isClearAll = false;
     private BaseActivity currentActivity;
-
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        // push service
+        PushManager.instance().initPushService();
     }
+
 
     public static MainApplication getContext() {
         return instance;

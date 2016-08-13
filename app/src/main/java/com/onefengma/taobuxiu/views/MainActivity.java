@@ -1,5 +1,6 @@
 package com.onefengma.taobuxiu.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TabHost;
@@ -37,14 +38,12 @@ public class MainActivity extends BaseActivity {
     private TabIndicatorView offerIndicatorView;
     private TabIndicatorView mineIndicatorView;
 
-    public static void start(BaseActivity activity) {
+    public static void start(Context activity) {
         Intent intent = new Intent(activity, MainActivity.class);
-        activity.startActivity(intent);
-
-        UserProfile userProfile = SPHelper.instance().get(Constant.StorageKeys.USER_PROFILE, UserProfile.class);
-        if (userProfile != null) {
-            ToastUtils.showInfoTasty(userProfile.mobile);
+        if (!(activity instanceof BaseActivity)) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
+        activity.startActivity(intent);
     }
 
     @Override
@@ -80,4 +79,8 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
 }

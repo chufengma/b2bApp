@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.onefengma.taobuxiu.MainApplication;
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.AuthManager;
+import com.onefengma.taobuxiu.manager.PushManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
 import com.onefengma.taobuxiu.model.events.LoginEvent;
@@ -17,6 +18,7 @@ import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.widgets.ProgressDialog;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -65,9 +67,10 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
             progressDialog.show("登陆中...");
             return;
         }
-        progressDialog.hide();
+        progressDialog.dismiss();
         if (event.status == BaseStatusEvent.SUCCESS) {
             MainApplication.getContext().finishActivities();
+            PushManager.instance().setCurrentUserAccount();
             MainActivity.start(this);
         }
     }
