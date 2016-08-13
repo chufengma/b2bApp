@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
  */
 public class BuySubFragment extends BaseFragment {
 
-    CustomAdapter customAdapter;
+    BuyAdapter customAdapter;
 
     @BindView(R.id.recycler_view)
     XRecyclerView recyclerView;
@@ -61,7 +61,7 @@ public class BuySubFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        customAdapter = new CustomAdapter();
+        customAdapter = new BuyAdapter();
         recyclerView.setAdapter(customAdapter);
 
         recyclerView.getRecyclerView().setLayoutManager(new LinearLayoutManager(getContext()));
@@ -91,38 +91,5 @@ public class BuySubFragment extends BaseFragment {
         customAdapter.setMyBuys(BuyManager.instance().ironBuys);
     }
 
-    public static class CustomAdapter extends RecyclerView.Adapter {
-
-        public List<IronBuyBrief> myBuys = new ArrayList<>();
-
-        public void setMyBuys(List<IronBuyBrief> myBuys) {
-            this.myBuys.clear();
-            this.myBuys.addAll(myBuys);
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new SimpleTextHolder(new TextView(parent.getContext()));
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            ((TextView) holder.itemView).setText(myBuys.get(position).userId + ":" + myBuys.get(position).id);
-        }
-
-        @Override
-        public int getItemCount() {
-            return this.myBuys.size();
-        }
-    }
-
-    ;
-
-    public static class SimpleTextHolder extends RecyclerView.ViewHolder {
-        public SimpleTextHolder(TextView itemView) {
-            super(itemView);
-        }
-    }
 
 }

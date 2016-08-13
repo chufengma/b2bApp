@@ -4,8 +4,8 @@ import android.content.Intent;
 
 import com.onefengma.taobuxiu.MainApplication;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
-import com.onefengma.taobuxiu.manager.helpers.HttpHelper;
-import com.onefengma.taobuxiu.manager.helpers.HttpHelper.SimpleNetworkSubscriber;
+import com.onefengma.taobuxiu.network.HttpHelper;
+import com.onefengma.taobuxiu.network.HttpHelper.SimpleNetworkSubscriber;
 import com.onefengma.taobuxiu.manager.helpers.JSONHelper;
 import com.onefengma.taobuxiu.manager.helpers.VerifyHelper;
 import com.onefengma.taobuxiu.model.BaseResponse;

@@ -1,19 +1,21 @@
-package com.onefengma.taobuxiu.manager.helpers;
+package com.onefengma.taobuxiu.network;
 
 import android.accounts.NetworkErrorException;
 
+import com.onefengma.taobuxiu.MainApplication;
 import com.onefengma.taobuxiu.manager.AuthManager;
 import com.onefengma.taobuxiu.model.BaseResponse;
+import com.onefengma.taobuxiu.network.persistentcookiejar.ClearableCookieJar;
+import com.onefengma.taobuxiu.network.persistentcookiejar.PersistentCookieJar;
+import com.onefengma.taobuxiu.network.persistentcookiejar.cache.SetCookieCache;
+import com.onefengma.taobuxiu.network.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.onefengma.taobuxiu.utils.ToastUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.CookieManager;
-import java.net.CookiePolicy;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
-import okhttp3.JavaNetCookieJar;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -33,14 +35,14 @@ import rx.schedulers.Schedulers;
  */
 public class HttpHelper {
 
-    private static final String BASE_URL = "http://10.32.24.114:5389/";
+    private static final String BASE_URL = "http://192.168.0.103:9090/";
 
     private static Retrofit retrofit;
 
     public static Retrofit getRetrofit() {
         if (retrofit == null) {
-            CookieManager cookieManager = new CookieManager();
-            cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+            ClearableCookieJar cookieJar =
+                    new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(MainApplication.getContext()));
 
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             // set your desired log level
@@ -49,7 +51,7 @@ public class HttpHelper {
             CookieInterceptor cookieInterceptor = new CookieInterceptor();
 
             OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                    .cookieJar(new JavaNetCookieJar(cookieManager))
+                    .cookieJar(cookieJar)
                     .connectTimeout(10000, TimeUnit.MILLISECONDS)
                     .addInterceptor(logging)
                     .addInterceptor(cookieInterceptor)

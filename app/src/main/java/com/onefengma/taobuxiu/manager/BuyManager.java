@@ -2,8 +2,8 @@ package com.onefengma.taobuxiu.manager;
 
 
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
-import com.onefengma.taobuxiu.manager.helpers.HttpHelper;
-import com.onefengma.taobuxiu.manager.helpers.HttpHelper.SimpleNetworkSubscriber;
+import com.onefengma.taobuxiu.network.HttpHelper;
+import com.onefengma.taobuxiu.network.HttpHelper.SimpleNetworkSubscriber;
 import com.onefengma.taobuxiu.manager.helpers.JSONHelper;
 import com.onefengma.taobuxiu.model.BaseResponse;
 import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
@@ -43,6 +43,7 @@ public class BuyManager {
     }
 
     public void reloadMyIronBuys() {
+        currentPage = 0;
         EventBusHelper.post(new MyIronsEvent(BaseStatusEvent.STARTED, MyIronsEvent.RELOAD));
         HttpHelper.wrap(HttpHelper.create(BuyService.class).myIronBuy(currentPage, pageCount)).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
             @Override
@@ -65,7 +66,7 @@ public class BuyManager {
         HttpHelper.wrap(HttpHelper.create(BuyService.class).myIronBuy(currentPage + 1, pageCount)).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse data) {
-                MyIronsResponse myIronsResponse = JSONHelper.to(data.data, MyIronsResponse.class);
+                MyIronsResponse myIronsResponse = JSONHelper.parse(data.data.toString(), MyIronsResponse.class);
                 BuyManager.this.currentPage = myIronsResponse.currentPage;
                 BuyManager.this.pageCount = myIronsResponse.pageCount;
                 ironBuys.addAll(myIronsResponse.buys);
