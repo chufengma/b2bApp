@@ -21,6 +21,7 @@
         <activity
             android:name=".views.SplashActivity"
             android:configChanges="orientation"
+            android:theme="@style/FadeAnimActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,6 +43,7 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".views.LoginMainActivity"
+            android:theme="@style/FadeAnimActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"></activity>
 

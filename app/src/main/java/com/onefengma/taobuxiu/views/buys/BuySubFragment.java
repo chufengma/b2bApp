@@ -80,6 +80,7 @@ public class BuySubFragment extends BaseFragment {
             }
         });
 
+        recyclerView.getPullToRefreshRecyclerView().autoRefresh();
     }
 
     @Subscribe

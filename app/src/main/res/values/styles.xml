@@ -25,4 +25,11 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <style name="FadeAnimActivity" parent="@style/AppThemeLight">
+        <item name="android:activityOpenEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:activityOpenExitAnimation">@android:anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>
+    </style>
+
 </resources>

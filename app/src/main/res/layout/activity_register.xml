@@ -4,14 +4,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/login_bg"
+    android:background="@drawable/ic_login_bg"
     tools:context="com.onefengma.taobuxiu.views.LoginActivity">
 
     <com.onefengma.taobuxiu.views.widgets.ToolBar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         app:tool_bar_title="@string/register"
-        android:background="@android:color/transparent"
+        app:tool_bar_bg="@android:color/transparent"
         android:layout_height="@dimen/tool_bar_height" />
 
     <RelativeLayout
@@ -23,7 +23,7 @@
 
         <ImageView
             android:id="@+id/login_icon"
-            android:src="@drawable/ic_main_tab_chat"
+            android:src="@drawable/ic_mobile"
             android:layout_alignParentLeft="true"
             android:layout_width="30dip"
             android:layout_height="40dip" />
@@ -55,7 +55,7 @@
 
         <ImageView
             android:id="@+id/verify_icon"
-            android:src="@drawable/ic_main_tab_chat"
+            android:src="@drawable/ic_msgcode"
             android:layout_alignParentLeft="true"
             android:layout_width="30dip"
             android:layout_height="40dip" />
@@ -108,7 +108,7 @@
 
         <ImageView
             android:id="@+id/password_icon"
-            android:src="@drawable/ic_main_tab_chat"
+            android:src="@drawable/ic_password"
             android:layout_alignParentLeft="true"
             android:layout_width="30dip"
             android:layout_height="39dip" />

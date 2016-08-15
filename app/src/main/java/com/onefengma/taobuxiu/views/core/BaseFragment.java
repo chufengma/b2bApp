@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.onefengma.taobuxiu.R;
+
 /**
  * Created by chufengma on 16/8/7.
  */
@@ -18,6 +20,19 @@ public class BaseFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         applyToolbarShadow(view);
+        applyLeftBtn(view);
+    }
+
+    private void applyLeftBtn(View view) {
+        View leftView = view.findViewById(R.id.left_image);
+        if (leftView != null) {
+            leftView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().onBackPressed();
+                }
+            });
+        }
     }
 
     private void applyToolbarShadow(View view) {

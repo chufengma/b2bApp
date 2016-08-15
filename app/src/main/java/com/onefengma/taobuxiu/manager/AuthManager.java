@@ -18,6 +18,7 @@ import com.onefengma.taobuxiu.utils.SPHelper;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
 import com.onefengma.taobuxiu.views.LoginActivity;
+import com.onefengma.taobuxiu.views.LoginMainActivity;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -42,7 +43,7 @@ public class AuthManager {
     }
 
     public static void startLoginActivity() {
-        Intent intent = new Intent(MainApplication.getContext().getCurrentActivity(), LoginActivity.class);
+        Intent intent = new Intent(MainApplication.getContext().getCurrentActivity(), LoginMainActivity.class);
         MainApplication.getContext().finishActivities();
         MainApplication.getContext().getCurrentActivity().startActivity(intent);
     }

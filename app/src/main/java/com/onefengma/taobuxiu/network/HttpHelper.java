@@ -5,10 +5,12 @@ import android.accounts.NetworkErrorException;
 import com.onefengma.taobuxiu.MainApplication;
 import com.onefengma.taobuxiu.manager.AuthManager;
 import com.onefengma.taobuxiu.model.BaseResponse;
+import com.onefengma.taobuxiu.model.Constant;
 import com.onefengma.taobuxiu.network.persistentcookiejar.ClearableCookieJar;
 import com.onefengma.taobuxiu.network.persistentcookiejar.PersistentCookieJar;
 import com.onefengma.taobuxiu.network.persistentcookiejar.cache.SetCookieCache;
 import com.onefengma.taobuxiu.network.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.onefengma.taobuxiu.utils.SPHelper;
 import com.onefengma.taobuxiu.utils.ToastUtils;
 
 import java.io.File;
@@ -129,6 +131,7 @@ public class HttpHelper {
                 onSuccess(t);
             } else if (t.status == 2) {
                 AuthManager.startLoginActivity();
+                SPHelper.instance().save(Constant.StorageKeys.USER_PROFILE, "");
             } else {
                 onFailed(t, new NetworkErrorException(t.errorMsg));
             }

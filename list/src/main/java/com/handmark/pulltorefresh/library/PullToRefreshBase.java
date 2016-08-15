@@ -1650,4 +1650,12 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 		void onSmoothScrollFinished();
 	}
 
+	public void autoRefresh(){
+		this.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				setRefreshing(true);  //直接调用是没有用的
+			}
+		}, 100);
+	}
 }

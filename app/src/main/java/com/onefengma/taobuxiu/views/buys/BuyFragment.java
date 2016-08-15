@@ -1,5 +1,6 @@
 package com.onefengma.taobuxiu.views.buys;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -7,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
@@ -44,21 +47,36 @@ public class BuyFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        toolbar.setTitle("我的求购");
 
         BuyFragmentViewPagerAdapter adapter = new BuyFragmentViewPagerAdapter(getFragmentManager());
+        buyViewPager.setOffscreenPageLimit(3);
         buyViewPager.setAdapter(adapter);
 
         buyViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(buyTab));
         buyTab.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(buyViewPager));
 
-        for (int i = 0; i < adapter.getCount(); i++) {
-            TabLayout.Tab tab = buyTab.newTab();
-            TextView text = new TextView(getContext());
-            text.setText("选项卡" + i);
-            tab.setCustomView(text);
-            buyTab.addTab(tab);
-        }
+        setupTabs();
+    }
+
+    private void setupTabs() {
+        TabLayout.Tab tabDoing = buyTab.newTab();
+        TabItem tabItemDoing = new TabItem(getContext());
+        tabItemDoing.setTitle("进行中");
+        tabDoing.setCustomView(tabItemDoing);
+        buyTab.addTab(tabDoing);
+
+        TabLayout.Tab tabDone = buyTab.newTab();
+        TabItem tabItemDone = new TabItem(getContext());
+        tabItemDone.setTitle("已成交");
+        tabDone.setCustomView(tabItemDone);
+        buyTab.addTab(tabDone);
+
+        TabLayout.Tab tabOut = buyTab.newTab();
+        TabItem tabItemOut = new TabItem(getContext());
+        tabItemOut.setTitle("已过期");
+        tabOut.setCustomView(tabItemOut);
+        buyTab.addTab(tabOut);
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -77,5 +95,27 @@ public class BuyFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         EventBusHelper.unregister(this);
+    }
+
+    public static class TabItem extends FrameLayout {
+
+        @BindView(R.id.icon)
+        ImageView iconView;
+        @BindView(R.id.title)
+        TextView titleView;
+
+        public TabItem(Context context) {
+            super(context);
+            View view = inflate(context, R.layout.buy_tab_item, this);
+            ButterKnife.bind(this, view);
+        }
+
+        public void setTitle(String title) {
+            titleView.setText(title);
+        }
+
+        public void setIcon(int resId) {
+            iconView.setImageResource(resId);
+        }
     }
 }
