@@ -17,8 +17,7 @@ import com.onefengma.taobuxiu.model.events.OnGetMsgCodeEvent;
 import com.onefengma.taobuxiu.utils.SPHelper;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
-import com.onefengma.taobuxiu.views.LoginActivity;
-import com.onefengma.taobuxiu.views.LoginMainActivity;
+import com.onefengma.taobuxiu.views.auth.LoginMainActivity;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

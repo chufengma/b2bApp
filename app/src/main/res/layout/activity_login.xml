@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/ic_login_bg"
-    tools:context="com.onefengma.taobuxiu.views.LoginActivity">
+    tools:context="com.onefengma.taobuxiu.views.auth.LoginActivity">
 
     <com.onefengma.taobuxiu.views.widgets.ToolBar
         android:id="@+id/toolbar"
@@ -83,6 +83,8 @@
     <TextView
         android:padding="@dimen/activity_horizontal_margin"
         android:text="@string/forget_password"
+        android:clickable="true"
+        android:id="@+id/reset_password"
         android:layout_gravity="right"
         android:autoLink="all"
         android:layout_width="wrap_content"

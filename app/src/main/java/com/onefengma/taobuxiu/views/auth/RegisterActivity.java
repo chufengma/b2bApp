@@ -1,4 +1,4 @@
-package com.onefengma.taobuxiu.views;
+package com.onefengma.taobuxiu.views.auth;
 
 import android.content.Intent;
 import android.os.Bundle;

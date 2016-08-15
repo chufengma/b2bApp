@@ -1,4 +1,4 @@
-package com.onefengma.taobuxiu.views;
+package com.onefengma.taobuxiu.views.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,10 +15,10 @@ import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
 import com.onefengma.taobuxiu.model.events.LoginEvent;
 import com.onefengma.taobuxiu.utils.StringUtils;
+import com.onefengma.taobuxiu.views.MainActivity;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.widgets.ProgressDialog;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
-import com.xiaomi.mipush.sdk.MiPushClient;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -78,6 +78,11 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
     @OnClick(R.id.register)
     public void doRegister() {
         RegisterActivity.start(this);
+    }
+
+    @OnClick(R.id.reset_password)
+    public void doReset() {
+        ResetPasswordActivity.start(this);
     }
 
     @Override

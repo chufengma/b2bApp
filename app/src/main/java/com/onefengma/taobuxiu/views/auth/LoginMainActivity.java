@@ -1,4 +1,4 @@
-package com.onefengma.taobuxiu.views;
+package com.onefengma.taobuxiu.views.auth;
 
 import android.os.Bundle;
 import android.widget.ImageView;

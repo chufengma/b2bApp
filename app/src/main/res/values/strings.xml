@@ -21,4 +21,10 @@
     <string name="get_verify_code_started">获取中...</string>
     <string name="get_verify_code_desc">%1$s后重新获取</string>
 
+    <string name="title_activity_reset_password">忘记密码</string>
+    <string name="msg_code_title">验证码</string>
+    <string name="pass_hint">6~20位字符</string>
+    <string name="new_pass_title">新密码</string>
+    <string name="reset_password_notice">请获取短信验证码，并设置新的登陆密码</string>
+
 </resources>
