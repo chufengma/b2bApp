@@ -41,6 +41,7 @@
             android:theme="@style/AppThemeLight" />
         <activity
             android:name=".views.auth.LoginActivity"
+            android:launchMode="singleTask"
             android:theme="@style/AppThemeDark"
             android:label="@string/title_activity_login" />
         <activity

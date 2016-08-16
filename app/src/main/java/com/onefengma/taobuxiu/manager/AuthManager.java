@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.onefengma.taobuxiu.MainApplication;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.model.events.OnResetPasswordEvent;
 import com.onefengma.taobuxiu.network.HttpHelper;
 import com.onefengma.taobuxiu.network.HttpHelper.SimpleNetworkSubscriber;
 import com.onefengma.taobuxiu.manager.helpers.JSONHelper;
@@ -106,6 +107,25 @@ public class AuthManager {
         });
     }
 
+    public void doResetPassword(String mobile, String msgCode, String password) {
+        if(!VerifyHelper.checkMobileAndPassword(mobile, password)) {
+            return;
+        }
+
+        EventBusHelper.post(new OnResetPasswordEvent(BaseStatusEvent.STARTED));
+        HttpHelper.wrap(HttpHelper.create(AuthService.class).resetPassword(mobile, msgCode, password, password)).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
+            @Override
+            public void onSuccess(BaseResponse baseResponse) {
+                EventBusHelper.post(new OnResetPasswordEvent(BaseStatusEvent.SUCCESS));
+            }
+
+            @Override
+            public void onFailed(BaseResponse baseResponse, Throwable e) {
+                super.onFailed(baseResponse, e);
+                EventBusHelper.post(new OnResetPasswordEvent(BaseStatusEvent.FAILED));
+            }
+        });
+    }
 
     public interface AuthService {
         @GET("msgCode")
@@ -113,11 +133,21 @@ public class AuthManager {
 
         @FormUrlEncoded
         @POST("member/login")
-        Observable<BaseResponse> login(@Field(("mobile")) String mobile, @Field("password") String password);
+        Observable<BaseResponse> login(@Field(("mobile")) String mobile,
+                                       @Field("password") String password);
 
         @FormUrlEncoded
         @POST("member/registerMobile")
-        Observable<BaseResponse> register(@Field(("mobile")) String mobile, @Field("password") String password, @Field("msgCode") String msgCode);
+        Observable<BaseResponse> register(@Field(("mobile")) String mobile,
+                                          @Field("password") String password,
+                                          @Field("msgCode") String msgCode);
+
+        @FormUrlEncoded
+        @POST("member/forgetPassword")
+        Observable<BaseResponse> resetPassword(@Field("mobile") String mobile,
+                                               @Field("msgCode") String msgCode,
+                                               @Field(("newPassword")) String newPassword,
+                                               @Field("newPasswordConfirm") String newPasswordConfirm);
     }
 
 }
