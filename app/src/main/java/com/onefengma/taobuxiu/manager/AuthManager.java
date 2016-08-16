@@ -57,7 +57,7 @@ public class AuthManager {
             @Override
             public void onSuccess(BaseResponse baseResponse) {
                 UserProfile userProfile = JSONHelper.parse(baseResponse.data.toString(), UserProfile.class);
-                SPHelper.instance().save(Constant.StorageKeys.USER_PROFILE, userProfile);
+                SPHelper.common().save(Constant.StorageKeys.USER_PROFILE, userProfile);
                 EventBusHelper.post(new LoginEvent(BaseStatusEvent.SUCCESS));
             }
 

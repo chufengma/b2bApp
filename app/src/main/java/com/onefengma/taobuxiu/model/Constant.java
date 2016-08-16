@@ -11,4 +11,14 @@ public class Constant {
         public static final String USER_PROFILE = "user_profile";
     }
 
+    public static class StorageBuyKeys {
+        public static final String BUY_DOING = "buy_doing";
+        public static final String BUY_DOING_NUMBERS = "buy_doing_numbers";
+
+        public static final String BUY_DONE = "buy_done";
+        public static final String BUY_DONE_NUMBERS = "buy_done_numbers";
+
+        public static final String BUY_OUT_OF_DATE = "buy_out_of_date";
+        public static final String BUY_OUT_OF_DATE_NUMBERS = "buy_out_of_date_numbers";
+    }
 }

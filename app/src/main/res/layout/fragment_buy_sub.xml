@@ -3,9 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.onefengma.taobuxiu.views.widgets.XRecyclerView
+    <com.onefengma.taobuxiu.views.widgets.listview.XListView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
+        android:divider="@null"
         android:layout_height="match_parent"/>
+
+    <TextView
+        android:text="暂无数据"
+        android:id="@+id/emptyView"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textColor="@color/gray"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

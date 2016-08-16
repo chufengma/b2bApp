@@ -2,7 +2,6 @@ package com.onefengma.taobuxiu.manager;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.os.*;
 import android.util.Log;
 
 import com.onefengma.taobuxiu.BuildConfig;
@@ -64,7 +63,7 @@ public class PushManager {
     }
 
     public void setCurrentUserAccount() {
-        UserProfile userProfile = SPHelper.instance().get(Constant.StorageKeys.USER_PROFILE, UserProfile.class);
+        UserProfile userProfile = SPHelper.common().get(Constant.StorageKeys.USER_PROFILE, UserProfile.class);
         if (userProfile != null) {
             String accountId = (BuildConfig.DEBUG ? DEV : PRO) + "_" + userProfile.userId;
             MiPushClient.setUserAccount(MainApplication.getContext(), accountId, null);

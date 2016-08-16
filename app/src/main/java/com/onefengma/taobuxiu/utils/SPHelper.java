@@ -2,6 +2,7 @@ package com.onefengma.taobuxiu.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.util.ArrayMap;
 
 import com.alibaba.fastjson.JSON;
 import com.onefengma.taobuxiu.MainApplication;
@@ -13,30 +14,40 @@ import com.orhanobut.logger.Logger;
  */
 public class SPHelper {
 
-    private static final String SP_FILE_NAME = "common_taobuxiu_sp";
+    private static final String COMMON_SP = "taobuxiu_common_sp";
+    private static final String BUY_SP = "taobuxiu_buy_sp";
 
-    private static SPHelper instance;
-    private static SharedPreferences.Editor editor;
-    private static SharedPreferences sp;
+    private static ArrayMap<String, SPHelper> spHelperArrayMap = new ArrayMap<>();
+    private SharedPreferences.Editor editor;
+    private SharedPreferences sp;
 
-
-    public SPHelper() {
-        sp = MainApplication.getContext().getSharedPreferences(SP_FILE_NAME, Context.MODE_PRIVATE);
+    public SPHelper(String name) {
+        sp = MainApplication.getContext().getSharedPreferences(name, Context.MODE_PRIVATE);
         editor = sp.edit();
     }
 
-    public static SPHelper instance() {
-        if (instance == null) {
-            instance = new SPHelper();
+    // common sp
+    public static SPHelper common() {
+        SPHelper spHelper = spHelperArrayMap.get(COMMON_SP);
+        if (spHelper == null) {
+            spHelper = new SPHelper(COMMON_SP);
+            spHelperArrayMap.put(COMMON_SP, spHelper);
         }
-        return instance;
+        return spHelper;
     }
 
-    public static SharedPreferences sp() {
-        if (instance == null) {
-            instance = new SPHelper();
+    // common sp
+    public static SPHelper buy() {
+        SPHelper spHelper = spHelperArrayMap.get(BUY_SP);
+        if (spHelper == null) {
+            spHelper = new SPHelper(BUY_SP);
+            spHelperArrayMap.put(BUY_SP, spHelper);
         }
-        return instance.sp;
+        return spHelper;
+    }
+
+    public SharedPreferences sp() {
+        return sp;
     }
 
     public void save(String key, Object value) {

@@ -13,7 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
+import com.onefengma.taobuxiu.model.events.MyIronsEventDone;
+import com.onefengma.taobuxiu.model.events.MyIronsEventOutOfDate;
 import com.onefengma.taobuxiu.model.events.OnBuyTabEvent;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
@@ -35,6 +39,14 @@ public class BuyFragment extends BaseFragment {
     TabLayout buyTab;
     @BindView(R.id.buy_view_pager)
     ViewPager buyViewPager;
+
+    TabLayout.Tab tabDoing;
+    TabLayout.Tab tabDone;
+    TabLayout.Tab tabOut;
+
+    TabItem tabItemDoing;
+    TabItem tabItemDone;
+    TabItem tabItemOut;
 
     @Nullable
     @Override
@@ -59,24 +71,23 @@ public class BuyFragment extends BaseFragment {
     }
 
     private void setupTabs() {
-        TabLayout.Tab tabDoing = buyTab.newTab();
-        TabItem tabItemDoing = new TabItem(getContext());
-        tabItemDoing.setTitle("进行中");
+        tabDoing = buyTab.newTab();
+        tabItemDoing = new TabItem(getContext());
+        tabItemDoing.setTitle(getString(R.string.buy_doing_tab, 0));
         tabDoing.setCustomView(tabItemDoing);
         buyTab.addTab(tabDoing);
 
-        TabLayout.Tab tabDone = buyTab.newTab();
-        TabItem tabItemDone = new TabItem(getContext());
-        tabItemDone.setTitle("已成交");
+        tabDone = buyTab.newTab();
+        tabItemDone = new TabItem(getContext());
+        tabItemDone.setTitle(getString(R.string.buy_done_tab, 0));
         tabDone.setCustomView(tabItemDone);
         buyTab.addTab(tabDone);
 
-        TabLayout.Tab tabOut = buyTab.newTab();
-        TabItem tabItemOut = new TabItem(getContext());
-        tabItemOut.setTitle("已过期");
+        tabOut = buyTab.newTab();
+        tabItemOut = new TabItem(getContext());
+        tabItemOut.setTitle(getString(R.string.buy_out_tab, 0));
         tabOut.setCustomView(tabItemOut);
         buyTab.addTab(tabOut);
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -84,6 +95,20 @@ public class BuyFragment extends BaseFragment {
         System.out.println("-----------------onBuyTabEvent");
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoadDoingNumbers(MyIronsEventDoing myIronsEvent) {
+        tabItemDoing.setTitle(getString(R.string.buy_doing_tab, BuyManager.instance().myIronsResponseForDoing.maxCount));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoadDoneNumbers(MyIronsEventDone myIronsEvent) {
+        tabItemDone.setTitle(getString(R.string.buy_done_tab, BuyManager.instance().myIronsResponseForDone.maxCount));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoadOutOfDateNumbers(MyIronsEventOutOfDate myIronsEvent) {
+        tabItemOut.setTitle(getString(R.string.buy_out_tab, BuyManager.instance().myIronsResponseForOutOfDate.maxCount));
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

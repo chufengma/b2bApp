@@ -4,4 +4,18 @@
         <attr name="tool_bar_title"  format="string|reference" />
         <attr name="tool_bar_bg"  format="color|reference" />
     </declare-styleable>
+
+    <declare-styleable name="XListView">
+        <attr name="headerOffset" format="dimension" />
+        <attr name="footerOffset" format="integer" />
+        <attr name="hintTextColor" format="color" />
+        <attr name="displayUpdateTime" format="boolean" />
+        <attr name="showFooterArrow" format="boolean" />
+        <attr name="headerHintNormal" format="string|reference" />
+        <attr name="headerHintReady" format="string|reference" />
+        <attr name="headerHintLoading" format="string|reference" />
+        <attr name="footerHintNormal" format="string|reference" />
+        <attr name="footerHintReady" format="string|reference" />
+        <attr name="footerHintLoading" format="string|reference" />
+    </declare-styleable>
 </resources>

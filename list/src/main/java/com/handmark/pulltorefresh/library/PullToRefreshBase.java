@@ -1656,6 +1656,6 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 			public void run() {
 				setRefreshing(true);  //直接调用是没有用的
 			}
-		}, 100);
+		}, 300);
 	}
 }

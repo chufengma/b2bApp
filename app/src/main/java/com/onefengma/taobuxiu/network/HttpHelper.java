@@ -12,6 +12,7 @@ import com.onefengma.taobuxiu.network.persistentcookiejar.cache.SetCookieCache;
 import com.onefengma.taobuxiu.network.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.onefengma.taobuxiu.utils.SPHelper;
 import com.onefengma.taobuxiu.utils.ToastUtils;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +38,7 @@ import rx.schedulers.Schedulers;
  */
 public class HttpHelper {
 
-    private static final String BASE_URL = "http://192.168.0.103:9090/";
+    private static final String BASE_URL = "http://10.32.24.114:5389/";
 
     private static Retrofit retrofit;
 
@@ -122,6 +123,7 @@ public class HttpHelper {
             BaseResponse baseResponse = new BaseResponse();
             baseResponse.errorMsg = "网络错误，请重试";
             baseResponse.status = 1;
+            Logger.e(e, e.getMessage());
             onFailed(baseResponse, e);
         }
 
@@ -131,7 +133,7 @@ public class HttpHelper {
                 onSuccess(t);
             } else if (t.status == 2) {
                 AuthManager.startLoginActivity();
-                SPHelper.instance().save(Constant.StorageKeys.USER_PROFILE, "");
+                SPHelper.common().save(Constant.StorageKeys.USER_PROFILE, "");
             } else {
                 onFailed(t, new NetworkErrorException(t.errorMsg));
             }

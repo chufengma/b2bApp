@@ -32,6 +32,25 @@ public class XRecyclerView extends LinearLayout {
         super(context, attrs);
         View view = inflate(context, R.layout.recycler_view_x, this);
         ButterKnife.bind(this, view);
+
+        recyclerView.getRefreshableView().addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+    }
+
+    protected boolean isSlideToBottom(RecyclerView recyclerView) {
+        if (recyclerView == null) return false;
+        if (recyclerView.computeVerticalScrollExtent() + recyclerView.computeVerticalScrollOffset() >= recyclerView.computeVerticalScrollRange())
+            return true;
+        return false;
     }
 
     final private RecyclerView.AdapterDataObserver observer = new RecyclerView.AdapterDataObserver() {

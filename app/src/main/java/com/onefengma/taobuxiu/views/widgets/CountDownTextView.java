@@ -34,7 +34,7 @@ public class CountDownTextView extends TextView {
     private void init() {
         setClickable(true);
 
-        long lastGetVerifyCodeTime = SPHelper.instance().getLong(GET_VERIFY_CODE_TIME, 0);
+        long lastGetVerifyCodeTime = SPHelper.common().getLong(GET_VERIFY_CODE_TIME, 0);
         if (lastGetVerifyCodeTime > 0 && System.currentTimeMillis() - lastGetVerifyCodeTime < 60 * 1000) {
             startCountDown((int) ((System.currentTimeMillis() - lastGetVerifyCodeTime) / 1000));
         }
@@ -47,7 +47,7 @@ public class CountDownTextView extends TextView {
         } else if (event.status == BaseStatusEvent.FAILED) {
             setText(R.string.get_verify_code);
         } else {
-            SPHelper.instance().save(GET_VERIFY_CODE_TIME, System.currentTimeMillis());
+            SPHelper.common().save(GET_VERIFY_CODE_TIME, System.currentTimeMillis());
             startCountDown(0);
         }
     }

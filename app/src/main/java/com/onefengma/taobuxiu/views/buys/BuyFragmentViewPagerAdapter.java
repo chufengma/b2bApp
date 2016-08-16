@@ -17,13 +17,13 @@ public class BuyFragmentViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new BuySubFragment();
+                return new BuyFragmentForDoing();
             case 1:
-                return new BuySub1Fragment();
+                return new BuyFragmentForDone();
             case 2:
-                return new BuySub2Fragment();
+                return new BuyFragmentForOutOfDate();
         }
-        return new BuySubFragment();
+        return new BuyFragmentForDoing();
     }
 
     @Override
