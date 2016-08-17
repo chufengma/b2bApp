@@ -1,19 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="90dip" >
+    android:background="@android:color/transparent"
+    android:paddingTop="2dip"
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_gravity="center_vertical"
-        android:layout_width="60dip"
-        android:layout_height="60dip" />
-
-    <TextView
-        android:padding="10dip"
-        android:gravity="center"
-        android:id="@+id/text"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:minHeight="100dip"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
 
-</LinearLayout>
+        <RelativeLayout
+            android:id="@+id/supply_count_layout"
+            android:layout_width="66dip"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/supply_count"
+                android:layout_width="60dip"
+                android:layout_height="60dip"
+                android:layout_marginBottom="3dip"
+                android:layout_marginLeft="3dip"
+                android:layout_marginRight="3dip"
+                android:layout_marginTop="3dip"
+                android:background="@drawable/buy_item_icon_bg"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="@color/white"
+                android:textSize="30dip" />
+
+            <TextView
+                android:id="@+id/status_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/supply_count"
+                android:gravity="center_horizontal"
+                android:text="进行中"
+                android:textColor="@color/main_yellow" />
+
+            <View
+                android:id="@+id/red_dot"
+                android:layout_width="10dip"
+                android:layout_height="10dip"
+                android:layout_marginLeft="-10dip"
+                android:layout_marginTop="1dip"
+                android:visibility="gone"
+                android:layout_toRightOf="@id/supply_count"
+                android:background="@drawable/red_dot" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/supply_count_layout"
+            android:minHeight="100dip"
+            android:orientation="vertical"
+            android:paddingBottom="10dip"
+            android:paddingLeft="10dip"
+            android:layout_toLeftOf="@+id/arrow"
+            android:paddingTop="10dip">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="不锈钢卷/304/2B/太钢(江苏 无锡)"
+                android:textColor="#000" />
+
+            <TextView
+                android:id="@+id/sub_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingTop="4dip"
+                android:text="10*100*100 11.5~11.6 100kg"
+                android:textSize="12dip" />
+
+            <TextView
+                android:id="@+id/message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dip"
+                android:text="备注：11.5~11.6 100kg10*100*100 11.5~11.6 100kg10*100*100 11.5~11.6 100kg10*100*100 11.5~11.6 100kg10*100*100 11.5~11.6 100kg10*100*100 11.5~11.6 100kg"
+                android:textSize="12dip" />
+
+            <TextView
+                android:id="@+id/dead_line"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingTop="4dip"
+                android:text="求购截止：2015-11-21 11:32"
+                android:textSize="12dip" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@id/arrow"
+            android:layout_width="20dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/buy_item_arrow"
+            android:layout_height="40dip" />
+
+    </RelativeLayout>
+
+</FrameLayout>

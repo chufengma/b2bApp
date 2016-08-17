@@ -76,13 +76,18 @@ public class TabIndicatorView extends RelativeLayout {
         return new TabIndicatorView(context, tabParams);
     }
 
+    public static TabIndicatorView newQTTabIndicator(Context context) {
+        TabParams tabParams = new TabParams(R.drawable.ic_main_tab_qt, "找质检", false);
+        return new TabIndicatorView(context, tabParams);
+    }
+
     public static TabIndicatorView newOfferTabIndicator(Context context) {
-        TabParams tabParams = new TabParams(R.drawable.ic_main_tab_chat, "报价", false);
+        TabParams tabParams = new TabParams(R.drawable.ic_main_tab_offer, "报价", false);
         return new TabIndicatorView(context, tabParams);
     }
 
     public static TabIndicatorView newMineTabIndicator(Context context) {
-        TabParams tabParams = new TabParams(R.drawable.ic_main_tab_chat, "我", false);
+        TabParams tabParams = new TabParams(R.drawable.ic_main_tab_mine, "我", false);
         return new TabIndicatorView(context, tabParams);
     }
 }

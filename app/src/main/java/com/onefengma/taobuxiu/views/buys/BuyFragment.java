@@ -74,20 +74,50 @@ public class BuyFragment extends BaseFragment {
         tabDoing = buyTab.newTab();
         tabItemDoing = new TabItem(getContext());
         tabItemDoing.setTitle(getString(R.string.buy_doing_tab, 0));
+
+        tabItemDoing.setIcon(R.drawable.buy_tab_doing);
+        tabItemDoing.titleView.setTextColor(getResources().getColorStateList(R.color.buy_doing_indicator_text_colors));
         tabDoing.setCustomView(tabItemDoing);
         buyTab.addTab(tabDoing);
 
         tabDone = buyTab.newTab();
         tabItemDone = new TabItem(getContext());
+        tabItemDone.setIcon(R.drawable.buy_tab_done);
         tabItemDone.setTitle(getString(R.string.buy_done_tab, 0));
+        tabItemDone.titleView.setTextColor(getResources().getColorStateList(R.color.buy_done_indicator_text_colors));
         tabDone.setCustomView(tabItemDone);
         buyTab.addTab(tabDone);
 
         tabOut = buyTab.newTab();
         tabItemOut = new TabItem(getContext());
+        tabItemOut.setIcon(R.drawable.buy_tab_out_of_date);
         tabItemOut.setTitle(getString(R.string.buy_out_tab, 0));
+        tabItemOut.titleView.setTextColor(getResources().getColorStateList(R.color.buy_outofdate_indicator_text_colors));
         tabOut.setCustomView(tabItemOut);
         buyTab.addTab(tabOut);
+
+        buyTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab == tabDoing) {
+                    buyTab.setSelectedTabIndicatorColor(getResources().getColor(R.color.main_yellow));
+                } else if (tab == tabDone) {
+                    buyTab.setSelectedTabIndicatorColor(getResources().getColor(R.color.main_green));
+                } else if (tab == tabOut) {
+                    buyTab.setSelectedTabIndicatorColor(getResources().getColor(R.color.main_red));
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -125,9 +155,9 @@ public class BuyFragment extends BaseFragment {
     public static class TabItem extends FrameLayout {
 
         @BindView(R.id.icon)
-        ImageView iconView;
+        public ImageView iconView;
         @BindView(R.id.title)
-        TextView titleView;
+        public TextView titleView;
 
         public TabItem(Context context) {
             super(context);

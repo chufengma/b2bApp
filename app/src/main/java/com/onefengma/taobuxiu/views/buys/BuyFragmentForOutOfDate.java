@@ -58,7 +58,7 @@ public class BuyFragmentForOutOfDate extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        customAdapter = new BuyListAdapter();
+        customAdapter = new BuyListAdapter(BuyManager.BuyStatus.OUT_OF_DATE);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setOnRefreshListener(new XListView.OnRefreshListener() {
             @Override

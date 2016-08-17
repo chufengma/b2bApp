@@ -71,7 +71,7 @@ public class BuyManager {
         EventBusHelper.post(new MyIronsEventDoing(BaseStatusEvent.STARTED, MyIronsEventDoing.RELOAD));
         myIronsResponseForDoing.currentPage = 0;
 
-        HttpHelper.wrap(HttpHelper.create(BuyService.class).myIronBuy(myIronsResponseForDoing.currentPage, myIronsResponseForDoing.pageCount, BuyStatus.DONE.ordinal())).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
+        HttpHelper.wrap(HttpHelper.create(BuyService.class).myIronBuy(myIronsResponseForDoing.currentPage, myIronsResponseForDoing.pageCount, BuyStatus.DOING.ordinal())).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse data) {
                 MyIronsResponse myIronsResponse = JSONHelper.parse(data.data.toString(), MyIronsResponse.class);
@@ -95,7 +95,7 @@ public class BuyManager {
 
     public void lodeMoreMyIronBuysForDoing() {
         EventBusHelper.post(new MyIronsEventDoing(BaseStatusEvent.STARTED, MyIronsEventDoing.LOAD_MORE));
-        HttpHelper.wrap(HttpHelper.create(BuyService.class).myIronBuy(myIronsResponseForDoing.currentPage + 1, myIronsResponseForDoing.pageCount, BuyStatus.DONE.ordinal())).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
+        HttpHelper.wrap(HttpHelper.create(BuyService.class).myIronBuy(myIronsResponseForDoing.currentPage + 1, myIronsResponseForDoing.pageCount, BuyStatus.DOING.ordinal())).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse data) {
                 MyIronsResponse myIronsResponse = JSONHelper.parse(data.data.toString(), MyIronsResponse.class);

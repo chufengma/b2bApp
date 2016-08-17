@@ -1,5 +1,7 @@
 package com.onefengma.taobuxiu.utils;
 
+import com.onefengma.taobuxiu.MainApplication;
+
 /**
  * @author yfchu
  * @date 2016/8/8
@@ -16,5 +18,9 @@ public class StringUtils {
 
     public static boolean isEmpty(String str) {
         return str == null || str.equals("");
+    }
+
+    public static String getString(int resId, String... placeHolder) {
+        return MainApplication.getContext().getString(resId, placeHolder);
     }
 }

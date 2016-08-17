@@ -2,12 +2,16 @@ package com.onefengma.taobuxiu.views.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.utils.ViewUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,14 +22,21 @@ import butterknife.ButterKnife;
 public class ToolBar extends RelativeLayout {
 
     @BindView(R.id.left_image)
-    View leftImage;
+    ImageView leftImage;
     @BindView(R.id.title)
     TextView titleView;
     @BindView(R.id.right_image)
-    View rightImage;
+    ImageView rightImage;
 
     String title;
     int color;
+    Drawable left;
+    Drawable right;
+    @BindView(R.id.right_image_layout)
+    FrameLayout rightImageLayout;
+    @BindView(R.id.left_image_layout)
+    FrameLayout leftImageLayout;
+    int size;
 
     public ToolBar(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -40,10 +51,27 @@ public class ToolBar extends RelativeLayout {
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TaoToolBar);
         title = a.getString(R.styleable.TaoToolBar_tool_bar_title);
         color = a.getColor(R.styleable.TaoToolBar_tool_bar_bg, getContext().getResources().getColor(R.color.colorPrimary));
+        left = a.getDrawable(R.styleable.TaoToolBar_tool_bar_left);
+        right = a.getDrawable(R.styleable.TaoToolBar_tool_bar_right);
+        size = a.getDimensionPixelSize(R.styleable.TaoToolBar_tool_bar_icon_size, ViewUtils.dipToPixels(24));
         a.recycle();
 
         setTitle(title);
         setBackgroundColor(color);
+        if (left != null) {
+            leftImage.setImageDrawable(left);
+            leftImageLayout.setVisibility(VISIBLE);
+            leftImage.getLayoutParams().width = size;
+            leftImage.getLayoutParams().height = size;
+            leftImage.requestLayout();
+        }
+        if (right != null) {
+            rightImage.setImageDrawable(right);
+            rightImageLayout.setVisibility(VISIBLE);
+            rightImage.getLayoutParams().width = size;
+            rightImage.getLayoutParams().height = size;
+            rightImage.requestLayout();
+        }
     }
 
     public void setTitle(CharSequence title) {

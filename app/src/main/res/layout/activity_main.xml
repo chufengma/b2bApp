@@ -20,6 +20,6 @@
     <com.onefengma.taobuxiu.views.core.FragmentTabHost
         android:id="@+id/tab"
         android:layout_width="match_parent"
-        android:layout_height="70dip" />
+        android:layout_height="60dip" />
 
 </LinearLayout>

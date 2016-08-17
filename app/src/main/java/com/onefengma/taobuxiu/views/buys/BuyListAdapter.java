@@ -1,20 +1,23 @@
 package com.onefengma.taobuxiu.views.buys;
 
-import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
+import com.onefengma.taobuxiu.utils.DateUtils;
+import com.onefengma.taobuxiu.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * @author yfchu
@@ -23,6 +26,13 @@ import java.util.Random;
 public class BuyListAdapter extends BaseAdapter {
 
     public List<IronBuyBrief> myBuys = new ArrayList<>();
+
+    private BuyManager.BuyStatus buyStatus = BuyManager.BuyStatus.DOING;
+
+    public BuyListAdapter(BuyManager.BuyStatus buyStatus) {
+        this.buyStatus = buyStatus;
+    }
+
     @Override
     public int getCount() {
         return myBuys.size();
@@ -35,7 +45,7 @@ public class BuyListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public IronBuyBrief getItem(int position) {
         return myBuys.get(position);
     }
 
@@ -46,30 +56,66 @@ public class BuyListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        SimpleTextHolder simpleTextHolder;
+        ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.buy_item, parent, false);
-            simpleTextHolder = new SimpleTextHolder(convertView);
-            convertView.setTag(simpleTextHolder);
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
         } else {
-            simpleTextHolder = (SimpleTextHolder) convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        simpleTextHolder.textView.setText(myBuys.get(position).userId + ":" + myBuys.get(position).id);
-        simpleTextHolder.imageView.setBackgroundColor(Color.rgb(new Random().nextInt(256), new Random().nextInt(256), new Random().nextInt(256)));
+        IronBuyBrief ironBuyBrief = getItem(position);
+
+        switch (buyStatus) {
+            case DOING:
+                viewHolder.supplyCount.setBackgroundResource(R.drawable.buy_item_icon_bg);
+                viewHolder.statusDesc.setText("进行中");
+                viewHolder.statusDesc.setTextColor(parent.getResources().getColor(R.color.main_yellow));
+                viewHolder.redDot.setVisibility(ironBuyBrief.newSupplyNum > 0 ? View.VISIBLE : View.GONE);
+                break;
+            case DONE:
+                viewHolder.supplyCount.setBackgroundResource(R.drawable.buy_item_icon_bg_done);
+                viewHolder.statusDesc.setText("恭喜成交");
+                viewHolder.statusDesc.setTextColor(parent.getResources().getColor(R.color.main_green));
+                break;
+            case OUT_OF_DATE:
+                viewHolder.supplyCount.setBackgroundResource(R.drawable.buy_item_icon_bg_out_of_date);
+                viewHolder.statusDesc.setText("已过期");
+                viewHolder.statusDesc.setTextColor(parent.getResources().getColor(R.color.main_red));
+                break;
+        }
+
+        viewHolder.title.setText(ironBuyBrief.ironType + "/" + ironBuyBrief.material + "/" + ironBuyBrief.surface + "/" + ironBuyBrief.proPlace + "( " + ironBuyBrief.sourceCity + ")");
+        viewHolder.subTitle.setText(ironBuyBrief.length + "*" + ironBuyBrief.width + "*" + ironBuyBrief.height + " " + ironBuyBrief.tolerance + " " + ironBuyBrief.numbers + "" + ironBuyBrief.unit);
+        viewHolder.message.setText(StringUtils.getString(R.string.buy_item_message, ironBuyBrief.message));
+        viewHolder.deadLine.setText(StringUtils.getString(R.string.buy_item_time_limit, DateUtils.getDateStr(ironBuyBrief.pushTime + ironBuyBrief.timeLimit)));
+
+        viewHolder.supplyCount.setText(ironBuyBrief.supplyCount + "");
 
         return convertView;
     }
 
-    public static class SimpleTextHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder {
+        @BindView(R.id.supply_count)
+        TextView supplyCount;
+        @BindView(R.id.status_desc)
+        TextView statusDesc;
+        @BindView(R.id.red_dot)
+        View redDot;
+        @BindView(R.id.supply_count_layout)
+        RelativeLayout supplyCountLayout;
+        @BindView(R.id.title)
+        TextView title;
+        @BindView(R.id.sub_title)
+        TextView subTitle;
+        @BindView(R.id.message)
+        TextView message;
+        @BindView(R.id.dead_line)
+        TextView deadLine;
 
-        public TextView textView;
-        public ImageView imageView;
-
-        public SimpleTextHolder(View itemView) {
-            super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.text);
-            imageView = (ImageView) itemView.findViewById(R.id.image);
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
         }
     }
 }

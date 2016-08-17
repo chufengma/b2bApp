@@ -56,7 +56,7 @@ public class BuyFragmentForDoing extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        customAdapter = new BuyListAdapter();
+        customAdapter = new BuyListAdapter(BuyManager.BuyStatus.DOING);
         recyclerView.setAdapter(customAdapter);
 
         recyclerView.setOnRefreshListener(new XListView.OnRefreshListener() {

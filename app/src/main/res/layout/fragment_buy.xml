@@ -8,19 +8,20 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         app:tool_bar_title="我的求购"
+        app:tool_bar_left="@drawable/ic_buy_sum"
+        app:tool_bar_right="@drawable/ic_buy_add"
+        app:tool_bar_icon_size="30dip"
         android:layout_height="56dip" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/buy_tab"
         android:layout_below="@id/toolbar"
-        app:tabIndicatorColor="#ff0"
+        app:tabIndicatorColor="@color/main_yellow"
         app:tabMode="fixed"
         app:tabGravity="fill"
-        app:tabSelectedTextColor="#f00"
-        app:tabTextColor="#70ff0000"
         android:layout_width="match_parent"
         android:layout_height="60dip"
-        android:background="#cccccc" />
+        android:background="@color/white" />
 
     <android.support.v4.view.ViewPager
         android:layout_below="@id/buy_tab"

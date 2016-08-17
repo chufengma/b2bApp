@@ -27,5 +27,7 @@ public class IronBuyBrief {
     public int status; // 0 待报价, 1 交易完成 , 2 过期, 3 已报价候选中, 4 我已中标
     public String supplyUserId;
     public long supplyWinTime;
-    private int supplyCount;
+    public int supplyCount;
+    public int newSupplyNum;
+    public String sourceCity;
 }

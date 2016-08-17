@@ -31,6 +31,9 @@
     <string name="buy_done_tab">已完成(%1$s)</string>
     <string name="buy_out_tab">已过期(%1$s)</string>
 
+    <string name="buy_item_message">备注：%1$s</string>
+    <string name="buy_item_time_limit">求购期限：%1$s</string>
+
     <!-- XListView -->
     <string name="xlist_view_hint_loading">正在加载</string>
     <string name="xlist_view_footer_hint_normal">点击查看更多</string>

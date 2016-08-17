@@ -8,4 +8,5 @@ import java.util.List;
  */
 public class MyIronsResponse extends BasePageBean {
     public List<IronBuyBrief> buys;
+    public int newSupplyNums;
 }

@@ -24,4 +24,7 @@
 
     <!-- XListView -->
     <color name="xlist_view_hint_text">#313131</color>
+    <color name="main_yellow">#f39a16</color>
+    <color name="main_green">#009944</color>
+    <color name="main_red">#e60012</color>
 </resources>

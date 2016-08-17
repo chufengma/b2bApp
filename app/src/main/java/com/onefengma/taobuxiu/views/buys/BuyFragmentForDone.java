@@ -57,7 +57,7 @@ public class BuyFragmentForDone extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        customAdapter = new BuyListAdapter();
+        customAdapter = new BuyListAdapter(BuyManager.BuyStatus.DONE);
         recyclerView.setAdapter(customAdapter);
         recyclerView.enableLoadMore(true);
 
@@ -93,9 +93,9 @@ public class BuyFragmentForDone extends BaseFragment {
         if (myIronsEvent.status == MyIronsEventDoing.LOAD_MORE) {
             recyclerView.onLoadMoreComplete();
         }
-        recyclerView.enableLoadMore(BuyManager.instance().myIronsResponseForDoing.buys != null
-                && BuyManager.instance().myIronsResponseForDoing.buys.size() > 0
-                && BuyManager.instance().myIronsResponseForDoing.buys.size() % 15 == 0);
+        recyclerView.enableLoadMore(BuyManager.instance().myIronsResponseForDone.buys != null
+                && BuyManager.instance().myIronsResponseForDone.buys.size() > 0
+                && BuyManager.instance().myIronsResponseForDone.buys.size() % 15 == 0);
         customAdapter.setMyBuys(BuyManager.instance().myIronsResponseForDone.buys);
     }
 
