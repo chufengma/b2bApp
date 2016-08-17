@@ -65,7 +65,19 @@ public class BuyFragment extends BaseFragment {
         buyViewPager.setAdapter(adapter);
 
         buyViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(buyTab));
-        buyTab.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(buyViewPager));
+        buyTab.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(buyViewPager) {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                super.onTabSelected(tab);
+                if (tab == tabDoing) {
+                    buyTab.setSelectedTabIndicatorColor(getResources().getColor(R.color.main_yellow));
+                } else if (tab == tabDone) {
+                    buyTab.setSelectedTabIndicatorColor(getResources().getColor(R.color.main_green));
+                } else if (tab == tabOut) {
+                    buyTab.setSelectedTabIndicatorColor(getResources().getColor(R.color.main_red));
+                }
+            }
+        });
 
         setupTabs();
     }
@@ -95,29 +107,6 @@ public class BuyFragment extends BaseFragment {
         tabItemOut.titleView.setTextColor(getResources().getColorStateList(R.color.buy_outofdate_indicator_text_colors));
         tabOut.setCustomView(tabItemOut);
         buyTab.addTab(tabOut);
-
-        buyTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if (tab == tabDoing) {
-                    buyTab.setSelectedTabIndicatorColor(getResources().getColor(R.color.main_yellow));
-                } else if (tab == tabDone) {
-                    buyTab.setSelectedTabIndicatorColor(getResources().getColor(R.color.main_green));
-                } else if (tab == tabOut) {
-                    buyTab.setSelectedTabIndicatorColor(getResources().getColor(R.color.main_red));
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
