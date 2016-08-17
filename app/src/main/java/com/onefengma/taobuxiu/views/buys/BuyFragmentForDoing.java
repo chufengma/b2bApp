@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
@@ -12,6 +13,7 @@ import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
 import com.onefengma.taobuxiu.utils.ThreadUtils;
+import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 import com.onefengma.taobuxiu.views.widgets.listview.XListView;
 
@@ -82,6 +84,13 @@ public class BuyFragmentForDoing extends BaseFragment {
         }, 200);
 
         recyclerView.setEmptyView(emptyView);
+
+        recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                BuyDetailActivity.start((BaseActivity) getActivity());
+            }
+        });
     }
 
     @Subscribe

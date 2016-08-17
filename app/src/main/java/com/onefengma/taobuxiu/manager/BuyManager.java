@@ -242,6 +242,7 @@ public class BuyManager {
             if (cache != null) {
                 myIronsResponseForDoing.buys = cache.buys;
                 myIronsResponseForDoing.maxCount = cache.maxCount;
+                myIronsResponseForDoing.newSupplyNums = cache.newSupplyNums;
             }
         }
 
@@ -250,6 +251,7 @@ public class BuyManager {
             if (cache != null) {
                 myIronsResponseForDone.buys = cache.buys;
                 myIronsResponseForDone.maxCount = cache.maxCount;
+                myIronsResponseForDone.newSupplyNums = cache.newSupplyNums;
             }
         }
 
@@ -258,6 +260,7 @@ public class BuyManager {
             if (cache != null) {
                 myIronsResponseForOutOfDate.buys = cache.buys;
                 myIronsResponseForOutOfDate.maxCount = cache.maxCount;
+                myIronsResponseForOutOfDate.newSupplyNums = cache.newSupplyNums;
             }
         }
     }
