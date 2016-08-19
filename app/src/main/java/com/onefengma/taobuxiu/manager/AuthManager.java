@@ -12,7 +12,7 @@ import com.onefengma.taobuxiu.manager.helpers.VerifyHelper;
 import com.onefengma.taobuxiu.model.BaseResponse;
 import com.onefengma.taobuxiu.model.Constant;
 import com.onefengma.taobuxiu.model.entities.UserProfile;
-import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
+import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.LoginEvent;
 import com.onefengma.taobuxiu.model.events.OnGetMsgCodeEvent;
 import com.onefengma.taobuxiu.utils.SPHelper;
@@ -59,13 +59,13 @@ public class AuthManager {
             public void onSuccess(BaseResponse baseResponse) {
                 UserProfile userProfile = JSONHelper.parse(baseResponse.data.toString(), UserProfile.class);
                 SPHelper.common().save(Constant.StorageKeys.USER_PROFILE, userProfile);
-                EventBusHelper.post(new LoginEvent(BaseStatusEvent.SUCCESS));
+                EventBusHelper.post(new LoginEvent(BaseListStatusEvent.SUCCESS));
             }
 
             @Override
             public void onFailed(BaseResponse baseResponse, Throwable e) {
                 super.onFailed(baseResponse, e);
-                EventBusHelper.post(new LoginEvent(BaseStatusEvent.FAILED));
+                EventBusHelper.post(new LoginEvent(BaseListStatusEvent.FAILED));
             }
         });
     }
@@ -92,17 +92,17 @@ public class AuthManager {
             return;
         }
 
-        EventBusHelper.post(new OnGetMsgCodeEvent(BaseStatusEvent.STARTED));
+        EventBusHelper.post(new OnGetMsgCodeEvent(BaseListStatusEvent.STARTED));
         HttpHelper.wrap(HttpHelper.create(AuthService.class).msgCode(mobile)).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse baseResponse) {
                 ToastUtils.showSuccessTasty("获取短信验证码成功");
-                EventBusHelper.post(new OnGetMsgCodeEvent(BaseStatusEvent.SUCCESS));
+                EventBusHelper.post(new OnGetMsgCodeEvent(BaseListStatusEvent.SUCCESS));
             }
 
             @Override
             public void onFailed(BaseResponse baseResponse, Throwable e) {
-                EventBusHelper.post(new OnGetMsgCodeEvent(BaseStatusEvent.FAILED));
+                EventBusHelper.post(new OnGetMsgCodeEvent(BaseListStatusEvent.FAILED));
             }
         });
     }
@@ -112,17 +112,17 @@ public class AuthManager {
             return;
         }
 
-        EventBusHelper.post(new OnResetPasswordEvent(BaseStatusEvent.STARTED));
+        EventBusHelper.post(new OnResetPasswordEvent(BaseListStatusEvent.STARTED));
         HttpHelper.wrap(HttpHelper.create(AuthService.class).resetPassword(mobile, msgCode, password, password)).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse baseResponse) {
-                EventBusHelper.post(new OnResetPasswordEvent(BaseStatusEvent.SUCCESS));
+                EventBusHelper.post(new OnResetPasswordEvent(BaseListStatusEvent.SUCCESS));
             }
 
             @Override
             public void onFailed(BaseResponse baseResponse, Throwable e) {
                 super.onFailed(baseResponse, e);
-                EventBusHelper.post(new OnResetPasswordEvent(BaseStatusEvent.FAILED));
+                EventBusHelper.post(new OnResetPasswordEvent(BaseListStatusEvent.FAILED));
             }
         });
     }

@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
-import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDone;
 import com.onefengma.taobuxiu.utils.ThreadUtils;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
@@ -20,6 +19,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by chufengma on 16/8/7.
@@ -85,12 +85,18 @@ public class BuyFragmentForDone extends BaseFragment {
         recyclerView.setEmptyView(emptyView);
     }
 
+    @OnClick(R.id.emptyView)
+    public void clickOnEmptyView() {
+        recyclerView.fakePullRefresh();
+    }
+
     @Subscribe
     public void onLoadMyIronBuys(MyIronsEventDone myIronsEvent) {
-        if (myIronsEvent.status == MyIronsEventDoing.RELOAD) {
+        if (myIronsEvent.isRefreshComplete()) {
             recyclerView.onRefreshComplete(false);
         }
-        if (myIronsEvent.status == MyIronsEventDoing.LOAD_MORE) {
+
+        if (myIronsEvent.isLoadComplete()) {
             recyclerView.onLoadMoreComplete();
         }
         recyclerView.enableLoadMore(BuyManager.instance().myIronsResponseForDone.buys != null

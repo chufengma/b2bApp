@@ -408,6 +408,7 @@ public class XListView extends ListView implements OnScrollListener {
                         if (onRefreshListener != null) {
                             onRefreshListener.onRefresh();
                         }
+                        break;
                     }
                     resetHeaderHeight();
                 } else if (getLastVisiblePosition() == mTotalItemCount - 1) {
@@ -503,4 +504,12 @@ public class XListView extends ListView implements OnScrollListener {
         this.onLoadMoreListener = onLoadMoreListener;
     }
 
+    @Override
+    public void setVisibility(int visibility) {
+//        super.setVisibility(visibility);
+    }
+
+    public void setVisibilityTrue(int visibility) {
+        super.setVisibility(visibility);
+    }
 }

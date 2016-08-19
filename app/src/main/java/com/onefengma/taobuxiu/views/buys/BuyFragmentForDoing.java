@@ -21,6 +21,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by chufengma on 16/8/7.
@@ -93,13 +94,18 @@ public class BuyFragmentForDoing extends BaseFragment {
         });
     }
 
+    @OnClick(R.id.emptyView)
+    public void clickOnEmptyView() {
+        recyclerView.fakePullRefresh();
+    }
+
     @Subscribe
     public void onLoadMyIronBuys(MyIronsEventDoing myIronsEvent) {
-        if (myIronsEvent.status == MyIronsEventDoing.RELOAD) {
-            recyclerView.onRefreshComplete(false);
+        if (myIronsEvent.isRefreshComplete()) {
+           recyclerView.onRefreshComplete(false);
         }
-        
-        if (myIronsEvent.status == MyIronsEventDoing.LOAD_MORE) {
+
+        if (myIronsEvent.isLoadComplete()) {
             recyclerView.onLoadMoreComplete();
         }
 

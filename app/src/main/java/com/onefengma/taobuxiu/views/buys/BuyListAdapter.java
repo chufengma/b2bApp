@@ -39,6 +39,9 @@ public class BuyListAdapter extends BaseAdapter {
     }
 
     public void setMyBuys(List<IronBuyBrief> myBuys) {
+        if (myBuys == null) {
+            return;
+        }
         this.myBuys.clear();
         this.myBuys.addAll(myBuys);
         notifyDataSetChanged();

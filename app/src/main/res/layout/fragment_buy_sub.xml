@@ -11,8 +11,9 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:text="暂无数据"
+        android:text="暂无数据, 点击刷新"
         android:id="@+id/emptyView"
+        android:clickable="true"
         android:gravity="center"
         android:visibility="gone"
         android:textColor="@color/gray"

@@ -3,9 +3,12 @@ package com.onefengma.taobuxiu.push;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.onefengma.taobuxiu.utils.ThreadUtils;
-import com.onefengma.taobuxiu.utils.ToastUtils;
-import com.onefengma.taobuxiu.views.MainActivity;
+import com.alibaba.fastjson.JSON;
+import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.model.push.BasePushData;
+import com.onefengma.taobuxiu.model.push.BuyPushData;
+import com.onefengma.taobuxiu.utils.StringUtils;
+import com.orhanobut.logger.Logger;
 import com.xiaomi.mipush.sdk.ErrorCode;
 import com.xiaomi.mipush.sdk.MiPushClient;
 import com.xiaomi.mipush.sdk.MiPushCommandMessage;
@@ -39,12 +42,12 @@ public class DemoMessageReceiver extends PushMessageReceiver {
         } else if(!TextUtils.isEmpty(message.getUserAccount())) {
             mUserAccount=message.getUserAccount();
         }
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ToastUtils.showInfoTasty(message.getContent());
-            }
-        });
+
+        String type = message.getExtra().get(BasePushData.PUSH_TYPE_KEY);
+        Logger.d(message.getContent());
+        if (StringUtils.equals(type, BasePushData.PUSH_TYPE_BUY)) {
+            EventBusHelper.post(JSON.parseObject(message.getContent(), BuyPushData.class));
+        }
     }
 
     @Override

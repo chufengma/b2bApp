@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
-import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
+import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.OnGetMsgCodeEvent;
 import com.onefengma.taobuxiu.utils.SPHelper;
 
@@ -42,9 +42,9 @@ public class CountDownTextView extends TextView {
 
     @Subscribe
     public void onGetCode(OnGetMsgCodeEvent event) {
-        if (event.status == BaseStatusEvent.STARTED) {
+        if (event.status == BaseListStatusEvent.STARTED) {
             setText(R.string.get_verify_code_started);
-        } else if (event.status == BaseStatusEvent.FAILED) {
+        } else if (event.status == BaseListStatusEvent.FAILED) {
             setText(R.string.get_verify_code);
         } else {
             SPHelper.common().save(GET_VERIFY_CODE_TIME, System.currentTimeMillis());

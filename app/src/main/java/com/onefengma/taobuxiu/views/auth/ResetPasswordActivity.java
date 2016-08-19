@@ -2,14 +2,13 @@ package com.onefengma.taobuxiu.views.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.AuthManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
-import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
+import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.OnResetPasswordEvent;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
@@ -73,10 +72,10 @@ public class ResetPasswordActivity extends BaseActivity {
 
     @Subscribe
     public void onEvent(OnResetPasswordEvent event) {
-        if (event.status == BaseStatusEvent.STARTED) {
+        if (event.status == BaseListStatusEvent.STARTED) {
             progressDialog.show("更改中");
             return;
-        } else if (event.status == BaseStatusEvent.SUCCESS) {
+        } else if (event.status == BaseListStatusEvent.SUCCESS) {
             ToastUtils.showSuccessTasty("更改成功，请重新登陆");
             LoginActivity.start(this);
         }

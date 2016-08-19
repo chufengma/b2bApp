@@ -38,7 +38,7 @@ import rx.schedulers.Schedulers;
  */
 public class HttpHelper {
 
-    private static final String BASE_URL = "http://192.168.0.103:9090/";
+    private static final String BASE_URL = "http://10.32.24.114:5389/";
 
     private static Retrofit retrofit;
 
@@ -123,7 +123,6 @@ public class HttpHelper {
             BaseResponse baseResponse = new BaseResponse();
             baseResponse.errorMsg = "网络错误，请重试";
             baseResponse.status = 1;
-            Logger.e(e, e.getMessage());
             onFailed(baseResponse, e);
         }
 
@@ -146,6 +145,7 @@ public class HttpHelper {
     public abstract static class SimpleNetworkSubscriber<T extends BaseResponse> extends NetworkSubscriber<T> {
         @Override
         public void onFailed(BaseResponse baseResponse, Throwable e) {
+            Logger.e(e, e.getMessage());
             ToastUtils.showErrorTasty(baseResponse.errorMsg);
         }
     }

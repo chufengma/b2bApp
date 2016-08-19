@@ -12,7 +12,7 @@ import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.AuthManager;
 import com.onefengma.taobuxiu.manager.PushManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
-import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
+import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.LoginEvent;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.views.MainActivity;
@@ -63,12 +63,12 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
 
     @Subscribe
     public void onLoginEvent(LoginEvent event) {
-        if (event.status == BaseStatusEvent.STARTED) {
+        if (event.status == BaseListStatusEvent.STARTED) {
             progressDialog.show("登陆中...");
             return;
         }
         progressDialog.dismiss();
-        if (event.status == BaseStatusEvent.SUCCESS) {
+        if (event.status == BaseListStatusEvent.SUCCESS) {
             MainApplication.getContext().finishActivities();
             PushManager.instance().setCurrentUserAccount();
             MainActivity.start(this);

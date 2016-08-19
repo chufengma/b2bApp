@@ -1,18 +1,29 @@
 package com.onefengma.taobuxiu.manager;
 
 
+import com.alibaba.fastjson.JSON;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.JSONHelper;
 import com.onefengma.taobuxiu.model.BaseResponse;
+import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
+import com.onefengma.taobuxiu.model.entities.MyIronBuyDetail;
+import com.onefengma.taobuxiu.model.entities.MyIronBuysNewNums;
 import com.onefengma.taobuxiu.model.entities.MyIronsResponse;
+import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
 import com.onefengma.taobuxiu.model.events.GetBuyNumbersEvent;
+import com.onefengma.taobuxiu.model.events.MyIronDetailEvent;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDone;
 import com.onefengma.taobuxiu.model.events.MyIronsEventOutOfDate;
+import com.onefengma.taobuxiu.model.push.BuyPushData;
 import com.onefengma.taobuxiu.network.HttpHelper;
 import com.onefengma.taobuxiu.network.HttpHelper.SimpleNetworkSubscriber;
 import com.onefengma.taobuxiu.utils.SPHelper;
+import com.onefengma.taobuxiu.utils.StringUtils;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -57,6 +68,8 @@ public class BuyManager {
         this.myIronsResponseForOutOfDate = new MyIronsResponse();
         this.myIronsResponseForOutOfDate.currentPage = 0;
         this.myIronsResponseForOutOfDate.pageCount = 15;
+
+        EventBusHelper.register(this);
     }
 
     public static BuyManager instance() {
@@ -68,7 +81,7 @@ public class BuyManager {
 
     public void reloadMyIronBuysForDoing() {
         readFromDB(BuyStatus.DOING);
-        EventBusHelper.post(new MyIronsEventDoing(BaseStatusEvent.STARTED, MyIronsEventDoing.RELOAD));
+        EventBusHelper.post(new MyIronsEventDoing(BaseListStatusEvent.STARTED, MyIronsEventDoing.RELOAD));
         myIronsResponseForDoing.currentPage = 0;
 
         HttpHelper.wrap(HttpHelper.create(BuyService.class).myIronBuy(myIronsResponseForDoing.currentPage, myIronsResponseForDoing.pageCount, BuyStatus.DOING.ordinal())).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
@@ -82,44 +95,47 @@ public class BuyManager {
                 SPHelper.buy().save(BUY_DOING_NUMBERS, myIronsResponse.maxCount);
 
                 // event
-                EventBusHelper.post(new MyIronsEventDoing(BaseStatusEvent.SUCCESS, MyIronsEventDoing.RELOAD));
+                EventBusHelper.post(new MyIronsEventDoing(BaseListStatusEvent.SUCCESS, MyIronsEventDoing.RELOAD));
             }
 
             @Override
             public void onFailed(BaseResponse baseResponse, Throwable e) {
-                EventBusHelper.post(new MyIronsEventDoing(BaseStatusEvent.FAILED, MyIronsEventDoing.RELOAD));
+                EventBusHelper.post(new MyIronsEventDoing(BaseListStatusEvent.FAILED, MyIronsEventDoing.RELOAD));
                 super.onFailed(baseResponse, e);
             }
         });
     }
 
     public void lodeMoreMyIronBuysForDoing() {
-        EventBusHelper.post(new MyIronsEventDoing(BaseStatusEvent.STARTED, MyIronsEventDoing.LOAD_MORE));
+        EventBusHelper.post(new MyIronsEventDoing(BaseListStatusEvent.STARTED, MyIronsEventDoing.LOAD_MORE));
         HttpHelper.wrap(HttpHelper.create(BuyService.class).myIronBuy(myIronsResponseForDoing.currentPage + 1, myIronsResponseForDoing.pageCount, BuyStatus.DOING.ordinal())).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse data) {
                 MyIronsResponse myIronsResponse = JSONHelper.parse(data.data.toString(), MyIronsResponse.class);
                 myIronsResponseForDoing.currentPage = myIronsResponse.currentPage;
                 myIronsResponseForDoing.pageCount = myIronsResponse.pageCount;
-                myIronsResponseForDoing.buys.addAll(myIronsResponse.buys);
+                if (myIronsResponse.buys != null) {
+                    myIronsResponseForDoing.buys.addAll(myIronsResponse.buys);
+                }
+
 
                 // cache
                 SPHelper.buy().save(BUY_DOING_NUMBERS, myIronsResponse.maxCount);
 
-                EventBusHelper.post(new MyIronsEventDoing(BaseStatusEvent.SUCCESS, MyIronsEventDoing.LOAD_MORE));
+                EventBusHelper.post(new MyIronsEventDoing(BaseListStatusEvent.SUCCESS, MyIronsEventDoing.LOAD_MORE));
             }
 
             @Override
             public void onFailed(BaseResponse baseResponse, Throwable e) {
                 super.onFailed(baseResponse, e);
-                EventBusHelper.post(new MyIronsEventDoing(BaseStatusEvent.FAILED, MyIronsEventDoing.LOAD_MORE));
+                EventBusHelper.post(new MyIronsEventDoing(BaseListStatusEvent.FAILED, MyIronsEventDoing.LOAD_MORE));
             }
         });
     }
 
     public void reloadMyIronBuysForDone() {
         readFromDB(BuyStatus.DONE);
-        EventBusHelper.post(new MyIronsEventDone(BaseStatusEvent.STARTED, MyIronsEventDoing.RELOAD));
+        EventBusHelper.post(new MyIronsEventDone(BaseListStatusEvent.STARTED, MyIronsEventDoing.RELOAD));
         myIronsResponseForDone.currentPage = 0;
 
         HttpHelper.wrap(HttpHelper.create(BuyService.class).myIronBuy(myIronsResponseForDone.currentPage, myIronsResponseForDone.pageCount, BuyStatus.DONE.ordinal())).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
@@ -133,44 +149,46 @@ public class BuyManager {
                 SPHelper.buy().save(BUY_DONE_NUMBERS, myIronsResponse.maxCount);
 
                 // event
-                EventBusHelper.post(new MyIronsEventDone(BaseStatusEvent.SUCCESS, MyIronsEventDoing.RELOAD));
+                EventBusHelper.post(new MyIronsEventDone(BaseListStatusEvent.SUCCESS, MyIronsEventDoing.RELOAD));
             }
 
             @Override
             public void onFailed(BaseResponse baseResponse, Throwable e) {
-                EventBusHelper.post(new MyIronsEventDone(BaseStatusEvent.FAILED, MyIronsEventDoing.RELOAD));
+                EventBusHelper.post(new MyIronsEventDone(BaseListStatusEvent.FAILED, MyIronsEventDoing.RELOAD));
                 super.onFailed(baseResponse, e);
             }
         });
     }
 
     public void lodeMoreMyIronBuysForDone() {
-        EventBusHelper.post(new MyIronsEventDone(BaseStatusEvent.STARTED, MyIronsEventDoing.LOAD_MORE));
+        EventBusHelper.post(new MyIronsEventDone(BaseListStatusEvent.STARTED, MyIronsEventDoing.LOAD_MORE));
         HttpHelper.wrap(HttpHelper.create(BuyService.class).myIronBuy(myIronsResponseForDone.currentPage + 1, myIronsResponseForDone.pageCount, BuyStatus.DONE.ordinal())).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse data) {
                 MyIronsResponse myIronsResponse = JSONHelper.parse(data.data.toString(), MyIronsResponse.class);
                 myIronsResponseForDone.currentPage = myIronsResponse.currentPage;
                 myIronsResponseForDone.pageCount = myIronsResponse.pageCount;
-                myIronsResponseForDone.buys.addAll(myIronsResponse.buys);
+                if (myIronsResponse.buys != null) {
+                    myIronsResponseForDone.buys.addAll(myIronsResponse.buys);
+                }
 
                 // cache
                 SPHelper.buy().save(BUY_DOING_NUMBERS, myIronsResponse.maxCount);
 
-                EventBusHelper.post(new MyIronsEventDone(BaseStatusEvent.SUCCESS, MyIronsEventDoing.LOAD_MORE));
+                EventBusHelper.post(new MyIronsEventDone(BaseListStatusEvent.SUCCESS, MyIronsEventDoing.LOAD_MORE));
             }
 
             @Override
             public void onFailed(BaseResponse baseResponse, Throwable e) {
                 super.onFailed(baseResponse, e);
-                EventBusHelper.post(new MyIronsEventDone(BaseStatusEvent.FAILED, MyIronsEventDoing.LOAD_MORE));
+                EventBusHelper.post(new MyIronsEventDone(BaseListStatusEvent.FAILED, MyIronsEventDoing.LOAD_MORE));
             }
         });
     }
 
     public void reloadMyIronBuysForOutForDate() {
         readFromDB(BuyStatus.OUT_OF_DATE);
-        EventBusHelper.post(new MyIronsEventOutOfDate(BaseStatusEvent.STARTED, MyIronsEventDoing.RELOAD));
+        EventBusHelper.post(new MyIronsEventOutOfDate(BaseListStatusEvent.STARTED, MyIronsEventDoing.RELOAD));
         myIronsResponseForOutOfDate.currentPage = 0;
 
         HttpHelper.wrap(HttpHelper.create(BuyService.class).myIronBuy(myIronsResponseForOutOfDate.currentPage, myIronsResponseForOutOfDate.pageCount, BuyStatus.OUT_OF_DATE.ordinal())).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
@@ -184,37 +202,84 @@ public class BuyManager {
                 SPHelper.buy().save(BUY_OUT_OF_DATE_NUMBERS, myIronsResponse.maxCount);
 
                 // event
-                EventBusHelper.post(new MyIronsEventOutOfDate(BaseStatusEvent.SUCCESS, MyIronsEventDoing.RELOAD));
+                EventBusHelper.post(new MyIronsEventOutOfDate(BaseListStatusEvent.SUCCESS, MyIronsEventDoing.RELOAD));
             }
 
             @Override
             public void onFailed(BaseResponse baseResponse, Throwable e) {
-                EventBusHelper.post(new MyIronsEventOutOfDate(BaseStatusEvent.FAILED, MyIronsEventDoing.RELOAD));
+                EventBusHelper.post(new MyIronsEventOutOfDate(BaseListStatusEvent.FAILED, MyIronsEventDoing.RELOAD));
                 super.onFailed(baseResponse, e);
             }
         });
     }
 
     public void lodeMoreMyIronBuysForOutForDate() {
-        EventBusHelper.post(new MyIronsEventOutOfDate(BaseStatusEvent.STARTED, MyIronsEventDoing.LOAD_MORE));
+        EventBusHelper.post(new MyIronsEventOutOfDate(BaseListStatusEvent.STARTED, MyIronsEventDoing.LOAD_MORE));
         HttpHelper.wrap(HttpHelper.create(BuyService.class).myIronBuy(myIronsResponseForOutOfDate.currentPage + 1, myIronsResponseForOutOfDate.pageCount, BuyStatus.OUT_OF_DATE.ordinal())).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse data) {
                 MyIronsResponse myIronsResponse = JSONHelper.parse(data.data.toString(), MyIronsResponse.class);
                 myIronsResponseForOutOfDate.currentPage = myIronsResponse.currentPage;
                 myIronsResponseForOutOfDate.pageCount = myIronsResponse.pageCount;
-                myIronsResponseForOutOfDate.buys.addAll(myIronsResponse.buys);
+                if (myIronsResponse.buys != null) {
+                    myIronsResponseForOutOfDate.buys.addAll(myIronsResponse.buys);
+                }
 
                 // cache
                 SPHelper.buy().save(BUY_OUT_OF_DATE, myIronsResponse.maxCount);
 
-                EventBusHelper.post(new MyIronsEventOutOfDate(BaseStatusEvent.SUCCESS, MyIronsEventDoing.LOAD_MORE));
+                EventBusHelper.post(new MyIronsEventOutOfDate(BaseListStatusEvent.SUCCESS, MyIronsEventDoing.LOAD_MORE));
             }
 
             @Override
             public void onFailed(BaseResponse baseResponse, Throwable e) {
                 super.onFailed(baseResponse, e);
-                EventBusHelper.post(new MyIronsEventOutOfDate(BaseStatusEvent.FAILED, MyIronsEventDoing.LOAD_MORE));
+                EventBusHelper.post(new MyIronsEventOutOfDate(BaseListStatusEvent.FAILED, MyIronsEventDoing.LOAD_MORE));
+            }
+        });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onBuyPushEvent(BuyPushData pushData) {
+        myIronsResponseForDoing.newSupplyNums = pushData.newSupplyNums;
+        if (myIronsResponseForDoing.buys != null) {
+            for(IronBuyBrief ironBuyBrief : myIronsResponseForDoing.buys) {
+                if (StringUtils.equals(ironBuyBrief.id, pushData.ironBuyBrief.id)) {
+                    ironBuyBrief.newSupplyNum = pushData.ironBuyBrief.newSupplyNum;
+                    ironBuyBrief.supplyCount = pushData.ironBuyBrief.supplyCount;
+                }
+            }
+        }
+        EventBusHelper.post(new MyIronsEventDoing(BaseListStatusEvent.SUCCESS, MyIronsEventDoing.LOAD_MORE));
+    }
+
+    public void loadBuyNewNums() {
+        HttpHelper.wrap(HttpHelper.create(BuyService.class).buyNewNums()).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
+            @Override
+            public void onSuccess(BaseResponse data) {
+                MyIronBuysNewNums newSupplyNums = JSON.parseObject(data.data.toString(), MyIronBuysNewNums.class);
+                myIronsResponseForDoing.newSupplyNums = newSupplyNums.newSupplyNums;
+                EventBusHelper.post(new MyIronsEventDoing(BaseListStatusEvent.SUCCESS, MyIronsEventDoing.LOAD_MORE));
+            }
+
+            @Override
+            public void onFailed(BaseResponse baseResponse, Throwable e) {
+            }
+        });
+    }
+
+    public void loadIronBuyDetail(String ironId) {
+        EventBusHelper.post(new MyIronDetailEvent(BaseStatusEvent.STARTED, null));
+        HttpHelper.wrap(HttpHelper.create(BuyService.class).myIronDetail(ironId)).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
+            @Override
+            public void onSuccess(BaseResponse data) {
+                MyIronBuyDetail myIronBuyDetail = JSON.parseObject(data.data.toString(), MyIronBuyDetail.class);
+                EventBusHelper.post(new MyIronDetailEvent(BaseStatusEvent.SUCCESS, myIronBuyDetail));
+            }
+
+            @Override
+            public void onFailed(BaseResponse baseResponse, Throwable e) {
+                EventBusHelper.post(new MyIronDetailEvent(BaseStatusEvent.FAILED, null));
             }
         });
     }
@@ -222,6 +287,12 @@ public class BuyManager {
     public interface BuyService {
         @GET("iron/myBuy")
         Observable<BaseResponse> myIronBuy(@Query(("currentPage")) int currentPage, @Query("pageCount") int pageCount, @Query("status") int status);
+
+        @GET("iron/newBuyNums")
+        Observable<BaseResponse> buyNewNums();
+
+        @GET("iron/myBuyDetail")
+        Observable<BaseResponse> myIronDetail(@Query(("ironId")) String ironId);
     }
 
     public void getBuyNumbers() {
