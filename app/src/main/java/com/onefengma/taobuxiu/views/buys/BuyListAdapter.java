@@ -12,6 +12,7 @@ import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
 import com.onefengma.taobuxiu.utils.DateUtils;
 import com.onefengma.taobuxiu.utils.StringUtils;
+import com.onefengma.taobuxiu.views.core.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +59,7 @@ public class BuyListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.buy_item, parent, false);
@@ -68,7 +69,7 @@ public class BuyListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        IronBuyBrief ironBuyBrief = getItem(position);
+        final IronBuyBrief ironBuyBrief = getItem(position);
 
         switch (buyStatus) {
             case DOING:
@@ -95,6 +96,13 @@ public class BuyListAdapter extends BaseAdapter {
         viewHolder.deadLine.setText(StringUtils.getString(R.string.buy_item_time_limit, DateUtils.getDateStr(ironBuyBrief.pushTime + ironBuyBrief.timeLimit)));
 
         viewHolder.supplyCount.setText(ironBuyBrief.supplyCount + "");
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BuyDetailActivity.start((BaseActivity) parent.getContext(), ironBuyBrief.id);
+            }
+        });
 
         return convertView;
     }

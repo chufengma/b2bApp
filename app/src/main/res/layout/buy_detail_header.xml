@@ -22,6 +22,7 @@
         <TextView
             android:layout_gravity="right|center_vertical"
             android:text="2016-08-20 09：40"
+            android:id="@+id/time_limit"
             android:padding="10dip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -79,6 +80,7 @@
             android:textSize="12dip" />
 
         <ImageView
+            android:id="@+id/edit"
             android:src="@drawable/ic_edit_icon"
             android:layout_alignBottom="@id/salesman"
             android:layout_alignParentRight="true"

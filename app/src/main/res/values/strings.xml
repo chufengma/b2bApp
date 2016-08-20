@@ -34,6 +34,11 @@
     <string name="buy_item_message">备注：%1$s</string>
     <string name="buy_item_time_limit">求购期限：%1$s</string>
 
+    <string name="buy_detail_salesman">跟进专员：%1$s</string>
+    <string name="buy_detail_buy_num">求购单号：%1$s</string>
+    <string name="buy_detail_supply_count">%1$s家已报价</string>
+    <string name="buy_detail_info">卖家中标次数：%1$s次  联系人：%2$s</string>
+
     <!-- XListView -->
     <string name="xlist_view_hint_loading">正在加载</string>
     <string name="xlist_view_footer_hint_normal">点击查看更多</string>

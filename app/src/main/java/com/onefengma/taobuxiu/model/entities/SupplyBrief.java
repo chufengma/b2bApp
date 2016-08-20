@@ -15,4 +15,5 @@ public class SupplyBrief {
     public long offerTime;
     public boolean isWinner;
     public String mobile;
+    public String contact;
 }

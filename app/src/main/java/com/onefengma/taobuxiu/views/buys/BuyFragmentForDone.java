@@ -64,7 +64,7 @@ public class BuyFragmentForDone extends BaseFragment {
         recyclerView.setOnRefreshListener(new XListView.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                BuyManager.instance().reloadMyIronBuysForDone();
+                BuyManager.instance().reloadAllStatusBuys();
             }
         });
 

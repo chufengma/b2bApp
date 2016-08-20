@@ -63,7 +63,7 @@ public class BuyFragmentForOutOfDate extends BaseFragment {
         recyclerView.setOnRefreshListener(new XListView.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                BuyManager.instance().reloadMyIronBuysForOutForDate();
+                BuyManager.instance().reloadAllStatusBuys();
             }
         });
 

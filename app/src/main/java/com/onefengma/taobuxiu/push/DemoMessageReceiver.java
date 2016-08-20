@@ -1,13 +1,17 @@
 package com.onefengma.taobuxiu.push;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.onefengma.taobuxiu.MainApplication;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.manager.helpers.NotificationHelper;
 import com.onefengma.taobuxiu.model.push.BasePushData;
 import com.onefengma.taobuxiu.model.push.BuyPushData;
 import com.onefengma.taobuxiu.utils.StringUtils;
+import com.onefengma.taobuxiu.views.MainActivity;
 import com.orhanobut.logger.Logger;
 import com.xiaomi.mipush.sdk.ErrorCode;
 import com.xiaomi.mipush.sdk.MiPushClient;
@@ -46,7 +50,12 @@ public class DemoMessageReceiver extends PushMessageReceiver {
         String type = message.getExtra().get(BasePushData.PUSH_TYPE_KEY);
         Logger.d(message.getContent());
         if (StringUtils.equals(type, BasePushData.PUSH_TYPE_BUY)) {
-            EventBusHelper.post(JSON.parseObject(message.getContent(), BuyPushData.class));
+            if (MainApplication.getContext().isAppOnForeground()) {
+                EventBusHelper.post(JSON.parseObject(message.getContent(), BuyPushData.class));
+            } else {
+                Intent intent = MainActivity.getIntent(MainApplication.getContext());
+                NotificationHelper.showNotification(message.getTitle(), message.getDescription(), intent);
+            }
         }
     }
 

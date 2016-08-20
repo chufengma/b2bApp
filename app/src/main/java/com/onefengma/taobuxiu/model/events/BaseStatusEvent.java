@@ -15,10 +15,10 @@ public class BaseStatusEvent {
     }
 
     public boolean isSuccess() {
-        return status == STARTED;
+        return status == SUCCESS;
     }
 
     public boolean isFailed() {
-        return status == STARTED;
+        return status == FAILED;
     }
 }

@@ -56,6 +56,12 @@ public class BuyFragmentForDoing extends BaseFragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        recyclerView.fakePullRefresh();
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -65,7 +71,7 @@ public class BuyFragmentForDoing extends BaseFragment {
         recyclerView.setOnRefreshListener(new XListView.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                BuyManager.instance().reloadMyIronBuysForDoing();
+                BuyManager.instance().reloadAllStatusBuys();
             }
         });
 
@@ -76,20 +82,13 @@ public class BuyFragmentForDoing extends BaseFragment {
             }
         });
 
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                recyclerView.fakePullRefresh();
-                recyclerView.enableLoadMore(true);
-            }
-        }, 200);
+        recyclerView.enableLoadMore(true);
 
         recyclerView.setEmptyView(emptyView);
 
         recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                BuyDetailActivity.start((BaseActivity) getActivity());
             }
         });
     }

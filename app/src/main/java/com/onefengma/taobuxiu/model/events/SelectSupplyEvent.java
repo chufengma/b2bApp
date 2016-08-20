@@ -6,12 +6,9 @@ import com.onefengma.taobuxiu.model.entities.MyIronBuyDetail;
  * @author yfchu
  * @date 2016/8/12
  */
-public class MyIronDetailEvent extends BaseStatusEvent {
+public class SelectSupplyEvent extends BaseStatusEvent {
 
-    public MyIronBuyDetail detail;
-
-    public MyIronDetailEvent(int status, MyIronBuyDetail detail) {
+    public SelectSupplyEvent(int status) {
         this.status = status;
-        this.detail = detail;
     }
 }

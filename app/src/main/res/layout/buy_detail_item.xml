@@ -46,7 +46,7 @@
             android:textSize="12dip" />
 
         <TextView
-            android:id="@+id/salesman"
+            android:id="@+id/info"
             android:layout_below="@id/message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,11 +66,26 @@
         android:paddingRight="10dip"
         android:layout_height="match_parent">
 
+
+        <TextView
+            android:id="@+id/winner"
+            android:text="已中标"
+            android:textColor="@color/main_green"
+            android:clickable="true"
+            android:padding="4dip"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/choose_supply"
             android:text="要他供货"
             android:textColor="@color/white"
-            android:padding="4dip"
+            android:clickable="true"
+            android:paddingLeft="8dip"
+            android:paddingRight="8dip"
+            android:paddingTop="2dip"
+            android:paddingBottom="2dip"
             android:background="@drawable/get_verify_code_bg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -79,8 +94,12 @@
             android:id="@+id/contact"
             android:text="联系对方"
             android:layout_marginTop="4dip"
+            android:clickable="true"
             android:textColor="@color/white"
-            android:padding="4dip"
+            android:paddingLeft="8dip"
+            android:paddingRight="8dip"
+            android:paddingTop="2dip"
+            android:paddingBottom="2dip"
             android:background="@drawable/get_verify_code_bg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

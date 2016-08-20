@@ -11,11 +11,13 @@ import com.onefengma.taobuxiu.model.entities.MyIronBuysNewNums;
 import com.onefengma.taobuxiu.model.entities.MyIronsResponse;
 import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
+import com.onefengma.taobuxiu.model.events.DeleteIronBuyEvent;
 import com.onefengma.taobuxiu.model.events.GetBuyNumbersEvent;
 import com.onefengma.taobuxiu.model.events.MyIronDetailEvent;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDone;
 import com.onefengma.taobuxiu.model.events.MyIronsEventOutOfDate;
+import com.onefengma.taobuxiu.model.events.SelectSupplyEvent;
 import com.onefengma.taobuxiu.model.push.BuyPushData;
 import com.onefengma.taobuxiu.network.HttpHelper;
 import com.onefengma.taobuxiu.network.HttpHelper.SimpleNetworkSubscriber;
@@ -25,7 +27,10 @@ import com.onefengma.taobuxiu.utils.StringUtils;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 import rx.Observer;
@@ -49,6 +54,8 @@ public class BuyManager {
     public MyIronsResponse myIronsResponseForDoing;
     public MyIronsResponse myIronsResponseForDone;
     public MyIronsResponse myIronsResponseForOutOfDate;
+
+    private boolean isBuyRefresing = false;
 
     public enum BuyStatus {
         DOING,
@@ -77,6 +84,15 @@ public class BuyManager {
             instance = new BuyManager();
         }
         return instance;
+    }
+
+    public void reloadAllStatusBuys() {
+        if (isBuyRefresing) {
+            return;
+        }
+        reloadMyIronBuysForDoing();
+        reloadMyIronBuysForDone();
+        reloadMyIronBuysForOutForDate();
     }
 
     public void reloadMyIronBuysForDoing() {
@@ -203,11 +219,13 @@ public class BuyManager {
 
                 // event
                 EventBusHelper.post(new MyIronsEventOutOfDate(BaseListStatusEvent.SUCCESS, MyIronsEventDoing.RELOAD));
+                isBuyRefresing = false;
             }
 
             @Override
             public void onFailed(BaseResponse baseResponse, Throwable e) {
                 EventBusHelper.post(new MyIronsEventOutOfDate(BaseListStatusEvent.FAILED, MyIronsEventDoing.RELOAD));
+                isBuyRefresing = false;
                 super.onFailed(baseResponse, e);
             }
         });
@@ -284,6 +302,36 @@ public class BuyManager {
         });
     }
 
+    public void selectSupply(String ironId, String supplyId) {
+        EventBusHelper.post(new SelectSupplyEvent(BaseStatusEvent.STARTED));
+        HttpHelper.wrap(HttpHelper.create(BuyService.class).selectSupply(supplyId, ironId)).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
+            @Override
+            public void onSuccess(BaseResponse data) {
+                EventBusHelper.post(new SelectSupplyEvent(BaseStatusEvent.SUCCESS));
+            }
+
+            @Override
+            public void onFailed(BaseResponse baseResponse, Throwable e) {
+                EventBusHelper.post(new SelectSupplyEvent(BaseStatusEvent.FAILED));
+            }
+        });
+    }
+
+    public void deleteIronBuy(String ironId) {
+        EventBusHelper.post(new DeleteIronBuyEvent(BaseStatusEvent.STARTED));
+        HttpHelper.wrap(HttpHelper.create(BuyService.class).deleteIronBuy(ironId)).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
+            @Override
+            public void onSuccess(BaseResponse data) {
+                EventBusHelper.post(new DeleteIronBuyEvent(BaseStatusEvent.SUCCESS));
+            }
+
+            @Override
+            public void onFailed(BaseResponse baseResponse, Throwable e) {
+                EventBusHelper.post(new DeleteIronBuyEvent(BaseStatusEvent.FAILED));
+            }
+        });
+    }
+
     public interface BuyService {
         @GET("iron/myBuy")
         Observable<BaseResponse> myIronBuy(@Query(("currentPage")) int currentPage, @Query("pageCount") int pageCount, @Query("status") int status);
@@ -293,6 +341,14 @@ public class BuyManager {
 
         @GET("iron/myBuyDetail")
         Observable<BaseResponse> myIronDetail(@Query(("ironId")) String ironId);
+
+        @FormUrlEncoded
+        @POST("iron/selectSupply")
+        Observable<BaseResponse> selectSupply(@Field(("supplyId")) String supplyId, @Field(("ironBuyId")) String ironBuyId);
+
+        @FormUrlEncoded
+        @POST("iron/deleteIronBuy")
+        Observable<BaseResponse> deleteIronBuy(@Field(("ironId")) String ironId);
     }
 
     public void getBuyNumbers() {

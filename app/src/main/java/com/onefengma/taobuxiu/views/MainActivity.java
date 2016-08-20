@@ -43,12 +43,16 @@ public class MainActivity extends BaseActivity {
     private TabIndicatorView mineIndicatorView;
     private TabIndicatorView qtIndicatorView;
 
-    public static void start(Context activity) {
+    public static Intent getIntent(Context activity) {
         Intent intent = new Intent(activity, MainActivity.class);
         if (!(activity instanceof BaseActivity)) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
-        activity.startActivity(intent);
+        return intent;
+    }
+
+    public static void start(Context activity) {
+        activity.startActivity(getIntent(activity));
     }
 
     @Override
