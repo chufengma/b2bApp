@@ -8,7 +8,12 @@ import com.onefengma.taobuxiu.model.entities.MyIronBuyDetail;
  */
 public class SelectSupplyEvent extends BaseStatusEvent {
 
-    public SelectSupplyEvent(int status) {
+    public float totalMoney;
+    public String ironId;
+
+    public SelectSupplyEvent(int status, float totalMoney, String ironId) {
         this.status = status;
+        this.totalMoney = totalMoney;
+        this.ironId = ironId;
     }
 }

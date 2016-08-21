@@ -20,5 +20,7 @@ public class Constant {
 
         public static final String BUY_OUT_OF_DATE = "buy_out_of_date";
         public static final String BUY_OUT_OF_DATE_NUMBERS = "buy_out_of_date_numbers";
+
+        public static final String QT_LIST = "qt_list";
     }
 }

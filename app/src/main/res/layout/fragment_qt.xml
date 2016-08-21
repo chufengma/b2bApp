@@ -1,12 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/main_content_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.onefengma.taobuxiu.views.widgets.ToolBar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        app:tool_bar_title="我的质检"
+        app:tool_bar_left="@drawable/ic_buy_sum"
+        app:tool_bar_right="@drawable/ic_buy_add"
+        app:tool_bar_icon_size="30dip"
+        android:layout_height="56dip" />
+
+    <com.onefengma.taobuxiu.views.widgets.listview.XListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:divider="@null"
+        android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_centerInParent="true"
-        android:text="找质检 tab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:text="暂无数据, 点击刷新"
+        android:id="@+id/emptyView"
+        android:clickable="true"
+        android:gravity="center"
+        android:textColor="@color/gray"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-</RelativeLayout>
+</LinearLayout>

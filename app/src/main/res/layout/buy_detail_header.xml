@@ -117,6 +117,7 @@
             android:layout_height="wrap_content" />
 
         <ImageView
+            android:id="@+id/supply_count_icon"
             android:layout_toLeftOf="@id/supply_count"
             android:src="@drawable/ic_buy_detail_nums"
             android:layout_centerVertical="true"

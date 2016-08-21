@@ -12,12 +12,16 @@ import com.onefengma.taobuxiu.MainApplication;
  */
 public class DialogUtils {
 
-    public static void showAlertDialog(Context context, String title, DialogInterface.OnClickListener confirmListener) {
+    public static void showAlertDialog(Context context, String message, DialogInterface.OnClickListener confirmListener) {
+        showAlertDialog(context, "提示", message, confirmListener);
+    }
+
+    public static void showAlertDialog(Context context, String title, String message, DialogInterface.OnClickListener confirmListener) {
         AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setTitle(title)
+                .setMessage(message)
                 .setNegativeButton("取消", null)
                 .setPositiveButton("确定", confirmListener).create();
         alertDialog.show();
     }
-
 }

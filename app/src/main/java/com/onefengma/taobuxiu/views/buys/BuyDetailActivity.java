@@ -19,9 +19,11 @@ import com.onefengma.taobuxiu.model.entities.SalesMan;
 import com.onefengma.taobuxiu.model.entities.SupplyBrief;
 import com.onefengma.taobuxiu.model.events.DeleteIronBuyEvent;
 import com.onefengma.taobuxiu.model.events.MyIronDetailEvent;
+import com.onefengma.taobuxiu.model.events.QtIronBuyEvent;
 import com.onefengma.taobuxiu.model.events.SelectSupplyEvent;
 import com.onefengma.taobuxiu.utils.DateUtils;
 import com.onefengma.taobuxiu.utils.DialogUtils;
+import com.onefengma.taobuxiu.utils.NumbersUtils;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
@@ -30,6 +32,10 @@ import com.onefengma.taobuxiu.views.widgets.listview.XListView;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -37,11 +43,15 @@ import butterknife.OnClick;
 public class BuyDetailActivity extends BaseActivity {
 
     private static final String IRON_ID = "ironId";
+    private static final String ONLY_SHOW_WINNER = "only_show_winner";
 
     @BindView(R.id.list_view)
     XListView listView;
+    @BindView(R.id.right_image)
+    View rightImage;
 
     private String ironId;
+    private boolean isOnlyShowWinner;
     private ProgressDialog progressDialog;
     private BuyDetailSupplyListAdapter buyDetailSupplyListAdapter;
     private HeaderViewHolder headerViewHolder;
@@ -49,6 +59,13 @@ public class BuyDetailActivity extends BaseActivity {
     public static void start(BaseActivity activity, String ironId) {
         Intent intent = new Intent(activity, BuyDetailActivity.class);
         intent.putExtra(IRON_ID, ironId);
+        activity.startActivity(intent);
+    }
+
+    public static void start(BaseActivity activity, String ironId, boolean onlyShowWinner) {
+        Intent intent = new Intent(activity, BuyDetailActivity.class);
+        intent.putExtra(IRON_ID, ironId);
+        intent.putExtra(ONLY_SHOW_WINNER, onlyShowWinner);
         activity.startActivity(intent);
     }
 
@@ -68,6 +85,7 @@ public class BuyDetailActivity extends BaseActivity {
         listView.setAdapter(buyDetailSupplyListAdapter);
 
         ironId = getIntent().getStringExtra(IRON_ID);
+        isOnlyShowWinner = getIntent().getBooleanExtra(ONLY_SHOW_WINNER, false);
 
         listView.setOnRefreshListener(new XListView.OnRefreshListener() {
             @Override
@@ -75,6 +93,8 @@ public class BuyDetailActivity extends BaseActivity {
                 BuyManager.instance().loadIronBuyDetail(ironId);
             }
         });
+
+        rightImage.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.right_image)
@@ -94,7 +114,7 @@ public class BuyDetailActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void onSelectSupplyEvent(SelectSupplyEvent event) {
+    public void onSelectSupplyEvent(final SelectSupplyEvent event) {
         if (event.isStarted()) {
             progressDialog.show("提交中...");
             return;
@@ -104,6 +124,28 @@ public class BuyDetailActivity extends BaseActivity {
         if (event.isSuccess()) {
             ToastUtils.showSuccessTasty("选标成功");
             listView.fakePullRefresh();
+
+            if (event.totalMoney >= 5000) {
+                DialogUtils.showAlertDialog(this, "是否发送质检请求？", "您已达到质检服务门槛，点『确认』后，您的申请将发送至专员客户端。",  new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        BuyManager.instance().qtIronBuy(event.ironId);
+                    }
+                });
+            }
+        }
+    }
+
+    @Subscribe
+    public void onQtIronBuyEvent(QtIronBuyEvent event) {
+        if (event.isStarted()) {
+            progressDialog.show("提交中...");
+            return;
+        } else {
+            progressDialog.dismiss();
+        }
+        if (event.isSuccess()) {
+            ToastUtils.showSuccessTasty("申请成功！");
         }
     }
 
@@ -136,6 +178,15 @@ public class BuyDetailActivity extends BaseActivity {
             return;
         }
         if (event.isSuccess()) {
+            if (isOnlyShowWinner && event.detail.supplies != null) {
+                List<SupplyBrief> supplies = event.detail.supplies;
+                for(SupplyBrief supplyBrief : supplies) {
+                    if (supplyBrief.isWinner) {
+                        event.detail.supplies = Arrays.asList(supplyBrief);
+                        break;
+                    }
+                }
+            }
             setUpViews(event.detail);
         }
     }
@@ -143,6 +194,7 @@ public class BuyDetailActivity extends BaseActivity {
     private void setUpViews(MyIronBuyDetail detail) {
         headerViewHolder.display(detail);
         buyDetailSupplyListAdapter.setDetail(detail);
+        rightImage.setVisibility(detail.buy.status == BuyManager.BuyStatus.DOING.ordinal() ? View.VISIBLE: View.GONE);
     }
 
     public static class BuyDetailSupplyListAdapter extends BaseAdapter {
@@ -217,10 +269,14 @@ public class BuyDetailActivity extends BaseActivity {
                 chooseSupply.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DialogUtils.showAlertDialog(winnerView.getContext(), "确定选「" + supplyBrief.companyName + "」中标？", new DialogInterface.OnClickListener() {
+                        String message = supplyBrief.companyName + " "
+                                + supplyBrief.supplyPrice + "/"
+                                + supplyBrief.unit + " ";
+                        final float totalMoney = NumbersUtils.round(ironBuyBrief.numbers.floatValue() * supplyBrief.supplyPrice, 2);
+                        DialogUtils.showAlertDialog(winnerView.getContext(), "确定选「" + message + "」中标？", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                BuyManager.instance().selectSupply(ironBuyBrief.id, supplyBrief.sellerId);
+                                BuyManager.instance().selectSupply(ironBuyBrief.id, supplyBrief.sellerId, totalMoney);
                             }
                         });
                     }
@@ -241,7 +297,7 @@ public class BuyDetailActivity extends BaseActivity {
         }
     }
 
-    public static class HeaderViewHolder {
+    public class HeaderViewHolder {
 
         @BindView(R.id.title)
         TextView title;
@@ -259,6 +315,8 @@ public class BuyDetailActivity extends BaseActivity {
         TextView timeLimit;
         @BindView(R.id.edit)
         View editView;
+        @BindView(R.id.supply_count_icon)
+        View supplyCountIcon;
 
         HeaderViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -286,6 +344,8 @@ public class BuyDetailActivity extends BaseActivity {
             } else {
                 salesman.setText(StringUtils.getString(R.string.buy_detail_salesman, "暂无"));
             }
+            supplyCount.setVisibility(BuyDetailActivity.this.isOnlyShowWinner ? View.GONE : View.VISIBLE);
+            supplyCountIcon.setVisibility(BuyDetailActivity.this.isOnlyShowWinner ? View.GONE : View.VISIBLE);
         }
     }
 

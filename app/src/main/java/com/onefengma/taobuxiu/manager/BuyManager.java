@@ -17,6 +17,7 @@ import com.onefengma.taobuxiu.model.events.MyIronDetailEvent;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDone;
 import com.onefengma.taobuxiu.model.events.MyIronsEventOutOfDate;
+import com.onefengma.taobuxiu.model.events.QtIronBuyEvent;
 import com.onefengma.taobuxiu.model.events.SelectSupplyEvent;
 import com.onefengma.taobuxiu.model.push.BuyPushData;
 import com.onefengma.taobuxiu.network.HttpHelper;
@@ -302,17 +303,18 @@ public class BuyManager {
         });
     }
 
-    public void selectSupply(String ironId, String supplyId) {
-        EventBusHelper.post(new SelectSupplyEvent(BaseStatusEvent.STARTED));
+    public void selectSupply(final String ironId, String supplyId, final float totalMoney) {
+        EventBusHelper.post(new SelectSupplyEvent(BaseStatusEvent.STARTED, totalMoney, ironId));
         HttpHelper.wrap(HttpHelper.create(BuyService.class).selectSupply(supplyId, ironId)).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse data) {
-                EventBusHelper.post(new SelectSupplyEvent(BaseStatusEvent.SUCCESS));
+                EventBusHelper.post(new SelectSupplyEvent(BaseStatusEvent.SUCCESS, totalMoney, ironId));
             }
 
             @Override
             public void onFailed(BaseResponse baseResponse, Throwable e) {
-                EventBusHelper.post(new SelectSupplyEvent(BaseStatusEvent.FAILED));
+                super.onFailed(baseResponse, e);
+                EventBusHelper.post(new SelectSupplyEvent(BaseStatusEvent.FAILED, totalMoney, ironId));
             }
         });
     }
@@ -327,7 +329,24 @@ public class BuyManager {
 
             @Override
             public void onFailed(BaseResponse baseResponse, Throwable e) {
+                super.onFailed(baseResponse, e);
                 EventBusHelper.post(new DeleteIronBuyEvent(BaseStatusEvent.FAILED));
+            }
+        });
+    }
+
+    public void qtIronBuy(String ironId) {
+        EventBusHelper.post(new QtIronBuyEvent(BaseStatusEvent.STARTED));
+        HttpHelper.wrap(HttpHelper.create(BuyService.class).qtIronBuy(ironId)).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
+            @Override
+            public void onSuccess(BaseResponse data) {
+                EventBusHelper.post(new QtIronBuyEvent(BaseStatusEvent.SUCCESS));
+            }
+
+            @Override
+            public void onFailed(BaseResponse baseResponse, Throwable e) {
+                super.onFailed(baseResponse, e);
+                EventBusHelper.post(new QtIronBuyEvent(BaseStatusEvent.FAILED));
             }
         });
     }
@@ -349,6 +368,10 @@ public class BuyManager {
         @FormUrlEncoded
         @POST("iron/deleteIronBuy")
         Observable<BaseResponse> deleteIronBuy(@Field(("ironId")) String ironId);
+
+        @FormUrlEncoded
+        @POST("iron/qt")
+        Observable<BaseResponse> qtIronBuy(@Field(("ironId")) String ironId);
     }
 
     public void getBuyNumbers() {
