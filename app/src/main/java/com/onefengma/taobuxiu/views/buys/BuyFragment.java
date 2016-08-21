@@ -19,6 +19,7 @@ import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDone;
 import com.onefengma.taobuxiu.model.events.MyIronsEventOutOfDate;
 import com.onefengma.taobuxiu.model.events.OnBuyTabEvent;
+import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
 
@@ -27,6 +28,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by chufengma on 16/8/7.
@@ -54,6 +56,11 @@ public class BuyFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_buy, container, false);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    @OnClick(R.id.right_image)
+    public void clickOnRightImage() {
+        PushNewBuyActivity.start((BaseActivity) getActivity());
     }
 
     @Override

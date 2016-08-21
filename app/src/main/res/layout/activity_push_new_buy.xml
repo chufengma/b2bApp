@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/main_content_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.onefengma.taobuxiu.views.widgets.ToolBar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        app:tool_bar_title="我要求购"
+        app:tool_bar_right="@drawable/ic_buy_add"
+        app:tool_bar_icon_size="30dip"
+        android:layout_height="56dip" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/list"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/goto_add"
+                android:layout_alignParentBottom="true"
+                android:text="添加求购"
+                android:gravity="center"
+                android:textSize="16dip"
+                android:paddingTop="8dip"
+                android:layout_marginTop="20dip"
+                android:clickable="true"
+                android:paddingBottom="8dip"
+                android:padding="8dip"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
+                android:background="@drawable/get_verify_code_bg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</LinearLayout>
