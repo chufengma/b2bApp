@@ -11,6 +11,9 @@ import com.onefengma.taobuxiu.R;
  */
 public class BaseFragment extends Fragment {
 
+    private View.OnClickListener leftViewListener;
+    private View.OnClickListener rightViewListener;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -29,10 +32,18 @@ public class BaseFragment extends Fragment {
             leftView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getActivity().onBackPressed();
+                    if (leftViewListener != null) {
+                        leftViewListener.onClick(v);
+                    } else {
+                        getActivity().onBackPressed();
+                    }
                 }
             });
         }
+    }
+
+    public void setLeftViewListener(View.OnClickListener leftViewListener) {
+        this.leftViewListener = leftViewListener;
     }
 
     private void applyToolbarShadow(View view) {

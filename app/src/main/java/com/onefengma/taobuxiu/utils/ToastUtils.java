@@ -64,6 +64,10 @@ public class ToastUtils {
         TastyToast.makeText(MainApplication.getContext(), msg, Toast.LENGTH_SHORT, type);
     }
 
+    public static void showTasty(String msg, int type, int length) {
+        TastyToast.makeText(MainApplication.getContext(), msg, length, type);
+    }
+
     public static void showErrorTasty(String msg) {
         TastyToast.makeText(MainApplication.getContext(), msg, Toast.LENGTH_SHORT, TastyToast.ERROR);
     }

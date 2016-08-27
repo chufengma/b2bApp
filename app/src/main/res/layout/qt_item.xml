@@ -9,42 +9,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="100dip"
-        android:background="@color/white"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/title_layout"
+            android:background="@color/light_green"
+            android:layout_width="match_parent"
+            android:padding="10dip"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="订单号：3sdfat45sdfdsf"
+                android:textColor="@color/black"
+                android:id="@+id/order_num"
+                android:layout_width="wrap_content"
+                android:textSize="16dip"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="质检中"
+                android:textColor="@color/black"
+                android:textSize="16dip"
+                android:layout_gravity="right"
+                android:id="@+id/qt_status"
+                android:gravity="center"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="100dip"
             android:orientation="vertical"
-            android:paddingBottom="10dip"
-            android:paddingLeft="10dip"
-            android:layout_toLeftOf="@+id/arrow"
+            android:paddingBottom="20dip"
+            android:layout_below="@id/title_layout"
+            android:paddingLeft="20dip"
             android:paddingTop="10dip">
-
-            <LinearLayout
-                android:id="@+id/title_layout"
-                android:background="@color/main_green"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:textColor="@color/white"
-                    android:text="订单号：3sdfat45sdfdsf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:text="质检中"
-                    android:textColor="@color/white"
-                    android:layout_gravity="right"
-                    android:gravity="right"
-                    android:layout_width="0dip"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/title"
@@ -85,14 +88,6 @@
                 android:textSize="12dip" />
 
         </LinearLayout>
-
-        <ImageView
-            android:id="@id/arrow"
-            android:layout_width="20dip"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/buy_item_arrow"
-            android:layout_height="40dip" />
 
     </RelativeLayout>
 

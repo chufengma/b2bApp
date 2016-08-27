@@ -34,7 +34,8 @@ import rx.Observable;
 public class AuthManager {
     
     private static AuthManager instance;
-    
+    private static UserProfile userProfile;
+
     public static AuthManager instance() {
         if (instance == null) {
             instance = new AuthManager();
@@ -46,6 +47,21 @@ public class AuthManager {
         Intent intent = new Intent(MainApplication.getContext().getCurrentActivity(), LoginMainActivity.class);
         MainApplication.getContext().finishActivities();
         MainApplication.getContext().getCurrentActivity().startActivity(intent);
+    }
+
+    public UserProfile getUserProfile() {
+        if (userProfile == null) {
+            userProfile = SPHelper.common().get(Constant.StorageKeys.USER_PROFILE, UserProfile.class);
+        }
+        return userProfile;
+    }
+
+    public String getUserSalesmanMobile() {
+        if (getUserProfile() == null || getUserProfile().salesMan == null) {
+            return null;
+        } else {
+            return getUserProfile().salesMan.tel;
+        }
     }
 
     public void doLogin(String mobile, String password) {

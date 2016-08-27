@@ -13,4 +13,14 @@ public class QtDetail {
     public long finishTime;
     public String userId;
     public IronBuyBrief ironBuyBrief;
+
+    public String getStatusStr() {
+        if (status == 0) {
+            return "等待质检";
+        } else if (status == 1) {
+            return "质检完成";
+        } else {
+            return "质检取消";
+        }
+    }
 }

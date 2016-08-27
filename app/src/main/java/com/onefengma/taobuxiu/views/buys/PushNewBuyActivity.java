@@ -11,6 +11,7 @@ import com.onefengma.taobuxiu.views.widgets.ToolBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by chufengma on 16/8/21.
@@ -27,6 +28,12 @@ public class PushNewBuyActivity extends BaseActivity {
     public static void start(BaseActivity activity) {
         Intent intent = new Intent(activity, PushNewBuyActivity.class);
         activity.startActivity(intent);
+    }
+
+
+    @OnClick(R.id.right_image)
+    public void clickOnRightImage() {
+        EditBuyActivity.start(this);
     }
 
     @Override

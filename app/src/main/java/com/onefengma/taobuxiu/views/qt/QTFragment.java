@@ -1,21 +1,28 @@
 package com.onefengma.taobuxiu.views.qt;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.onefengma.taobuxiu.R;
-import com.onefengma.taobuxiu.manager.BuyManager;
+import com.onefengma.taobuxiu.manager.AuthManager;
 import com.onefengma.taobuxiu.manager.QtManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.manager.helpers.SystemHelper;
 import com.onefengma.taobuxiu.model.events.OnMineTabEvent;
 import com.onefengma.taobuxiu.model.events.QtListEvent;
+import com.onefengma.taobuxiu.utils.DialogUtils;
+import com.onefengma.taobuxiu.utils.StringUtils;
+import com.onefengma.taobuxiu.utils.ToastUtils;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
 import com.onefengma.taobuxiu.views.widgets.listview.XListView;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -66,6 +73,22 @@ public class QTFragment extends BaseFragment {
                 QtManager.instance().loadMoreQtList();
             }
         });
+
+        setLeftViewListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (StringUtils.isEmpty(AuthManager.instance().getUserSalesmanMobile())) {
+                    ToastUtils.showTasty("您还没有绑定专员，请到淘不锈官网绑定专员", TastyToast.INFO, Toast.LENGTH_LONG);
+                    return;
+                }
+                DialogUtils.showAlertDialog(getActivity(), "拨打专员电话:" + AuthManager.instance().getUserSalesmanMobile(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SystemHelper.call(AuthManager.instance().getUserSalesmanMobile());
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -98,6 +121,11 @@ public class QTFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onTabEvent(OnMineTabEvent OnQtTabEvent) {
         System.out.println("-----------------OnQtTabEvent");
+    }
+
+    @OnClick(R.id.right_image)
+    public void onRightImageClick() {
+        SystemHelper.open("http://www.baidu.com");
     }
 
     @Override

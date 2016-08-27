@@ -1,8 +1,8 @@
 package com.onefengma.taobuxiu.utils;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 
 import com.onefengma.taobuxiu.MainApplication;
 
@@ -22,6 +22,14 @@ public class DialogUtils {
                 .setMessage(message)
                 .setNegativeButton("取消", null)
                 .setPositiveButton("确定", confirmListener).create();
+        alertDialog.show();
+    }
+
+    public static void showItemDialog(Context context, String title, String[] items, DialogInterface.OnClickListener onClickListener) {
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setItems(items, onClickListener).create();
+
         alertDialog.show();
     }
 }

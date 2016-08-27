@@ -11,4 +11,5 @@ public class UserProfile {
     public String mobile;
     public int becomeStatus = 0;
     public Seller seller;
+    public SalesMan salesMan;
 }

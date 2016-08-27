@@ -73,6 +73,9 @@ public class QtListAdapter extends BaseAdapter {
         viewHolder.message.setText(StringUtils.getString(R.string.buy_item_message, ironBuyBrief.message));
         viewHolder.deadLine.setText(StringUtils.getString(R.string.buy_item_time_limit, DateUtils.getDateStr(ironBuyBrief.pushTime + ironBuyBrief.timeLimit)));
 
+        viewHolder.orderNum.setText(StringUtils.getString(R.string.qt_item_id, ironBuyBrief.id));
+        viewHolder.qtStatus.setText(qtDetail.getStatusStr());
+
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +95,10 @@ public class QtListAdapter extends BaseAdapter {
         TextView message;
         @BindView(R.id.dead_line)
         TextView deadLine;
+        @BindView(R.id.order_num)
+        TextView orderNum;
+        @BindView(R.id.qt_status)
+        TextView qtStatus;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

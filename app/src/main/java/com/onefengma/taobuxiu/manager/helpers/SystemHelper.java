@@ -22,4 +22,12 @@ public class SystemHelper {
         MainApplication.getContext().startActivity(intent);
     }
 
+    public static void open(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri data = Uri.parse(url);
+        intent.setData(data);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        MainApplication.getContext().startActivity(intent);
+    }
+
 }

@@ -20,7 +20,10 @@
     <color name="login_btn_border">#35A790</color>
     <color name="login_btn_border_a">#8f35A790</color>
 
+    <color name="light_green">#F5FDE4</color>
+
     <color name="login_line">#8fcccccc</color>
+
 
     <!-- XListView -->
     <color name="xlist_view_hint_text">#313131</color>
