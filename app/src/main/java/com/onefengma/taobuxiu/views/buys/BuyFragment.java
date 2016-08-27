@@ -21,6 +21,7 @@ import com.onefengma.taobuxiu.model.events.MyIronsEventOutOfDate;
 import com.onefengma.taobuxiu.model.events.OnBuyTabEvent;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
+import com.onefengma.taobuxiu.views.widgets.TabItem;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -148,25 +149,4 @@ public class BuyFragment extends BaseFragment {
         EventBusHelper.unregister(this);
     }
 
-    public static class TabItem extends FrameLayout {
-
-        @BindView(R.id.icon)
-        public ImageView iconView;
-        @BindView(R.id.title)
-        public TextView titleView;
-
-        public TabItem(Context context) {
-            super(context);
-            View view = inflate(context, R.layout.buy_tab_item, this);
-            ButterKnife.bind(this, view);
-        }
-
-        public void setTitle(String title) {
-            titleView.setText(title);
-        }
-
-        public void setIcon(int resId) {
-            iconView.setImageResource(resId);
-        }
-    }
 }

@@ -116,6 +116,11 @@
             android:name=".views.buys.EditBuyActivity"
             android:label="@string/title_activity_edit_buy" >
         </activity>
+        <activity
+            android:name=".views.offers.OfferDetailActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
+            android:label="@string/title_activity_offer_detail" >
+        </activity>
     </application>
 
 </manifest>

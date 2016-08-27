@@ -48,4 +48,24 @@
 
     <string name="qt_item_id">订单号：%1$s</string>
 
+    <string name="offer_doing_tab">我来报价(%1$s)</string>
+    <string name="offer_waiting_tab">等待中(%1$s)</string>
+    <string name="offer_win_tab">已中标(%1$s)</string>
+    <string name="offer_lose_tab">未中标(%1$s)</string>
+    <string name="title_activity_offer_detail">OfferDetailActivity</string>
+
+    <string name="offer_detail_type">品类： %1$s</string>
+    <string name="offer_detail_surface">表面： %1$s</string>
+    <string name="offer_detail_material">材料： %1$s</string>
+    <string name="offer_detail_pro_place">产地： %1$s</string>
+    <string name="offer_detail_locate_place">收货城市： %1$s</string>
+    <string name="offer_detail_info">规格： %1$s</string>
+    <string name="offer_detail_tolerate">公差： %1$s</string>
+    <string name="offer_detail_message">备注： %1$s</string>
+
+    <string name="offer_detail_buy_times">求购总次数：%1$s</string>
+    <string name="offer_detail_buy_rate">求购成功率：%1$s</string>
+    <string name="offer_detail_my_price">报价：%1$s</string>
+    <string name="offer_detail_my_message">备注：%1$s</string>
+
 </resources>

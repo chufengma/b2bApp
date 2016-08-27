@@ -22,5 +22,18 @@ public class Constant {
         public static final String BUY_OUT_OF_DATE_NUMBERS = "buy_out_of_date_numbers";
 
         public static final String QT_LIST = "qt_list";
+
+
+        public static final String OFFER_DOING = "buy_doing";
+        public static final String OFFER_DOING_NUMBERS = "buy_doing_numbers";
+
+        public static final String OFFER_WAITING = "offer_done";
+        public static final String OFFER_WAITING_NUMBERS = "offer_done_numbers";
+
+        public static final String OFFER_WIN = "offer_win";
+        public static final String OFFER_WIN_NUMBERS = "offer_win_numbers";
+
+        public static final String OFFER_LOSE = "offer_lose";
+        public static final String OFFER_LOSE_NUMBERS = "offer_lose_numbers";
     }
 }

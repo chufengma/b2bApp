@@ -1,0 +1,258 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_content_bg"
+    android:orientation="vertical"
+    tools:context="com.onefengma.taobuxiu.views.offers.OfferDetailActivity">
+
+    <com.onefengma.taobuxiu.views.widgets.ToolBar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dip"
+        app:tool_bar_title="我来供货" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dip"
+                android:text="求购细节" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dip">
+
+                <TextView
+                    android:id="@+id/type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/blue_dot"
+                    android:drawablePadding="10dip"
+                    android:padding="5dip"
+                    android:text="品类： 不锈钢板"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/surface"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/blue_dot"
+                    android:drawablePadding="10dip"
+                    android:padding="5dip"
+                    android:text="表面： 2B"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/material"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/blue_dot"
+                    android:drawablePadding="10dip"
+                    android:padding="5dip"
+                    android:text="材料： 304"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/proPlace"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/blue_dot"
+                    android:drawablePadding="10dip"
+                    android:padding="5dip"
+                    android:text="产地： 太钢"
+                    android:textColor="@color/black" />
+
+
+                <TextView
+                    android:id="@+id/locateCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/blue_dot"
+                    android:drawablePadding="10dip"
+                    android:padding="5dip"
+                    android:text="收货城市： 江苏无锡"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/blue_dot"
+                    android:drawablePadding="10dip"
+                    android:padding="5dip"
+                    android:text="规格： 100*100*100"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tolerate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/blue_dot"
+                    android:drawablePadding="10dip"
+                    android:padding="5dip"
+                    android:text="公差： 1000~3323"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/blue_dot"
+                    android:drawablePadding="10dip"
+                    android:padding="5dip"
+                    android:text="备注： 好好好好爱护"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dip"
+                android:text="对方信息" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dip">
+
+                <TextView
+                    android:id="@+id/buy_times"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="4dip"
+                    android:paddingLeft="20dip"
+                    android:paddingRight="20dip"
+                    android:paddingTop="4dip"
+                    android:text="求购总次数： 1233"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/buy_rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="4dip"
+                    android:paddingLeft="20dip"
+                    android:paddingRight="20dip"
+                    android:paddingTop="4dip"
+                    android:text="求购成功率： 13%"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/my_offer_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dip"
+                android:text="我的报价" />
+
+            <RelativeLayout
+                android:id="@+id/offer_edit_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/price_edit"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:paddingRight="20dip"
+                    android:text="/kg"
+                    android:textColor="@color/black"
+                    android:textSize="18dip" />
+
+                <EditText
+                    android:id="@id/price_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dip"
+                    android:layout_marginRight="5dip"
+                    android:layout_toLeftOf="@id/unit"
+                    android:hint="输入报价"
+                    android:inputType="number" />
+
+                <EditText
+                    android:id="@+id/message_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/price_edit"
+                    android:layout_marginLeft="20dip"
+                    android:layout_marginRight="5dip"
+                    android:gravity="left|top"
+                    android:hint="备注(请输入您供货的细节)"
+                    android:singleLine="false" />
+
+                <TextView
+                    android:id="@+id/supply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/message_edit"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dip"
+                    android:background="@drawable/main_action_btn_bg"
+                    android:clickable="true"
+                    android:paddingBottom="5dip"
+                    android:paddingLeft="8dip"
+                    android:paddingRight="8dip"
+                    android:paddingTop="5dip"
+                    android:text="确认报价"
+                    android:textColor="@color/white"
+                    android:textSize="16dip" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/my_offer_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dip">
+
+                <TextView
+                    android:id="@+id/my_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="4dip"
+                    android:paddingLeft="20dip"
+                    android:paddingRight="20dip"
+                    android:paddingTop="4dip"
+                    android:text="报价： 100323/kg"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/my_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="4dip"
+                    android:paddingLeft="20dip"
+                    android:paddingRight="20dip"
+                    android:paddingTop="4dip"
+                    android:text="备注：是的发送到发送到发asdf飞"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

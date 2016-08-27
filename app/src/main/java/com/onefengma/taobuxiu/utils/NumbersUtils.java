@@ -27,4 +27,8 @@ public class NumbersUtils {
         }
         return number.setScale(count, BigDecimal.ROUND_HALF_UP);
     }
+
+    public static String getHS(float number) {
+        return (number * 100) + "%";
+    }
 }
