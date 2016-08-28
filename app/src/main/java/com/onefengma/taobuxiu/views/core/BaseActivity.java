@@ -24,7 +24,7 @@ public class BaseActivity extends AppCompatActivity {
             leftView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onBackPressed();
+                    finish();
                 }
             });
         }

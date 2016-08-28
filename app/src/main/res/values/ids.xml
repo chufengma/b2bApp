@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="top_city_mask" type="id"/>
+    <item name="city_mask" type="id"/>
+</resources>

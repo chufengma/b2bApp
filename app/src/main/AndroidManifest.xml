@@ -114,6 +114,7 @@
         <activity android:name=".views.buys.PushNewBuyActivity" />
         <activity
             android:name=".views.buys.EditBuyActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
             android:label="@string/title_activity_edit_buy" >
         </activity>
         <activity

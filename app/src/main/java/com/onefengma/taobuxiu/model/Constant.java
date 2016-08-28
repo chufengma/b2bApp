@@ -35,5 +35,7 @@ public class Constant {
 
         public static final String OFFER_LOSE = "offer_lose";
         public static final String OFFER_LOSE_NUMBERS = "offer_lose_numbers";
+
+        public static final String CACHED_IRON_PUSH = "cached_iron_push";
     }
 }

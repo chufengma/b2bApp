@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="day">
+        <item>0 天</item>
+        <item>1 天</item>
+        <item>2 天</item>
+        <item>3 天</item>
+        <item>4 天</item>
+        <item>5 天</item>
+        <item>6 天</item>
+        <item>7 天</item>
+        <item>8 天</item>
+        <item>9 天</item>
+        <item>10 天</item>
+        <item>11 天</item>
+        <item>12 天</item>
+        <item>13 天</item>
+        <item>14 天</item>
+        <item>15 天</item>
+        <item>16 天</item>
+        <item>17 天</item>
+        <item>18 天</item>
+        <item>19 天</item>
+        <item>20 天</item>
+        <item>21 天</item>
+        <item>22 天</item>
+        <item>23 天</item>
+        <item>24 天</item>
+        <item>25 天</item>
+        <item>26 天</item>
+        <item>27 天</item>
+        <item>28 天</item>
+        <item>29 天</item>
+        <item>30 天</item>
+    </string-array>
+
+    <string-array name="hour">
+        <item>0 小时</item>
+        <item>1 小时</item>
+        <item>2 小时</item>
+        <item>3 小时</item>
+        <item>4 小时</item>
+        <item>5 小时</item>
+        <item>6 小时</item>
+        <item>7 小时</item>
+        <item>8 小时</item>
+        <item>9 小时</item>
+        <item>10 小时</item>
+        <item>11 小时</item>
+        <item>12 小时</item>
+    </string-array>
+
+    <string-array name="minute">
+        <item>0 分钟</item>
+        <item>1 分钟</item>
+        <item>2 分钟</item>
+        <item>3 分钟</item>
+        <item>4 分钟</item>
+        <item>5 分钟</item>
+        <item>6 分钟</item>
+        <item>7 分钟</item>
+        <item>8 分钟</item>
+        <item>9 分钟</item>
+        <item>10 分钟</item>
+        <item>11 分钟</item>
+        <item>12 分钟</item>
+        <item>13 分钟</item>
+        <item>14 分钟</item>
+        <item>15 分钟</item>
+        <item>16 分钟</item>
+        <item>17 分钟</item>
+        <item>18 分钟</item>
+        <item>19 分钟</item>
+        <item>20 分钟</item>
+        <item>21 分钟</item>
+        <item>22 分钟</item>
+        <item>23 分钟</item>
+        <item>24 分钟</item>
+        <item>25 分钟</item>
+        <item>26 分钟</item>
+        <item>27 分钟</item>
+        <item>28 分钟</item>
+        <item>29 分钟</item>
+        <item>30 分钟</item>
+        <item>31 分钟</item>
+        <item>32 分钟</item>
+        <item>33 分钟</item>
+        <item>34 分钟</item>
+        <item>35 分钟</item>
+        <item>36 分钟</item>
+        <item>37 分钟</item>
+        <item>38 分钟</item>
+        <item>39 分钟</item>
+        <item>40 分钟</item>
+        <item>41 分钟</item>
+        <item>42 分钟</item>
+        <item>43 分钟</item>
+        <item>44 分钟</item>
+        <item>45 分钟</item>
+        <item>46 分钟</item>
+        <item>47 分钟</item>
+        <item>48 分钟</item>
+        <item>49 分钟</item>
+        <item>50 分钟</item>
+        <item>51 分钟</item>
+        <item>52 分钟</item>
+        <item>53 分钟</item>
+        <item>54 分钟</item>
+        <item>55 分钟</item>
+        <item>56 分钟</item>
+        <item>57 分钟</item>
+        <item>58 分钟</item>
+        <item>59 分钟</item>
+        <item>60 分钟</item>
+    </string-array>
+
+    <string-array name="units">
+        <item>kg</item>
+        <item>个</item>
+        <item>平方</item>
+        <item>片</item>
+        <item>支</item>
+        <item>千支</item>
+        <item>条</item>
+        <item>捆</item>
+    </string-array>
+</resources>

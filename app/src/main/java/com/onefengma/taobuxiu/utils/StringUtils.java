@@ -20,7 +20,7 @@ public class StringUtils {
         return str == null || str.equals("");
     }
 
-    public static String getString(int resId, String... placeHolder) {
+    public static String getString(int resId, Object... placeHolder) {
         return MainApplication.getContext().getString(resId, placeHolder);
     }
 }

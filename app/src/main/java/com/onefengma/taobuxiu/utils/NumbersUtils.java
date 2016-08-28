@@ -31,4 +31,11 @@ public class NumbersUtils {
     public static String getHS(float number) {
         return (number * 100) + "%";
     }
+
+    public static float parseFloat(String value) {
+        if (StringUtils.isEmpty(value)) {
+            return 0;
+        }
+        return Float.parseFloat(value);
+    }
 }

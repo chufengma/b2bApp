@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.v4.util.ArrayMap;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.onefengma.taobuxiu.MainApplication;
 import com.orhanobut.logger.Logger;
 
@@ -80,6 +81,16 @@ public class SPHelper {
         }
     }
 
+    public <T> T get(String key, TypeReference<T> clazz) {
+        if (StringUtils.isEmpty(key)) {
+            return null;
+        }
+        try {
+            return JSON.parseObject(sp.getString(key, ""), clazz);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     public int getInt(String key, int defValue) {
         try {

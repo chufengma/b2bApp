@@ -2,10 +2,13 @@ package com.onefengma.taobuxiu.manager;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.JSONHelper;
 import com.onefengma.taobuxiu.model.BaseResponse;
+import com.onefengma.taobuxiu.model.Constant;
 import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
+import com.onefengma.taobuxiu.model.entities.IronBuyPush;
 import com.onefengma.taobuxiu.model.entities.MyIronBuyDetail;
 import com.onefengma.taobuxiu.model.entities.MyIronBuysNewNums;
 import com.onefengma.taobuxiu.model.entities.MyIronsResponse;
@@ -13,6 +16,7 @@ import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
 import com.onefengma.taobuxiu.model.events.DeleteIronBuyEvent;
 import com.onefengma.taobuxiu.model.events.GetBuyNumbersEvent;
+import com.onefengma.taobuxiu.model.events.IronBuyPushEvent;
 import com.onefengma.taobuxiu.model.events.MyIronDetailEvent;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDone;
@@ -24,9 +28,13 @@ import com.onefengma.taobuxiu.network.HttpHelper;
 import com.onefengma.taobuxiu.network.HttpHelper.SimpleNetworkSubscriber;
 import com.onefengma.taobuxiu.utils.SPHelper;
 import com.onefengma.taobuxiu.utils.StringUtils;
+import com.onefengma.taobuxiu.utils.ToastUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -57,6 +65,8 @@ public class BuyManager {
     public MyIronsResponse myIronsResponseForOutOfDate;
 
     private boolean isBuyRefresing = false;
+
+    public List<IronBuyPush> ironBuyPushList = new ArrayList<>();
 
     public enum BuyStatus {
         DOING,
@@ -262,7 +272,7 @@ public class BuyManager {
     public void onBuyPushEvent(BuyPushData pushData) {
         myIronsResponseForDoing.newSupplyNums = pushData.newSupplyNums;
         if (myIronsResponseForDoing.buys != null) {
-            for(IronBuyBrief ironBuyBrief : myIronsResponseForDoing.buys) {
+            for (IronBuyBrief ironBuyBrief : myIronsResponseForDoing.buys) {
                 if (StringUtils.equals(ironBuyBrief.id, pushData.ironBuyBrief.id)) {
                     ironBuyBrief.newSupplyNum = pushData.ironBuyBrief.newSupplyNum;
                     ironBuyBrief.supplyCount = pushData.ironBuyBrief.supplyCount;
@@ -351,6 +361,72 @@ public class BuyManager {
         });
     }
 
+    public void doPushAllIronBuy() {
+        List<IronBuyPush> pushs = getCachedIronBuys();
+        IronBuyPush[] pushArray = new IronBuyPush[pushs.size()];
+        for (int i = 0; i < pushs.size(); i++) {
+            pushArray[i] = pushs.get(i);
+        }
+        for (IronBuyPush push : pushArray) {
+            doPushIronBuy(push);
+        }
+    }
+
+    public void doPushIronBuy(IronBuyPush push) {
+        deleteIronBuy(push);
+
+        if (push.timeLimit == 0) {
+            ToastUtils.showInfoTasty("时间期限不能为0");
+            return;
+        }
+        EventBusHelper.post(new IronBuyPushEvent(BaseStatusEvent.STARTED));
+
+        HttpHelper.wrap(HttpHelper.create(BuyService.class)
+                .ironBuyPush(push.ironType, push.material, push.surface, push.proPlace, push.locationCityId, push.message, push.length, push.width, push.height, push.toleranceFrom, push.toleranceTo, push.numbers, push.timeLimit, push.unit))
+                .subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse data) {
+                        EventBusHelper.post(new IronBuyPushEvent(BaseStatusEvent.SUCCESS));
+                    }
+
+                    @Override
+                    public void onFailed(BaseResponse baseResponse, Throwable e) {
+                        super.onFailed(baseResponse, e);
+                        EventBusHelper.post(new IronBuyPushEvent(BaseStatusEvent.FAILED));
+                    }
+                });
+    }
+
+    public List<IronBuyPush> getCachedIronBuys() {
+        List<IronBuyPush> pushs = SPHelper.buy().get(Constant.StorageBuyKeys.CACHED_IRON_PUSH, new TypeReference<List<IronBuyPush>>() {
+        });
+        if (pushs != null) {
+            ironBuyPushList.clear();
+            ironBuyPushList.addAll(pushs);
+        }
+        return ironBuyPushList;
+    }
+
+    public void saveIronBuy(IronBuyPush push) {
+        deleteIronBuy(push);
+        ironBuyPushList.add(0, push);
+        SPHelper.buy().save(Constant.StorageBuyKeys.CACHED_IRON_PUSH, ironBuyPushList);
+    }
+
+    public void deleteIronBuy(IronBuyPush push) {
+        int index = -1;
+        for (int i = 0; i < ironBuyPushList.size(); i++) {
+            IronBuyPush item = ironBuyPushList.get(i);
+            if (item.id == push.id) {
+                index = i;
+            }
+        }
+        if (index != -1) {
+            ironBuyPushList.remove(index);
+        }
+        SPHelper.buy().save(Constant.StorageBuyKeys.CACHED_IRON_PUSH, ironBuyPushList);
+    }
+
     public interface BuyService {
         @GET("iron/myBuy")
         Observable<BaseResponse> myIronBuy(@Query(("currentPage")) int currentPage, @Query("pageCount") int pageCount, @Query("status") int status);
@@ -372,6 +448,23 @@ public class BuyManager {
         @FormUrlEncoded
         @POST("iron/qt")
         Observable<BaseResponse> qtIronBuy(@Field(("ironId")) String ironId);
+
+        @FormUrlEncoded
+        @POST("iron/buy")
+        Observable<BaseResponse> ironBuyPush(@Field(("ironType")) String ironType,
+                                             @Field(("material")) String material,
+                                             @Field(("surface")) String surface,
+                                             @Field(("proPlace")) String proPlace,
+                                             @Field(("locationCityId")) String locationCityId,
+                                             @Field(("message")) String message,
+                                             @Field(("length")) float length,
+                                             @Field(("width")) float width,
+                                             @Field(("height")) float height,
+                                             @Field(("toleranceFrom")) float toleranceFrom,
+                                             @Field(("toleranceTo")) float toleranceTo,
+                                             @Field(("numbers")) float numbers,
+                                             @Field(("timeLimit")) long timeLimit,
+                                             @Field(("unit")) String unit);
     }
 
     public void getBuyNumbers() {
@@ -387,7 +480,7 @@ public class BuyManager {
     }
 
     private void readFromDB(BuyStatus status) {
-        if(myIronsResponseForDoing.buys == null && status == BuyStatus.DOING) {
+        if (myIronsResponseForDoing.buys == null && status == BuyStatus.DOING) {
             MyIronsResponse cache = SPHelper.buy().get(BUY_DOING, MyIronsResponse.class);
             if (cache != null) {
                 myIronsResponseForDoing.buys = cache.buys;
@@ -396,7 +489,7 @@ public class BuyManager {
             }
         }
 
-        if(myIronsResponseForDone.buys == null && status == BuyStatus.DONE) {
+        if (myIronsResponseForDone.buys == null && status == BuyStatus.DONE) {
             MyIronsResponse cache = SPHelper.buy().get(BUY_DONE, MyIronsResponse.class);
             if (cache != null) {
                 myIronsResponseForDone.buys = cache.buys;
@@ -405,7 +498,7 @@ public class BuyManager {
             }
         }
 
-        if(myIronsResponseForOutOfDate.buys == null && status == BuyStatus.OUT_OF_DATE) {
+        if (myIronsResponseForOutOfDate.buys == null && status == BuyStatus.OUT_OF_DATE) {
             MyIronsResponse cache = SPHelper.buy().get(BUY_OUT_OF_DATE, MyIronsResponse.class);
             if (cache != null) {
                 myIronsResponseForOutOfDate.buys = cache.buys;
