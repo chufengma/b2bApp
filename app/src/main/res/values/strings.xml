@@ -67,5 +67,6 @@
     <string name="offer_detail_buy_rate">求购成功率：%1$s</string>
     <string name="offer_detail_my_price">报价：%1$s</string>
     <string name="offer_detail_my_message">备注：%1$s</string>
+    <string name="title_activity_my_subscribe">MySubscribeActivity</string>
 
 </resources>

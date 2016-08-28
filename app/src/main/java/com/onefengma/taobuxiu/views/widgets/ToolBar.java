@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ViewUtils;
 
 import butterknife.BindView;
@@ -38,6 +39,14 @@ public class ToolBar extends RelativeLayout {
     FrameLayout leftImageLayout;
     int size;
 
+    @BindView(R.id.left_title)
+    TextView leftTitleView;
+    @BindView(R.id.right_title)
+    TextView rightTitleView;
+
+    String rightTitle;
+    String leftTitle;
+
     public ToolBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
@@ -54,6 +63,8 @@ public class ToolBar extends RelativeLayout {
         left = a.getDrawable(R.styleable.TaoToolBar_tool_bar_left);
         right = a.getDrawable(R.styleable.TaoToolBar_tool_bar_right);
         size = a.getDimensionPixelSize(R.styleable.TaoToolBar_tool_bar_icon_size, ViewUtils.dipToPixels(24));
+        rightTitle = a.getString(R.styleable.TaoToolBar_tool_bar_right_title);
+        leftTitle = a.getString(R.styleable.TaoToolBar_tool_bar_left_title);
         a.recycle();
 
         setTitle(title);
@@ -71,6 +82,18 @@ public class ToolBar extends RelativeLayout {
             rightImage.getLayoutParams().width = size;
             rightImage.getLayoutParams().height = size;
             rightImage.requestLayout();
+        }
+
+        if (!StringUtils.isEmpty(rightTitle)) {
+            rightImageLayout.setVisibility(View.GONE);
+            rightTitleView.setVisibility(View.VISIBLE);
+            rightTitleView.setText(rightTitle);
+        }
+
+        if (!StringUtils.isEmpty(leftTitle)) {
+            leftImageLayout.setVisibility(View.GONE);
+            leftTitleView.setVisibility(View.VISIBLE);
+            leftTitleView.setText(leftTitle);
         }
     }
 

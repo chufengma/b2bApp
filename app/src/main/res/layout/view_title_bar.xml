@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:minHeight="?attr/actionBarSize"
     android:gravity="center_vertical"
@@ -20,13 +20,33 @@
     </FrameLayout>
 
     <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/left_title"
+        android:visibility="gone"
+        android:clickable="true"
+        android:textColor="@color/white"
+        style="@style/Widget.AppCompat.ActionButton"
+        android:layout_height="56dip" />
+
+    <TextView
         android:id="@+id/title"
         android:textSize="18dip"
+        android:layout_weight="1"
+        android:gravity="center"
         android:layout_centerInParent="true"
         android:textColor="@color/title_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/right_title"
+        android:visibility="gone"
+        android:clickable="true"
+        android:textColor="@color/white"
+        style="@style/Widget.AppCompat.ActionButton"
+        android:layout_height="56dip" />
 
     <FrameLayout
         android:layout_width="56dip"
@@ -44,4 +64,4 @@
             android:layout_height="24dip" />
     </FrameLayout>
 
-</RelativeLayout>
+</LinearLayout>

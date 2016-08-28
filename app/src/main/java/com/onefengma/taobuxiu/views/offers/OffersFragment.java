@@ -51,7 +51,7 @@ public class OffersFragment extends BaseFragment {
 
     @OnClick(R.id.right_image)
     public void clickOnRightImage() {
-        PushNewBuyActivity.start((BaseActivity) getActivity());
+        MySubscribeActivity.start((BaseActivity) getActivity());
     }
 
     @Nullable

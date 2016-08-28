@@ -7,9 +7,11 @@ import com.onefengma.taobuxiu.model.BaseResponse;
 import com.onefengma.taobuxiu.model.entities.MyIronBuyDetail;
 import com.onefengma.taobuxiu.model.entities.MyOffersResponse;
 import com.onefengma.taobuxiu.model.entities.OfferDetail;
+import com.onefengma.taobuxiu.model.entities.SubscribeInfo;
 import com.onefengma.taobuxiu.model.events.ActionSupplyEvent;
 import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
+import com.onefengma.taobuxiu.model.events.GetSubscribeInfoEvent;
 import com.onefengma.taobuxiu.model.events.MyIronDetailEvent;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
 import com.onefengma.taobuxiu.model.events.MyOfferDetailEvent;
@@ -17,6 +19,8 @@ import com.onefengma.taobuxiu.model.events.MyOffersEvent;
 import com.onefengma.taobuxiu.model.events.SelectSupplyEvent;
 import com.onefengma.taobuxiu.network.HttpHelper;
 import com.onefengma.taobuxiu.utils.SPHelper;
+
+import java.util.List;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -165,6 +169,41 @@ public class OfferManager {
         });
     }
 
+    public void getMySubscribeInfo() {
+        EventBusHelper.post(new GetSubscribeInfoEvent(BaseStatusEvent.STARTED, null));
+        HttpHelper.wrap(HttpHelper.create(OfferService.class).mySubscribeInfo()).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
+            @Override
+            public void onSuccess(BaseResponse data) {
+                SubscribeInfo subscribeInfo = JSON.parseObject(data.data.toString(), SubscribeInfo.class);
+                EventBusHelper.post(new GetSubscribeInfoEvent(BaseStatusEvent.SUCCESS, subscribeInfo));
+            }
+
+            @Override
+            public void onFailed(BaseResponse baseResponse, Throwable e) {
+                super.onFailed(baseResponse, e);
+                EventBusHelper.post(new GetSubscribeInfoEvent(BaseStatusEvent.FAILED, null));
+            }
+        });
+    }
+
+    public void getMySubscribeInfo(SubscribeInfo subscribeInfo) {
+        EventBusHelper.post(new GetSubscribeInfoEvent(BaseStatusEvent.STARTED, null));
+        HttpHelper.wrap(HttpHelper.create(OfferService.class).mySubscribeInfo()).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
+            @Override
+            public void onSuccess(BaseResponse data) {
+                SubscribeInfo subscribeInfo = JSON.parseObject(data.data.toString(), SubscribeInfo.class);
+                EventBusHelper.post(new GetSubscribeInfoEvent(BaseStatusEvent.SUCCESS, subscribeInfo));
+            }
+
+            @Override
+            public void onFailed(BaseResponse baseResponse, Throwable e) {
+                super.onFailed(baseResponse, e);
+                EventBusHelper.post(new GetSubscribeInfoEvent(BaseStatusEvent.FAILED, null));
+            }
+        });
+    }
+
+
     private void readFromDB(OfferStatus status) {
         MyOffersResponse cache = SPHelper.buy().get(getDataKey(status).dataKey, MyOffersResponse.class);
         if (cache != null) {
@@ -205,9 +244,19 @@ public class OfferManager {
         @GET("seller/myIronBuyDetail")
         Observable<BaseResponse> myIronOfferDetails(@Query("ironId") String ironId);
 
+        @GET("seller/subscribeInfo")
+        Observable<BaseResponse> mySubscribeInfo();
+
         @FormUrlEncoded
         @POST("seller/offerIronBuy")
         Observable<BaseResponse> offerIronBuy(@Field("ironId") String ironId, @Field("price") float price, @Field("msg") String message, @Field("unit") String unit);
+
+        @FormUrlEncoded
+        @POST("seller/offerIronBuy")
+        Observable<BaseResponse> updateSubscribeInfo(@Field("types") String types,
+                                                     @Field("surfaces") String surfaces,
+                                                     @Field("materials") String materials,
+                                                     @Field("proPlaces") String proPlaces);
     }
 
     public class DataKeyItem {
