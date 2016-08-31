@@ -5,19 +5,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.PopupMenu;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.daasuu.bl.ArrowDirection;
+import com.daasuu.bl.BubbleLayout;
+import com.daasuu.bl.BubblePopupHelper;
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.CityCategory;
 import com.onefengma.taobuxiu.model.IconDataCategory;
 import com.onefengma.taobuxiu.model.entities.City;
-import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
 import com.onefengma.taobuxiu.model.entities.IronBuyPush;
 import com.onefengma.taobuxiu.model.events.IronBuyPushEvent;
 import com.onefengma.taobuxiu.utils.NumbersUtils;
@@ -145,6 +150,27 @@ public class EditBuyActivity extends BaseActivity {
             City fatherCity = CityCategory.instance().getCity(selectCity.fatherId);
             locateCity.setText(fatherCity.name + " " + selectCity.name);
         }
+
+
+        View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    BubbleLayout bubbleLayout = (BubbleLayout) LayoutInflater.from(EditBuyActivity.this).inflate(R.layout.bubble_info_layout, null);
+                    PopupWindow popupWindow = BubblePopupHelper.create(EditBuyActivity.this, bubbleLayout);
+                    int[] location = new int[2];
+                    view.getLocationInWindow(location);
+                    bubbleLayout.setArrowDirection(ArrowDirection.BOTTOM);
+
+                    bubbleLayout.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                    popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, location[0], location[1] - bubbleLayout.getMeasuredHeight());
+                }
+            }
+        };
+
+        length.setOnFocusChangeListener(onFocusChangeListener);
+        width.setOnFocusChangeListener(onFocusChangeListener);
+        height.setOnFocusChangeListener(onFocusChangeListener);
     }
 
     @OnClick(R.id.push)
@@ -155,6 +181,10 @@ public class EditBuyActivity extends BaseActivity {
     @OnClick(R.id.save)
     public void clickOnSave() {
         doSave();
+    }
+
+    @OnClick(R.id.length)
+    public void clickOnLength(View view) {
     }
 
     @Subscribe

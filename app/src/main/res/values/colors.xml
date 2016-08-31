@@ -31,4 +31,6 @@
     <color name="main_yellow_trans">#8ff39a16</color>
     <color name="main_green">#009944</color>
     <color name="main_red">#e60012</color>
+    <color name="main_blue">#1E7CBA</color>
+
 </resources>

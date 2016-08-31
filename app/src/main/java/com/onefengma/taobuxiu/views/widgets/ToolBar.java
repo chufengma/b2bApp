@@ -22,20 +22,20 @@ import butterknife.ButterKnife;
  */
 public class ToolBar extends RelativeLayout {
 
-    @BindView(R.id.left_image)
+    @BindView(R.id.left_image_view)
     ImageView leftImage;
     @BindView(R.id.title)
     TextView titleView;
-    @BindView(R.id.right_image)
+    @BindView(R.id.right_image_view)
     ImageView rightImage;
 
     String title;
     int color;
     Drawable left;
     Drawable right;
-    @BindView(R.id.right_image_layout)
+    @BindView(R.id.right_image)
     FrameLayout rightImageLayout;
-    @BindView(R.id.left_image_layout)
+    @BindView(R.id.left_image)
     FrameLayout leftImageLayout;
     int size;
 

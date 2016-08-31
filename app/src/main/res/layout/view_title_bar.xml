@@ -8,12 +8,12 @@
     <FrameLayout
         android:layout_width="56dip"
         style="@style/Widget.AppCompat.ActionButton"
-        android:id="@+id/left_image_layout"
+        android:id="@+id/left_image"
         android:clickable="true"
         android:layout_height="56dip">
         <ImageView
             android:layout_width="24dip"
-            android:id="@+id/left_image"
+            android:id="@+id/left_image_view"
             android:layout_gravity="center"
             android:src="@drawable/ic_arrow_back"
             android:layout_height="24dip" />
@@ -51,14 +51,14 @@
     <FrameLayout
         android:layout_width="56dip"
         style="@style/Widget.AppCompat.ActionButton"
-        android:id="@+id/right_image_layout"
+        android:id="@+id/right_image"
         android:clickable="true"
         android:visibility="gone"
         android:layout_alignParentRight="true"
         android:layout_height="56dip">
         <ImageView
             android:layout_width="24dip"
-            android:id="@+id/right_image"
+            android:id="@+id/right_image_view"
             android:layout_gravity="center"
             android:src="@drawable/ic_arrow_back"
             android:layout_height="24dip" />

@@ -56,6 +56,12 @@ public class DemoMessageReceiver extends PushMessageReceiver {
                 Intent intent = MainActivity.getIntent(MainApplication.getContext());
                 NotificationHelper.showNotification(message.getTitle(), message.getDescription(), intent);
             }
+        } else if (StringUtils.equals(type, BasePushData.PUSH_TYPE_WIN_OFFER)) {
+            Intent intent = MainActivity.getIntent(MainApplication.getContext());
+            NotificationHelper.showNotification(message.getTitle(), message.getDescription(), intent);
+        } else if (StringUtils.equals(type, BasePushData.PUSH_TYPE_NEW_IRON_BUY)) {
+            Intent intent = MainActivity.getIntent(MainApplication.getContext());
+            NotificationHelper.showNotification(message.getTitle(), message.getDescription(), intent);
         }
     }
 

@@ -15,7 +15,6 @@ import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.entities.MyOffersResponse;
 import com.onefengma.taobuxiu.model.events.MyOffersEvent;
 import com.onefengma.taobuxiu.model.events.OnOfferTabEvent;
-import com.onefengma.taobuxiu.views.buys.PushNewBuyActivity;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 import com.onefengma.taobuxiu.views.widgets.TabItem;
@@ -78,11 +77,11 @@ public class OffersFragment extends BaseFragment {
                 if (tab == tabDoing) {
                     offerTab.setSelectedTabIndicatorColor(getResources().getColor(R.color.main_yellow));
                 } else if (tab == tabWaiting) {
-                    offerTab.setSelectedTabIndicatorColor(getResources().getColor(R.color.main_green));
-                } else if (tab == tabWin) {
-                    offerTab.setSelectedTabIndicatorColor(getResources().getColor(R.color.main_red));
-                } else if (tab == tabLose) {
                     offerTab.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorPrimary));
+                } else if (tab == tabWin) {
+                    offerTab.setSelectedTabIndicatorColor(getResources().getColor(R.color.main_green));
+                } else if (tab == tabLose) {
+                    offerTab.setSelectedTabIndicatorColor(getResources().getColor(R.color.main_red));
                 }
             }
         });
@@ -96,7 +95,7 @@ public class OffersFragment extends BaseFragment {
         tabDoing = offerTab.newTab();
         tabItemDoing = new TabItem(getContext());
         tabItemDoing.setTitle(getString(R.string.offer_doing_tab, 0));
-        tabItemDoing.setIcon(R.drawable.buy_tab_doing);
+        tabItemDoing.setIcon(R.drawable.offer_tab_doing);
         tabItemDoing.titleView.setTextColor(getResources().getColorStateList(R.color.buy_doing_indicator_text_colors));
         tabItemDoing.setWidth(width);
         tabDoing.setCustomView(tabItemDoing);
@@ -104,18 +103,18 @@ public class OffersFragment extends BaseFragment {
 
         tabWaiting = offerTab.newTab();
         tabItemWaiting = new TabItem(getContext());
-        tabItemWaiting.setIcon(R.drawable.buy_tab_done);
+        tabItemWaiting.setIcon(R.drawable.offer_tab_done);
         tabItemWaiting.setTitle(getString(R.string.offer_waiting_tab, 0));
-        tabItemWaiting.titleView.setTextColor(getResources().getColorStateList(R.color.buy_done_indicator_text_colors));
+        tabItemWaiting.titleView.setTextColor(getResources().getColorStateList(R.color.offer_waiting_indicator_text_colors));
         tabItemWaiting.setWidth(width);
         tabWaiting.setCustomView(tabItemWaiting);
         offerTab.addTab(tabWaiting);
 
         tabWin = offerTab.newTab();
         tabItemWin = new TabItem(getContext());
-        tabItemWin.setIcon(R.drawable.buy_tab_out_of_date);
+        tabItemWin.setIcon(R.drawable.offer_tab_win);
         tabItemWin.setTitle(getString(R.string.offer_win_tab, 0));
-        tabItemWin.titleView.setTextColor(getResources().getColorStateList(R.color.buy_outofdate_indicator_text_colors));
+        tabItemWin.titleView.setTextColor(getResources().getColorStateList(R.color.buy_done_indicator_text_colors));
         tabItemWin.setWidth(width);
         tabWin.setCustomView(tabItemWin);
         offerTab.addTab(tabWin);

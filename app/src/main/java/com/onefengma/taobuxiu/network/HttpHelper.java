@@ -38,7 +38,7 @@ import rx.schedulers.Schedulers;
  */
 public class HttpHelper {
 
-    private static final String BASE_URL = "http://118.178.17.15:9090/";
+    private static final String BASE_URL = "http://10.32.24.115:5389/";
 
     private static Retrofit retrofit;
 

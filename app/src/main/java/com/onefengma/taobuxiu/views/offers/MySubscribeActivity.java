@@ -5,20 +5,23 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.manager.OfferManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.IconDataCategory;
+import com.onefengma.taobuxiu.model.entities.SubscribeInfo;
 import com.onefengma.taobuxiu.model.events.GetSubscribeInfoEvent;
+import com.onefengma.taobuxiu.model.events.UpdateSubscribeInfoEvent;
 import com.onefengma.taobuxiu.utils.StringUtils;
+import com.onefengma.taobuxiu.utils.ToastUtils;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.widgets.ProgressDialog;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
@@ -30,6 +33,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MySubscribeActivity extends BaseActivity {
 
@@ -58,10 +62,18 @@ public class MySubscribeActivity extends BaseActivity {
         setContentView(R.layout.activity_my_subscribe);
         ButterKnife.bind(this);
         viewPager.setAdapter(new MyPageAdapter());
+        viewPager.setOffscreenPageLimit(2);
         tab.setupWithViewPager(viewPager);
         progressDialog = new ProgressDialog(this);
 
         EventBusHelper.register(this);
+
+        viewPager.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                OfferManager.instance().getMySubscribeInfo();
+            }
+        }, 500);
     }
 
     @Override
@@ -70,9 +82,52 @@ public class MySubscribeActivity extends BaseActivity {
         EventBusHelper.unregister(this);
     }
 
+    @OnClick(R.id.right_title)
+    public void clickOnSave() {
+        if (materialAdapter == null || proPlaceadapter == null || typesAdapter == null || surfacesAdapter == null) {
+            return;
+        }
+        SubscribeInfo subscribeInfo = new SubscribeInfo();
+        subscribeInfo.materials = materialAdapter.checkedList;
+        subscribeInfo.proPlaces = proPlaceadapter.checkedList;
+        subscribeInfo.types = typesAdapter.checkedList;
+        subscribeInfo.surfaces = surfacesAdapter.checkedList;
+        OfferManager.instance().updateMySubscribeInfo(subscribeInfo);
+    }
+
     @Subscribe
     public void onGetSubscirbeEvent(GetSubscribeInfoEvent event) {
+        if (event.isStarted()) {
+            progressDialog.show("加载中...");
+            return;
+        } else {
+            progressDialog.dismiss();
+        }
+        if (event.isSuccess()) {
+            SubscribeInfo subscribeInfo = event.subscribeInfo;
+            typesAdapter.setCheckedList(subscribeInfo.types);
+            surfacesAdapter.setCheckedList(subscribeInfo.surfaces);
+            materialAdapter.setCheckedList(subscribeInfo.materials);
+            proPlaceadapter.setCheckedList(subscribeInfo.proPlaces);
+        } else {
+            ToastUtils.showErrorTasty("加载关注列表失败！");
+            finish();
+        }
+    }
 
+    @Subscribe
+    public void onPushSubscirbeEvent(UpdateSubscribeInfoEvent event) {
+        if (event.isStarted()) {
+            progressDialog.show("保存中...");
+            return;
+        } else {
+            progressDialog.dismiss();
+        }
+        if (event.isSuccess()) {
+            ToastUtils.showSuccessTasty("保存关注列表成功");
+        } else {
+            ToastUtils.showErrorTasty("保存关注列表失败，请重试！");
+        }
     }
 
     class MyPageAdapter extends PagerAdapter {
@@ -144,7 +199,7 @@ public class MySubscribeActivity extends BaseActivity {
         }
     }
 
-    class CheckAdapter extends RecyclerView.Adapter<ViewHolder> {
+    class CheckAdapter extends RecyclerView.Adapter<ViewHolder> implements CompoundButton.OnCheckedChangeListener {
 
         public List<String> list = new ArrayList<>();
         public List<String> checkedList = new ArrayList<>();
@@ -156,6 +211,9 @@ public class MySubscribeActivity extends BaseActivity {
         }
 
         public void setCheckedList(List<String> checkedList) {
+            if (checkedList == null) {
+                return;
+            }
             this.checkedList.clear();
             this.checkedList.addAll(checkedList);
             this.notifyDataSetChanged();
@@ -178,11 +236,21 @@ public class MySubscribeActivity extends BaseActivity {
                 }
             }
             holder.itemCheckout.setChecked(false);
+            holder.itemCheckout.setOnCheckedChangeListener(this);
         }
 
         @Override
         public int getItemCount() {
             return list.size();
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (isChecked) {
+                checkedList.add(buttonView.getText().toString());
+            } else {
+                checkedList.remove(buttonView.getText().toString());
+            }
         }
     }
 

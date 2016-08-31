@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         app:tool_bar_title="我的报价"
         app:tool_bar_left="@drawable/ic_buy_sum"
-        app:tool_bar_right="@drawable/ic_buy_add"
+        app:tool_bar_right="@drawable/ic_offer_subscribe"
         app:tool_bar_icon_size="30dip"
         android:layout_height="56dip" />
 

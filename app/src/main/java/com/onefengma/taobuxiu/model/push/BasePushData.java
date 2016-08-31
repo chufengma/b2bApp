@@ -12,6 +12,9 @@ public class BasePushData {
     public String type;
 
     public static final String PUSH_TYPE_BUY = "buy";
+    public static final String PUSH_TYPE_WIN_OFFER = "win_offer";
+    public static final String PUSH_TYPE_NEW_IRON_BUY = "new_iron_buy";
+
     public static final String PUSH_TYPE_KEY = "type";
 }
 
