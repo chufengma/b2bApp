@@ -9,6 +9,7 @@ import com.onefengma.taobuxiu.model.BaseResponse;
 import com.onefengma.taobuxiu.model.Constant;
 import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
 import com.onefengma.taobuxiu.model.entities.IronBuyPush;
+import com.onefengma.taobuxiu.model.entities.MyBuyHistoryInfo;
 import com.onefengma.taobuxiu.model.entities.MyIronBuyDetail;
 import com.onefengma.taobuxiu.model.entities.MyIronBuysNewNums;
 import com.onefengma.taobuxiu.model.entities.MyIronsResponse;
@@ -17,6 +18,7 @@ import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
 import com.onefengma.taobuxiu.model.events.DeleteIronBuyEvent;
 import com.onefengma.taobuxiu.model.events.GetBuyNumbersEvent;
 import com.onefengma.taobuxiu.model.events.IronBuyPushEvent;
+import com.onefengma.taobuxiu.model.events.MyIronBuyHistoryEvent;
 import com.onefengma.taobuxiu.model.events.MyIronDetailEvent;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDone;
@@ -375,8 +377,8 @@ public class BuyManager {
     public void doPushIronBuy(IronBuyPush push) {
         deleteIronBuy(push);
 
-        if (push.timeLimit == 0) {
-            ToastUtils.showInfoTasty("时间期限不能为0");
+        if (push.timeLimit <= 0) {
+            ToastUtils.showInfoTasty("时间期限必须大于0");
             return;
         }
         EventBusHelper.post(new IronBuyPushEvent(BaseStatusEvent.STARTED));
@@ -405,6 +407,23 @@ public class BuyManager {
             ironBuyPushList.addAll(pushs);
         }
         return ironBuyPushList;
+    }
+
+    public void getIronBuyHistroy() {
+        EventBusHelper.post(new MyIronBuyHistoryEvent(BaseStatusEvent.STARTED, null));
+        HttpHelper.wrap(HttpHelper.create(BuyService.class).getMyIronBuyHistory()).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
+            @Override
+            public void onSuccess(BaseResponse data) {
+                MyBuyHistoryInfo myBuyHistoryInfo = JSON.parseObject(data.data.toString(), MyBuyHistoryInfo.class);
+                EventBusHelper.post(new MyIronBuyHistoryEvent(BaseStatusEvent.SUCCESS, myBuyHistoryInfo));
+            }
+
+            @Override
+            public void onFailed(BaseResponse baseResponse, Throwable e) {
+                super.onFailed(baseResponse, e);
+                EventBusHelper.post(new MyIronBuyHistoryEvent(BaseStatusEvent.FAILED, null));
+            }
+        });
     }
 
     public void saveIronBuy(IronBuyPush push) {
@@ -436,6 +455,9 @@ public class BuyManager {
 
         @GET("iron/myBuyDetail")
         Observable<BaseResponse> myIronDetail(@Query(("ironId")) String ironId);
+
+        @GET("iron/myIronBuyHistory")
+        Observable<BaseResponse> getMyIronBuyHistory();
 
         @FormUrlEncoded
         @POST("iron/selectSupply")

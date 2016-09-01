@@ -1,6 +1,5 @@
 package com.onefengma.taobuxiu.views.buys;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -8,9 +7,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.BuyManager;
@@ -88,6 +84,13 @@ public class BuyFragment extends BaseFragment {
         });
 
         setupTabs();
+
+        setLeftViewListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyBuyHistoryActivity.start((BaseActivity) getActivity());
+            }
+        });
     }
 
     private void setupTabs() {

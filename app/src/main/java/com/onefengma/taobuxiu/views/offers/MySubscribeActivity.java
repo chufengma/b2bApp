@@ -68,6 +68,11 @@ public class MySubscribeActivity extends BaseActivity {
 
         EventBusHelper.register(this);
 
+        typesAdapter = new CheckAdapter(IconDataCategory.get().types);
+        surfacesAdapter = new CheckAdapter(IconDataCategory.get().surfaces);
+        materialAdapter = new CheckAdapter(IconDataCategory.get().materials);
+        proPlaceadapter = new CheckAdapter(IconDataCategory.get().productPlaces);
+
         viewPager.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -153,27 +158,18 @@ public class MySubscribeActivity extends BaseActivity {
             List<String> data ;
             switch (position) {
                 case 0 :
-                    data = IconDataCategory.get().types;
-                    typesAdapter = new CheckAdapter();
                     adapter = typesAdapter;
                     break;
                 case 1 :
-                    data = IconDataCategory.get().surfaces;
-                    surfacesAdapter = new CheckAdapter();
                     adapter = surfacesAdapter;
                     break;
                 case 2 :
-                    data = IconDataCategory.get().materials;
-                    materialAdapter = new CheckAdapter();
                     adapter = materialAdapter;
                     break;
                 default:
-                    data = IconDataCategory.get().productPlaces;
-                    proPlaceadapter = new CheckAdapter();
                     adapter = proPlaceadapter;
             }
 
-            adapter.setList(data);
             recyclerView.setAdapter(adapter);
             container.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             return view;
@@ -208,6 +204,10 @@ public class MySubscribeActivity extends BaseActivity {
             this.list.clear();
             this.list.addAll(list);
             this.notifyDataSetChanged();
+        }
+
+        public CheckAdapter(List<String> list) {
+            this.list = list;
         }
 
         public void setCheckedList(List<String> checkedList) {

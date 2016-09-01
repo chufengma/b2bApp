@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="TaoToolBar">
-        <attr name="tool_bar_title"  format="string|reference" />
-        <attr name="tool_bar_right_title"  format="string|reference" />
-        <attr name="tool_bar_left_title"  format="string|reference" />
-        <attr name="tool_bar_bg"  format="color|reference" />
-        <attr name="tool_bar_left"  format="reference" />
-        <attr name="tool_bar_right"  format="reference" />
-        <attr name="tool_bar_icon_size"  format="dimension" />
+        <attr name="tool_bar_title" format="string|reference" />
+        <attr name="tool_bar_right_title" format="string|reference" />
+        <attr name="tool_bar_left_title" format="string|reference" />
+        <attr name="tool_bar_bg" format="color|reference" />
+        <attr name="tool_bar_left" format="reference" />
+        <attr name="tool_bar_right" format="reference" />
+        <attr name="tool_bar_icon_size" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="HistoryCardView">
+        <attr name="history_title" format="string|reference" />
     </declare-styleable>
 
     <declare-styleable name="XListView">

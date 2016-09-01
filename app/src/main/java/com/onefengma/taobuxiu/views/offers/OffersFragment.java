@@ -87,6 +87,13 @@ public class OffersFragment extends BaseFragment {
         });
 
         setupTabs();
+
+        setLeftViewListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyOfferHistoryActivity.start((BaseActivity) getActivity());
+            }
+        });
     }
 
     private void setupTabs() {

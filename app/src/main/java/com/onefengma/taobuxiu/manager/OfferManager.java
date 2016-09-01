@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.JSONHelper;
 import com.onefengma.taobuxiu.model.BaseResponse;
+import com.onefengma.taobuxiu.model.entities.MyOfferHistoryInfo;
 import com.onefengma.taobuxiu.model.entities.MyOffersResponse;
 import com.onefengma.taobuxiu.model.entities.OfferDetail;
 import com.onefengma.taobuxiu.model.entities.SubscribeInfo;
@@ -12,6 +13,7 @@ import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
 import com.onefengma.taobuxiu.model.events.GetSubscribeInfoEvent;
 import com.onefengma.taobuxiu.model.events.MyIronDetailEvent;
+import com.onefengma.taobuxiu.model.events.MyIronOfferHistoryEvent;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
 import com.onefengma.taobuxiu.model.events.MyOfferDetailEvent;
 import com.onefengma.taobuxiu.model.events.MyOffersEvent;
@@ -193,7 +195,7 @@ public class OfferManager {
 
         try {
             types = JSON.toJSONString(subscribeInfo.types);
-            surfaces = JSON.toJSONString(subscribeInfo.materials);
+            surfaces = JSON.toJSONString(subscribeInfo.surfaces);
             materials = JSON.toJSONString(subscribeInfo.materials);
             proPlaces = JSON.toJSONString(subscribeInfo.proPlaces);
         } catch (Exception e) {}
@@ -245,6 +247,24 @@ public class OfferManager {
         return new DataKeyItem(dataKey, dataNumKey);
     }
 
+
+    public void getIronOfferHistroy() {
+        EventBusHelper.post(new MyIronOfferHistoryEvent(BaseStatusEvent.STARTED, null));
+        HttpHelper.wrap(HttpHelper.create(OfferService.class).getMyIronOfferHistory()).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
+            @Override
+            public void onSuccess(BaseResponse data) {
+                MyOfferHistoryInfo myOfferHistoryInfo = JSON.parseObject(data.data.toString(), MyOfferHistoryInfo.class);
+                EventBusHelper.post(new MyIronOfferHistoryEvent(BaseStatusEvent.SUCCESS, myOfferHistoryInfo));
+            }
+
+            @Override
+            public void onFailed(BaseResponse baseResponse, Throwable e) {
+                super.onFailed(baseResponse, e);
+                EventBusHelper.post(new MyIronOfferHistoryEvent(BaseStatusEvent.FAILED, null));
+            }
+        });
+    }
+
     public interface OfferService {
         @GET("seller/myIronBuys")
         Observable<BaseResponse> myIronOffers(@Query(("currentPage")) int currentPage, @Query("pageCount") int pageCount, @Query("status") int status);
@@ -266,6 +286,10 @@ public class OfferManager {
 
         @GET("member/ironSubscribe")
         Observable<BaseResponse> mySubscribeInfo();
+
+
+        @GET("iron/myIronBuyHistory")
+        Observable<BaseResponse> getMyIronOfferHistory();
     }
 
     public class DataKeyItem {

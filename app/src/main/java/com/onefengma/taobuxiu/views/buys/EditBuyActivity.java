@@ -221,9 +221,9 @@ public class EditBuyActivity extends BaseActivity {
 
         ironBuyPush.unit = getResources().getStringArray(R.array.units)[unit.getSelectedItemPosition()];
 
-        ironBuyPush.timeLimit = day.getSelectedItemPosition() * (1000 * 60 * 60 * 24)
-                + hour.getSelectedItemPosition() * (1000 * 60 * 60)
-                + minute.getSelectedItemPosition() * (1000 * 60);
+        ironBuyPush.timeLimit = (long) day.getSelectedItemPosition() * (1000 * 60 * 60 * 24)
+                + (long) hour.getSelectedItemPosition() * (1000 * 60 * 60)
+                + (long) minute.getSelectedItemPosition() * (1000 * 60);
 
         ironBuyPush.unitIndex = unit.getSelectedItemPosition();
         ironBuyPush.dayIndex = day.getSelectedItemPosition();
