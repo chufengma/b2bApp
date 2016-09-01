@@ -5,18 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.PopupMenu;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.daasuu.bl.ArrowDirection;
-import com.daasuu.bl.BubbleLayout;
-import com.daasuu.bl.BubblePopupHelper;
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
@@ -29,11 +23,15 @@ import com.onefengma.taobuxiu.utils.NumbersUtils;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
+import com.onefengma.taobuxiu.views.widgets.BubbleView;
 import com.onefengma.taobuxiu.views.widgets.ProgressDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,6 +85,9 @@ public class EditBuyActivity extends BaseActivity {
     IronBuyPush ironBuyPush;
 
     ProgressDialog progressDialog;
+
+    Map<String, List<String>> specMap = new HashMap<>();
+    Map<String, List<String>> torateMap = new HashMap<>();
 
     public static void start(Context context, IronBuyPush push) {
         Intent starter = new Intent(context, EditBuyActivity.class);
@@ -152,25 +153,61 @@ public class EditBuyActivity extends BaseActivity {
         }
 
 
+        specMap.put("1000*100*50", Arrays.asList("1000", "100", "50"));
+        specMap.put("100*100*50", Arrays.asList("100", "100", "50"));
+        specMap.put("1000*5000*50", Arrays.asList("1000", "5000", "50"));
+
         View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if (hasFocus) {
-                    BubbleLayout bubbleLayout = (BubbleLayout) LayoutInflater.from(EditBuyActivity.this).inflate(R.layout.bubble_info_layout, null);
-                    PopupWindow popupWindow = BubblePopupHelper.create(EditBuyActivity.this, bubbleLayout);
-                    int[] location = new int[2];
-                    view.getLocationInWindow(location);
-                    bubbleLayout.setArrowDirection(ArrowDirection.BOTTOM);
 
-                    bubbleLayout.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-                    popupWindow.showAtLocation(view, Gravity.NO_GRAVITY, location[0], location[1] - bubbleLayout.getMeasuredHeight());
+                    new BubbleView().init(EditBuyActivity.this, view, "推荐使用以下规格：", Arrays.asList(specMap.keySet().toArray(new String[specMap.size()])), new BubbleView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(String item) {
+                            if (specMap.containsKey(item)) {
+                                List<String> values = specMap.get(item);
+                                length.setText(values.get(0));
+                                width.setText(values.get(1));
+                                height.setText(values.get(2));
+                            }
+                        }
+                    });
                 }
             }
         };
 
+
+        torateMap.put("1000*100", Arrays.asList("1000", "100"));
+        torateMap.put("800*1600", Arrays.asList("800", "1600"));
+        View.OnFocusChangeListener onTolerateChangeListener = new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+
+                    new BubbleView().init(EditBuyActivity.this, view, "推荐使用以下公差范围：", Arrays.asList(torateMap.keySet().toArray(new String[torateMap.size()])), new BubbleView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(String item) {
+                            if (torateMap.containsKey(item)) {
+                                List<String> values = torateMap.get(item);
+                                toleranceFrom.setText(values.get(0));
+                                toleranceTo.setText(values.get(1));
+                            }
+                        }
+                    });
+                }
+            }
+        };
+
+        toleranceTo.setOnFocusChangeListener(onTolerateChangeListener);
+        toleranceFrom.setOnFocusChangeListener(onTolerateChangeListener);
+
         length.setOnFocusChangeListener(onFocusChangeListener);
         width.setOnFocusChangeListener(onFocusChangeListener);
         height.setOnFocusChangeListener(onFocusChangeListener);
+
+        message.requestFocus();
+        message.requestFocusFromTouch();
     }
 
     @OnClick(R.id.push)

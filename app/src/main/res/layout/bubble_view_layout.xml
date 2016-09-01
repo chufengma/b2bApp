@@ -9,7 +9,7 @@
     app:bl_arrowWidth="8dp"
     app:bl_bubbleColor="@color/colorAccent"
     android:paddingTop="10dip"
-    android:paddingBottom="10dip"
+    android:paddingBottom="5dip"
     app:bl_cornersRadius="2dp">
 
     <LinearLayout
@@ -21,10 +21,18 @@
             android:layout_width="wrap_content"
             android:text="推荐使用下列规格:"
             android:layout_marginBottom="5dip"
-            android:textColor="@color/white"
             android:paddingLeft="10dip"
             android:paddingRight="10dip"
+            android:id="@+id/title"
+            android:textColor="@color/white"
             android:layout_height="wrap_content" />
+
+        <ListView
+            android:id="@+id/list"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 

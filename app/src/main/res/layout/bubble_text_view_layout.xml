@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:layout_marginRight="4dp"
+    android:id="@+id/text"
+    android:padding="8dip"
+    android:gravity="center"
+    android:text="1000 * 1000 * 222"
+    android:background="@drawable/bubble_item_bg"
+    android:textColor="@color/bubble_item_text_colors" />
