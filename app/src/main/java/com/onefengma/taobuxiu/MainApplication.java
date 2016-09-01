@@ -19,6 +19,9 @@ public class MainApplication extends Application {
     private List<BaseActivity> activities = new ArrayList<>();
     private boolean isClearAll = false;
     private BaseActivity currentActivity;
+
+    public static boolean IS_SALES_APP = true;
+
     @Override
     public void onCreate() {
         super.onCreate();

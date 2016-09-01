@@ -1,0 +1,99 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/ic_login_bg"
+    tools:context="com.onefengma.taobuxiu.views.auth.LoginActivity">
+
+    <com.onefengma.taobuxiu.views.widgets.ToolBar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        app:tool_bar_title="@string/login"
+        app:tool_bar_bg="@android:color/transparent"
+        android:layout_height="@dimen/tool_bar_height" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="40dip"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_height="40dip">
+
+        <ImageView
+            android:id="@+id/login_icon"
+            android:src="@drawable/ic_mobile"
+            android:layout_alignParentLeft="true"
+            android:layout_width="30dip"
+            android:layout_height="40dip" />
+
+        <EditText
+            android:id="@+id/mobile"
+            android:inputType="number"
+            android:layout_marginLeft="5dip"
+            android:textSize="16dip"
+            android:hint="@string/mobile_title"
+            android:background="@android:color/transparent"
+            android:layout_toRightOf="@id/login_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:background="@color/login_line"
+            android:layout_height="1px" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="18dip"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_height="40dip">
+
+        <ImageView
+            android:id="@+id/password_icon"
+            android:src="@drawable/ic_password"
+            android:layout_alignParentLeft="true"
+            android:layout_width="30dip"
+            android:layout_height="40dip" />
+
+        <EditText
+            android:id="@+id/password"
+            android:inputType="textPassword"
+            android:layout_marginLeft="5dip"
+            android:hint="@string/pass_title"
+            android:textSize="16dip"
+            android:background="@android:color/transparent"
+            android:layout_toRightOf="@id/password_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:background="@color/login_line"
+            android:layout_height="1px" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/login"
+        android:text="@string/login"
+        android:layout_marginTop="25dip"
+        android:gravity="center"
+        android:textSize="16dip"
+        android:enabled="false"
+        android:paddingTop="8dip"
+        android:clickable="true"
+        android:paddingBottom="8dip"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/register_btn_bg_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

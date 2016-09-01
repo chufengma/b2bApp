@@ -12,6 +12,7 @@ import com.onefengma.taobuxiu.network.persistentcookiejar.cache.SetCookieCache;
 import com.onefengma.taobuxiu.network.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.onefengma.taobuxiu.utils.SPHelper;
 import com.onefengma.taobuxiu.utils.ToastUtils;
+import com.onefengma.taobuxiu.views.sales.SalesAuthManager;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
@@ -38,7 +39,7 @@ import rx.schedulers.Schedulers;
  */
 public class HttpHelper {
 
-    private static final String BASE_URL = "http://10.32.24.115:5389/";
+    private static final String BASE_URL = "http://10.32.24.114:5389/";
 
     private static Retrofit retrofit;
 
@@ -131,8 +132,13 @@ public class HttpHelper {
             if (t.status == 0) {
                 onSuccess(t);
             } else if (t.status == 2) {
-                AuthManager.startLoginActivity();
-                SPHelper.common().save(Constant.StorageKeys.USER_PROFILE, "");
+                if (MainApplication.IS_SALES_APP) {
+                    SalesAuthManager.startLoginActivity();
+                    SPHelper.common().save(Constant.StorageKeys.SALES_PROFILE, "");
+                } else {
+                    AuthManager.startLoginActivity();
+                    SPHelper.common().save(Constant.StorageKeys.USER_PROFILE, "");
+                }
             } else {
                 onFailed(t, new NetworkErrorException(t.errorMsg));
             }

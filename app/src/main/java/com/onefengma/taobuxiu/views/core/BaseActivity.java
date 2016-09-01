@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.onefengma.taobuxiu.MainApplication;
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.manager.PushManager;
 
 /**
  * Created by chufengma on 16/8/7.
@@ -34,6 +35,7 @@ public class BaseActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainApplication.getContext().addActivity(this);
+        PushManager.instance().setCurrentUserAccount();
     }
 
     @Override
