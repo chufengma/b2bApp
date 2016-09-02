@@ -1,12 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_centerInParent="true"
-        android:text="Sales User tab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:background="@color/main_blue"
+        android:layout_height="@dimen/tool_bar_height" >
+        
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab"
+            android:layout_below="@id/toolbar"
+            app:tabIndicatorColor="@color/white"
+            app:tabMode="fixed"
+            app:tabTextAppearance="@style/TabTextStyle"
+            app:tabTextColor="#f1ffffff"
+            app:tabSelectedTextColor="@color/white"
+            app:tabGravity="fill"
+            android:layout_width="220dip"
+            android:layout_height="40dip" />
+        
+    </LinearLayout>
 
-</RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

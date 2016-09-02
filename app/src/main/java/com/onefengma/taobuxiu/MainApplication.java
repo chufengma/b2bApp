@@ -23,7 +23,7 @@ public class MainApplication extends Application {
     private boolean isClearAll = false;
     private BaseActivity currentActivity;
 
-    public static boolean IS_SALES_APP = false;
+    public static boolean IS_SALES_APP = true;
 
     @Override
     public void onCreate() {
