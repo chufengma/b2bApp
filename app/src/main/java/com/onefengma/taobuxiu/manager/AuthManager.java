@@ -49,6 +49,11 @@ public class AuthManager {
         MainApplication.getContext().getCurrentActivity().startActivity(intent);
     }
 
+    public static void quit() {
+        SPHelper.common().save(Constant.StorageKeys.USER_PROFILE, "");
+        startLoginActivity();
+    }
+
     public UserProfile getUserProfile() {
         if (userProfile == null) {
             userProfile = SPHelper.common().get(Constant.StorageKeys.USER_PROFILE, UserProfile.class);

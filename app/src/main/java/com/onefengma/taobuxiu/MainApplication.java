@@ -4,6 +4,9 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.onefengma.taobuxiu.manager.PushManager;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 
@@ -29,6 +32,9 @@ public class MainApplication extends Application {
         // push service
         PushManager.instance().initPushService();
         PushManager.instance().setCurrentUserAccount();
+
+        ImageLoaderConfiguration configuration = (new ImageLoaderConfiguration.Builder(this).defaultDisplayImageOptions(new DisplayImageOptions.Builder().showImageOnFail(R.drawable.ic_detault_icon).build())).build();
+        ImageLoader.getInstance().init(configuration);
     }
 
 

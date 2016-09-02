@@ -124,20 +124,19 @@
             android:name=".views.offers.MySubscribeActivity"
             android:label="@string/title_activity_my_subscribe" />
         <activity android:name=".views.buys.MyBuyHistoryActivity" />
-        <activity android:name=".views.offers.MyOfferHistoryActivity"></activity>
-
+        <activity android:name=".views.offers.MyOfferHistoryActivity" />
         <activity
             android:name=".views.sales.SalesLoginActivity"
             android:label="@string/title_activity_login"
             android:launchMode="singleTask"
             android:theme="@style/AppThemeDark" />
-
         <activity
             android:name=".views.sales.SalesMainActivity"
             android:configChanges="orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeLight" />
+        <activity android:name=".views.auth.SettingActivity"></activity>
     </application>
 
 </manifest>
