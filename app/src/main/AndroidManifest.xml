@@ -134,6 +134,7 @@
             android:name=".views.sales.SalesMainActivity"
             android:configChanges="orientation"
             android:launchMode="singleTask"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeLight" />
         <activity android:name=".views.auth.SettingActivity"></activity>

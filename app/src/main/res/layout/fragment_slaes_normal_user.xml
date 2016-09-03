@@ -16,6 +16,7 @@
             android:id="@+id/search_bar"
             android:hint="手机号码搜索"
             android:background="@drawable/search_bar_layout"
+            android:inputType="number"
             android:padding="5dip"
             android:layout_width="match_parent"
             android:layout_margin="10dip"

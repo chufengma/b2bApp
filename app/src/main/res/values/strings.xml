@@ -69,4 +69,6 @@
     <string name="offer_detail_my_message">备注：%1$s</string>
     <string name="title_activity_my_subscribe">MySubscribeActivity</string>
 
+
+    <string name="sales_user_locate">所在地：%1$s</string>
 </resources>

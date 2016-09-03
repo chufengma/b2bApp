@@ -90,4 +90,24 @@ public class TabIndicatorView extends RelativeLayout {
         TabParams tabParams = new TabParams(R.drawable.ic_main_tab_mine, "我", false);
         return new TabIndicatorView(context, tabParams);
     }
+
+    public static TabIndicatorView newSalesUserTabIndicator(Context context) {
+        TabParams tabParams = new TabParams(R.drawable.ic_main_tab_home, "绑定用户", false);
+        return new TabIndicatorView(context, tabParams);
+    }
+
+    public static TabIndicatorView newSalesQTTabIndicator(Context context) {
+        TabParams tabParams = new TabParams(R.drawable.ic_main_tab_qt, "质检", false);
+        return new TabIndicatorView(context, tabParams);
+    }
+
+    public static TabIndicatorView newSalesBuyTabIndicator(Context context) {
+        TabParams tabParams = new TabParams(R.drawable.ic_main_tab_offer, "求购", false);
+        return new TabIndicatorView(context, tabParams);
+    }
+
+    public static TabIndicatorView newSalesMineTabIndicator(Context context) {
+        TabParams tabParams = new TabParams(R.drawable.ic_main_tab_mine, "账号", false);
+        return new TabIndicatorView(context, tabParams);
+    }
 }

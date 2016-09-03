@@ -19,7 +19,7 @@ public class SalesUserPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new SalesNormalUserFragment();
+                return new SalesSellerUserFragment();
             case 1:
                 return new SalesNormalUserFragment();
         }
@@ -33,6 +33,6 @@ public class SalesUserPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return position == 0 ? "普通用户" : "商家用户";
+        return position == 0 ? "商家用户" : "普通用户";
     }
 }

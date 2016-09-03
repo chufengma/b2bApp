@@ -41,6 +41,7 @@ public abstract class SalesBaseUserFragment extends BaseFragment implements Text
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         list.setAdapter(getAdapter());
+        list.enablePullRefresh(false);
         searchBar.addTextChangedListener(this);
     }
 

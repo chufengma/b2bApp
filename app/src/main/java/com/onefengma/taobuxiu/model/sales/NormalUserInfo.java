@@ -1,4 +1,4 @@
-package com.onefengma.taobuxiu.model.entities;
+package com.onefengma.taobuxiu.model.sales;
 
 /**
  * @author yfchu

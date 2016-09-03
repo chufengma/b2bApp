@@ -11,9 +11,15 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.manager.BuyManager;
+import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.SystemHelper;
-import com.onefengma.taobuxiu.model.entities.NormalUserInfo;
+import com.onefengma.taobuxiu.model.events.sales.SalesGetUsers;
+import com.onefengma.taobuxiu.model.sales.NormalUserInfo;
 import com.onefengma.taobuxiu.utils.DialogUtils;
+import com.onefengma.taobuxiu.views.widgets.listview.XListView;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,20 +37,48 @@ public class SalesNormalUserFragment extends SalesBaseUserFragment implements Te
     NormalSalesAdapter adapter;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBusHelper.register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusHelper.unregister(this);
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        NormalUserInfo userInfo = new NormalUserInfo();
-        userInfo.mobile = "18344441222";
-        NormalUserInfo userInfo2 = new NormalUserInfo();
-        userInfo2.name = "sss";
-        userInfo2.mobile = "18344441221";
-        adapter.setUserInfos(Arrays.asList(userInfo, userInfo2));
+        list.setOnLoadMoreListener(new XListView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                SalesUserManager.instance().loadMoreBindUsers(searchBar.getText().toString());
+            }
+        });
+
+        SalesUserManager.instance().reloadBindUsers(searchBar.getText().toString());
+    }
+
+    @Subscribe
+    public void onLoadUserEvent(SalesGetUsers event) {
+        if (event.isLoadComplete()) {
+            list.onLoadMoreComplete();
+        }
+
+        List<NormalUserInfo> data = SalesUserManager.instance().salesBindUserResponse.userInfos;
+        list.enableLoadMore(data != null
+                && data.size() > 0
+                && data.size() % 15 == 0);
+
+        adapter.setUserInfos(data);
     }
 
     @Override
     public void doSearch(String words) {
-
+        SalesUserManager.instance().reloadBindUsers(words);
     }
 
     @Override
@@ -59,6 +93,9 @@ public class SalesNormalUserFragment extends SalesBaseUserFragment implements Te
         List<NormalUserInfo> userInfos = new ArrayList<>();
 
         public void setUserInfos(List<NormalUserInfo> userInfos) {
+            if (userInfos == null) {
+                return;
+            }
             this.userInfos.clear();
             this.userInfos.addAll(userInfos);
             this.notifyDataSetChanged();

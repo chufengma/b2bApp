@@ -10,6 +10,9 @@ public class Constant {
         public static final String GET_VERIFY_CODE_TIME = "get_verify_code_time";
         public static final String USER_PROFILE = "user_profile";
         public static final String SALES_PROFILE = "sales_profile";
+
+        public static final String SALES_USERS = "sales_users";
+        public static final String SALES_SELLERS = "sales_sellers";
     }
 
     public static class StorageBuyKeys {

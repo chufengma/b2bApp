@@ -63,10 +63,10 @@ public class SalesMainActivity extends BaseActivity {
     }
 
     private void initTabs() {
-        buyIndicatorView = TabIndicatorView.newBuyTabIndicator(this);
-        offerIndicatorView = TabIndicatorView.newOfferTabIndicator(this);
-        mineIndicatorView = TabIndicatorView.newMineTabIndicator(this);
-        qtIndicatorView = TabIndicatorView.newQTTabIndicator(this);
+        buyIndicatorView = TabIndicatorView.newSalesUserTabIndicator(this);
+        qtIndicatorView = TabIndicatorView.newSalesQTTabIndicator(this);
+        offerIndicatorView = TabIndicatorView.newSalesBuyTabIndicator(this);
+        mineIndicatorView = TabIndicatorView.newSalesMineTabIndicator(this);
 
         tab.setup(this, getSupportFragmentManager(), R.id.content);
         tab.addTab(tab.newTabSpec(TAB_FLAG_BUYS).setIndicator(buyIndicatorView), SalesUserFragment.class, null);
