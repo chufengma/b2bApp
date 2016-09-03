@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginTop="2dip"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="0dip"
+        android:layout_weight="1"
+        android:padding="10dip"
+        android:baselineAligned="false"
+        android:layout_marginBottom="2dip"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="不锈钢卷/304/2B/太钢(江苏 无锡)"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_below="@id/title"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="4dip"
+            android:text="报价：110/kg"
+            android:textSize="12dip" />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_below="@id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="4dip"
+            android:text="备注：阿萨德法师打发撒旦法师打发士大夫"
+            android:textSize="12dip" />
+
+        <TextView
+            android:id="@+id/info"
+            android:layout_below="@id/message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="4dip"
+            android:text="中标次数：1次  联系人：梁先生"
+            android:textSize="12dip" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingRight="10dip"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/winner"
+            android:text="已中标"
+            android:textColor="@color/main_green"
+            android:clickable="true"
+            android:padding="4dip"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/contact"
+            android:text="联系卖家"
+            android:layout_marginTop="4dip"
+            android:clickable="true"
+            android:textColor="@color/white"
+            android:paddingLeft="8dip"
+            android:paddingRight="8dip"
+            android:paddingTop="2dip"
+            android:paddingBottom="2dip"
+            android:background="@drawable/get_verify_code_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

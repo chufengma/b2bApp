@@ -27,6 +27,15 @@ import butterknife.ButterKnife;
 public class BuyListAdapter extends BaseAdapter {
 
     public List<IronBuyBrief> myBuys = new ArrayList<>();
+    private OnBuyItemClickListener onBuyItemClickListener;
+
+    public interface OnBuyItemClickListener {
+        void onClickItem(String ironId);
+    }
+
+    public void setOnBuyItemClickListener(OnBuyItemClickListener onBuyItemClickListener) {
+        this.onBuyItemClickListener = onBuyItemClickListener;
+    }
 
     private BuyManager.BuyStatus buyStatus = BuyManager.BuyStatus.DOING;
 
@@ -100,7 +109,11 @@ public class BuyListAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BuyDetailActivity.start((BaseActivity) parent.getContext(), ironBuyBrief.id);
+                if (onBuyItemClickListener == null) {
+                    BuyDetailActivity.start((BaseActivity) parent.getContext(), ironBuyBrief.id);
+                } else {
+                    onBuyItemClickListener.onClickItem(ironBuyBrief.id);
+                }
             }
         });
 

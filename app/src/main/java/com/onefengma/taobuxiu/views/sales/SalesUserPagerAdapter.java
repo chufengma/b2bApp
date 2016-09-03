@@ -20,10 +20,14 @@ public class SalesUserPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 return new SalesSellerUserFragment();
-            case 1:
+            default:
                 return new SalesNormalUserFragment();
         }
-        return new BuyFragmentForDoing();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
     }
 
     @Override

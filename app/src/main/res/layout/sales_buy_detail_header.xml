@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_marginBottom="2dip"
+        android:baselineAligned="false"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="求购信息"
+            android:padding="10dip"
+            android:layout_width="0dip"
+            android:textSize="16dip"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_gravity="right|center_vertical"
+            android:text="2016-08-20 09：40"
+            android:id="@+id/time_limit"
+            android:padding="10dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:padding="10dip"
+        android:baselineAligned="false"
+        android:layout_marginBottom="2dip"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="不锈钢卷/304/2B/太钢(江苏 无锡)"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/sub_title"
+            android:layout_width="match_parent"
+            android:layout_below="@id/title"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="4dip"
+            android:text="10*100*100 11.5~11.6 100kg"
+            android:textSize="12dip" />
+
+        <TextView
+            android:id="@+id/buy_num"
+            android:layout_below="@id/sub_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="4dip"
+            android:text="求购单号：123123123123"
+            android:textSize="12dip" />
+
+        <TextView
+            android:id="@+id/salesman"
+            android:layout_below="@id/buy_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="4dip"
+            android:text="跟进专员： xxx 123311123"
+            android:textSize="12dip" />
+
+
+        <TextView
+            android:id="@+id/contact_user"
+            android:text="联系买家"
+            android:layout_marginTop="4dip"
+            android:clickable="true"
+            android:textColor="@color/white"
+            android:paddingLeft="8dip"
+            android:paddingRight="8dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingTop="2dip"
+            android:paddingBottom="2dip"
+            android:background="@drawable/get_verify_code_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:padding="10dip"
+        android:layout_marginBottom="2dip"
+        android:baselineAligned="false"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="求购细节"
+            android:textSize="16dip"
+            android:id="@+id/desc"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textColor="@color/main_yellow"
+            android:text="6家已报价"
+            android:textSize="12dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/supply_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/supply_count_icon"
+            android:layout_toLeftOf="@id/supply_count"
+            android:src="@drawable/ic_buy_detail_nums"
+            android:layout_centerVertical="true"
+            android:layout_width="20dip"
+            android:layout_height="20dip" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/main_content_bg">
+
+    <com.onefengma.taobuxiu.views.widgets.ToolBar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        app:tool_bar_title="求购细节"
+        app:tool_bar_right="@drawable/ic_delete"
+        android:layout_height="56dip" />
+
+    <com.onefengma.taobuxiu.views.widgets.listview.XListView
+        android:id="@+id/list_view"
+        android:divider="@null"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        />
+
+    <TextView
+        android:id="@+id/totalMoney"
+        android:layout_marginTop="1dip"
+        android:gravity="center"
+        android:background="@color/white"
+        android:padding="20dip"
+        android:layout_width="match_parent"
+        android:textSize="18dip"
+        android:textColor="@color/black"
+        android:text="总成交额：10000"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/sales_actions"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="20dip"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/done_qt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/main_action_btn_bg"
+            android:clickable="true"
+            android:paddingBottom="6dip"
+            android:paddingLeft="16dip"
+            android:paddingRight="16dip"
+            android:paddingTop="6dip"
+            android:text="质检完成"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/cancel_qt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/main_action_btn_bg"
+            android:clickable="true"
+            android:paddingBottom="6dip"
+            android:paddingLeft="16dip"
+            android:paddingRight="16dip"
+            android:paddingTop="6dip"
+            android:text="质检取消"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</LinearLayout>

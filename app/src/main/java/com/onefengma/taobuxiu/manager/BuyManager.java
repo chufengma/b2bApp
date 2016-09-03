@@ -71,9 +71,17 @@ public class BuyManager {
     public List<IronBuyPush> ironBuyPushList = new ArrayList<>();
 
     public enum BuyStatus {
-        DOING,
-        DONE,
-        OUT_OF_DATE
+        DOING(0),
+        DONE(1),
+        OUT_OF_DATE(2);
+        int status;
+        BuyStatus(int status) {
+            this.status = status;
+        }
+
+        public int getStatus() {
+            return status;
+        }
     }
 
     public BuyManager() {

@@ -30,6 +30,16 @@ public class QtListAdapter extends BaseAdapter {
 
     public List<QtDetail> details = new ArrayList<>();
 
+    public interface onIronItemClickListener {
+        void onClick(String ironId);
+    }
+
+    private onIronItemClickListener contentClickListener;
+
+    public void setContentClickListener(onIronItemClickListener contentClickListener) {
+        this.contentClickListener = contentClickListener;
+    }
+
     @Override
     public int getCount() {
         return details.size();
@@ -79,7 +89,11 @@ public class QtListAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BuyDetailActivity.start((BaseActivity) parent.getContext(), ironBuyBrief.id, true);
+                if (contentClickListener == null) {
+                    BuyDetailActivity.start((BaseActivity) parent.getContext(), ironBuyBrief.id, true);
+                } else {
+                    contentClickListener.onClick(ironBuyBrief.id);
+                }
             }
         });
 

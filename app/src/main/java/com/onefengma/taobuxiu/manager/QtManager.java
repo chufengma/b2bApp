@@ -70,7 +70,6 @@ public class QtManager {
 
     public void loadMoreQtList() {
         EventBusHelper.post(new QtListEvent(BaseListStatusEvent.STARTED, MyIronsEventDoing.LOAD_MORE));
-        qtListResponse.currentPage = 0;
 
         HttpHelper.wrap(HttpHelper.create(QtService.class).qtList(qtListResponse.currentPage, qtListResponse.pageCount)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
             @Override

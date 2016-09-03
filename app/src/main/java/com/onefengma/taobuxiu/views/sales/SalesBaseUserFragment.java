@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.utils.StringUtils;
@@ -17,6 +18,7 @@ import com.onefengma.taobuxiu.views.widgets.listview.XListView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author yfchu
@@ -28,6 +30,8 @@ public abstract class SalesBaseUserFragment extends BaseFragment implements Text
     EditText searchBar;
     @BindView(R.id.list)
     XListView list;
+    @BindView(R.id.emptyView)
+    TextView emptyView;
 
     @Nullable
     @Override
@@ -42,10 +46,18 @@ public abstract class SalesBaseUserFragment extends BaseFragment implements Text
         super.onViewCreated(view, savedInstanceState);
         list.setAdapter(getAdapter());
         list.enablePullRefresh(false);
+        list.setEmptyView(emptyView);
         searchBar.addTextChangedListener(this);
     }
 
+    @OnClick(R.id.emptyView)
+    public void onEmptyViewClick() {
+        searchBar.setText("");
+        doSearch("");
+    }
+
     public abstract void doSearch(String words);
+
     public abstract ListAdapter getAdapter();
 
     @Override
@@ -60,9 +72,9 @@ public abstract class SalesBaseUserFragment extends BaseFragment implements Text
         searchBar.postDelayed(new Runnable() {
             @Override
             public void run() {
-              if (StringUtils.equals(searchBar.getText().toString(), words)) {
-                  doSearch(words);
-              }
+                if (StringUtils.equals(searchBar.getText().toString(), words)) {
+                    doSearch(words);
+                }
             }
         }, 500);
     }
@@ -72,7 +84,6 @@ public abstract class SalesBaseUserFragment extends BaseFragment implements Text
     public void afterTextChanged(Editable s) {
 
     }
-
 
 
 }

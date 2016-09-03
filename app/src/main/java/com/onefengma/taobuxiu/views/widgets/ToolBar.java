@@ -97,6 +97,10 @@ public class ToolBar extends RelativeLayout {
         }
     }
 
+    public FrameLayout getLeftImageLayout() {
+        return leftImageLayout;
+    }
+
     public void setTitle(CharSequence title) {
         titleView.setText(title);
     }

@@ -13,6 +13,13 @@ public class Constant {
 
         public static final String SALES_USERS = "sales_users";
         public static final String SALES_SELLERS = "sales_sellers";
+        public static final String SALES_QT_WAITING = "sales_qt_waiting";
+        public static final String SALES_QT_DONE = "sales_qt_done";
+        public static final String SALES_QT_CANCEL = "sales_qt_cancel";
+
+        public static final String SALES_BUY_DOING = "sales_buy_doing";
+        public static final String SALES_BUY_DONE = "sales_buy_done";
+        public static final String SALES_BUY_OUT_OF_DATE = "sales_buy_out_of_date";
     }
 
     public static class StorageBuyKeys {
