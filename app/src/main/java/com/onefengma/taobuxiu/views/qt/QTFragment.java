@@ -19,6 +19,7 @@ import com.onefengma.taobuxiu.model.events.QtListEvent;
 import com.onefengma.taobuxiu.utils.DialogUtils;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
+import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
 import com.onefengma.taobuxiu.views.widgets.listview.XListView;
@@ -125,7 +126,7 @@ public class QTFragment extends BaseFragment {
 
     @OnClick(R.id.right_image)
     public void onRightImageClick() {
-        SystemHelper.open("http://www.baidu.com");
+        QtDescActivity.start((BaseActivity) getActivity());
     }
 
     @Override
