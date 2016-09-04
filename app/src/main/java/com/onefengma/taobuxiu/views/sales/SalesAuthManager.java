@@ -41,6 +41,11 @@ public class SalesAuthManager {
         MainApplication.getContext().getCurrentActivity().startActivity(intent);
     }
 
+    public static void quit() {
+        SPHelper.common().save(Constant.StorageKeys.SALES_PROFILE, "");
+        startLoginActivity();
+    }
+
     public void login(String mobile, String password) {
         if(!VerifyHelper.checkMobileAndPassword(mobile, password)) {
             return;
