@@ -142,6 +142,14 @@
             android:name=".views.sales.SalesBuyDetailActivity"
             android:label="@string/title_activity_sales_buy_detail" >
         </activity>
+        <activity
+            android:name=".views.GuidanceActivity"
+            android:label="@string/title_activity_guidance" >
+        </activity>
+        <activity
+            android:name=".views.mine.MyHistoryActivity"
+            android:label="@string/title_activity_my_history" >
+        </activity>
     </application>
 
 </manifest>

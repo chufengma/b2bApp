@@ -112,6 +112,11 @@ public class MineFragment extends BaseFragment {
         });
     }
 
+    @OnClick(R.id.mine_history)
+    public void clickOnHistory() {
+        MyHistoryActivity.start((BaseActivity) getActivity());
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onTabEvent(OnMineTabEvent onMineTabEvent) {
         System.out.println("-----------------onMineTabEvent");

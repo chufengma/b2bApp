@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/main_content_bg"
+    tools:context="com.onefengma.taobuxiu.views.mine.MyHistoryActivity">
+
+    <com.onefengma.taobuxiu.views.widgets.ToolBar
+        android:layout_width="match_parent"
+        app:tool_bar_title="我的历史"
+        android:layout_height="@dimen/tool_bar_height"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="100dip"
+        android:layout_height="wrap_content">
+
+        <com.onefengma.taobuxiu.views.widgets.HistoryCardView
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:id="@+id/month_buy"
+            android:layout_marginLeft="16dip"
+            android:layout_marginRight="8dip"
+            app:history_title="本月求购"
+            android:layout_height="80dip" />
+
+        <com.onefengma.taobuxiu.views.widgets.HistoryCardView
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_marginLeft="8dip"
+            android:id="@+id/month_done"
+            android:layout_marginRight="8dip"
+            app:history_title="本月成交"
+            android:layout_height="80dip" />
+
+        <com.onefengma.taobuxiu.views.widgets.HistoryCardView
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_marginLeft="8dip"
+            android:id="@+id/month_done_rate"
+            android:layout_marginRight="16dip"
+            app:history_title="本月成功率"
+            android:layout_height="80dip" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="16dip"
+        android:layout_height="wrap_content">
+
+        <com.onefengma.taobuxiu.views.widgets.HistoryCardView
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:id="@+id/month_offer"
+            android:layout_marginLeft="16dip"
+            android:layout_marginRight="8dip"
+            app:history_title="本月报价"
+            android:layout_height="80dip" />
+
+        <com.onefengma.taobuxiu.views.widgets.HistoryCardView
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_marginLeft="8dip"
+            android:id="@+id/month_win"
+            android:layout_marginRight="8dip"
+            app:history_title="本月成交"
+            android:layout_height="80dip" />
+
+        <com.onefengma.taobuxiu.views.widgets.HistoryCardView
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_marginLeft="8dip"
+            android:id="@+id/month_win_rate"
+            android:layout_marginRight="16dip"
+            app:history_title="本月成功率"
+            android:layout_height="80dip" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -10,6 +10,7 @@ public class Constant {
         public static final String GET_VERIFY_CODE_TIME = "get_verify_code_time";
         public static final String USER_PROFILE = "user_profile";
         public static final String USER_TEL = "user_tel";
+        public static final String SHOW_GUIDANCE = "show_guidance";
         public static final String SALES_PROFILE = "sales_profile";
 
         public static final String SALES_USERS = "sales_users";
