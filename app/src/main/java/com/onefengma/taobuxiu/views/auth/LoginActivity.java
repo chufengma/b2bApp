@@ -68,7 +68,7 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
     @Override
     protected void onResume() {
         super.onResume();
-        String userTel = SPHelper.common().sp().getString(Constant.StorageKeys.USER_TEL, "");
+        String userTel = SPHelper.top().sp().getString(Constant.StorageKeys.USER_TEL, "");
         if (!StringUtils.isEmpty(userTel)) {
             mobile.setText(userTel);
         }

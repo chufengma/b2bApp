@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.manager.AuthManager;
 import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.OfferManager;
 import com.onefengma.taobuxiu.manager.OfferManager.OfferStatus;
@@ -70,7 +71,9 @@ public class BaseOfferStatusFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        recyclerView.fakePullRefresh();
+        if (AuthManager.instance().sellerCheck()) {
+            recyclerView.fakePullRefresh();
+        }
     }
 
     @Override
@@ -107,7 +110,9 @@ public class BaseOfferStatusFragment extends BaseFragment {
 
     @OnClick(R.id.emptyView)
     public void clickOnEmptyView() {
-        recyclerView.fakePullRefresh();
+        if (AuthManager.instance().sellerCheck()) {
+            recyclerView.fakePullRefresh();
+        }
     }
 
     @Subscribe

@@ -9,12 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.manager.AuthManager;
 import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.model.entities.UserProfile;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDone;
 import com.onefengma.taobuxiu.model.events.MyIronsEventOutOfDate;
 import com.onefengma.taobuxiu.model.events.OnBuyTabEvent;
+import com.onefengma.taobuxiu.utils.ToastUtils;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 import com.onefengma.taobuxiu.views.widgets.TabItem;
@@ -57,7 +60,9 @@ public class BuyFragment extends BaseFragment {
 
     @OnClick(R.id.right_image)
     public void clickOnRightImage() {
-        PushNewBuyActivity.start((BaseActivity) getActivity());
+        if (AuthManager.instance().sellerCheck()) {
+            PushNewBuyActivity.start((BaseActivity) getActivity());
+        }
     }
 
     @Override

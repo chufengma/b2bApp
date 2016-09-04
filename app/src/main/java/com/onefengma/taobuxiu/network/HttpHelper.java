@@ -135,10 +135,10 @@ public class HttpHelper {
             } else if (t.status == 2) {
                 if (MainApplication.IS_SALES_APP) {
                     SalesAuthManager.startLoginActivity();
-                    SPHelper.common().save(Constant.StorageKeys.SALES_PROFILE, "");
+                    SPHelper.top().save(Constant.StorageKeys.SALES_PROFILE, "");
                 } else {
                     AuthManager.startLoginActivity();
-                    SPHelper.common().save(Constant.StorageKeys.USER_PROFILE, "");
+                    SPHelper.top().save(Constant.StorageKeys.USER_PROFILE, "");
                 }
             } else {
                 onFailed(t, new NetworkErrorException(t.errorMsg));

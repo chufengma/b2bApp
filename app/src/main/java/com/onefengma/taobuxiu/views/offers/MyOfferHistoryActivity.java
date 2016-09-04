@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.manager.AuthManager;
 import com.onefengma.taobuxiu.manager.OfferManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.entities.MyOfferHistoryInfo;
@@ -50,6 +51,10 @@ public class MyOfferHistoryActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         progressDialog = new ProgressDialog(this);
+        if (!AuthManager.instance().sellerCheck()) {
+            finish();
+            return;
+        }
 
         EventBusHelper.register(this);
         OfferManager.instance().getIronOfferHistroy();

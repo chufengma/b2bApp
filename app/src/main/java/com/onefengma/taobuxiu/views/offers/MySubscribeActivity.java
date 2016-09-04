@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.manager.AuthManager;
 import com.onefengma.taobuxiu.manager.OfferManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.IconDataCategory;
@@ -72,6 +73,11 @@ public class MySubscribeActivity extends BaseActivity {
         surfacesAdapter = new CheckAdapter(IconDataCategory.get().surfaces);
         materialAdapter = new CheckAdapter(IconDataCategory.get().materials);
         proPlaceadapter = new CheckAdapter(IconDataCategory.get().productPlaces);
+
+        if (!AuthManager.instance().sellerCheck()) {
+            finish();
+            return;
+        }
 
         viewPager.postDelayed(new Runnable() {
             @Override

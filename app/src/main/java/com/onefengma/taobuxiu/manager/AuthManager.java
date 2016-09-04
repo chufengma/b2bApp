@@ -19,6 +19,8 @@ import com.onefengma.taobuxiu.utils.SPHelper;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
 import com.onefengma.taobuxiu.views.auth.LoginMainActivity;
+import com.onefengma.taobuxiu.views.buys.PushNewBuyActivity;
+import com.onefengma.taobuxiu.views.core.BaseActivity;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -50,13 +52,14 @@ public class AuthManager {
     }
 
     public static void quit() {
-        SPHelper.common().save(Constant.StorageKeys.USER_PROFILE, "");
+        userProfile = null;
+        SPHelper.top().save(Constant.StorageKeys.USER_PROFILE, "");
         startLoginActivity();
     }
 
     public UserProfile getUserProfile() {
         if (userProfile == null) {
-            userProfile = SPHelper.common().get(Constant.StorageKeys.USER_PROFILE, UserProfile.class);
+            userProfile = SPHelper.top().get(Constant.StorageKeys.USER_PROFILE, UserProfile.class);
         }
         return userProfile;
     }
@@ -79,8 +82,8 @@ public class AuthManager {
             @Override
             public void onSuccess(BaseResponse baseResponse) {
                 UserProfile userProfile = JSONHelper.parse(baseResponse.data.toString(), UserProfile.class);
-                SPHelper.common().save(Constant.StorageKeys.USER_PROFILE, userProfile);
-                SPHelper.common().sp().edit().putString(Constant.StorageKeys.USER_TEL, userProfile.mobile).commit();
+                SPHelper.top().save(Constant.StorageKeys.USER_PROFILE, userProfile);
+                SPHelper.top().sp().edit().putString(Constant.StorageKeys.USER_TEL, userProfile.mobile).commit();
                 EventBusHelper.post(new LoginEvent(BaseListStatusEvent.SUCCESS));
             }
 
@@ -90,6 +93,16 @@ public class AuthManager {
                 EventBusHelper.post(new LoginEvent(BaseListStatusEvent.FAILED));
             }
         });
+    }
+
+    public boolean sellerCheck() {
+        UserProfile userProfile = AuthManager.instance().getUserProfile();
+        if (userProfile.seller == null) {
+            ToastUtils.showErrorTasty("您还不是商家，请前往电脑端申请商家身份");
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void doRegister(final String mobile, final String password, String msgCode) {

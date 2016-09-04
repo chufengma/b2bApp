@@ -20,6 +20,8 @@ import com.onefengma.taobuxiu.model.events.MyOffersEvent;
 import com.onefengma.taobuxiu.model.events.UpdateSubscribeInfoEvent;
 import com.onefengma.taobuxiu.network.HttpHelper;
 import com.onefengma.taobuxiu.utils.SPHelper;
+import com.onefengma.taobuxiu.views.buys.PushNewBuyActivity;
+import com.onefengma.taobuxiu.views.core.BaseActivity;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -74,6 +76,9 @@ public class OfferManager {
     }
 
     public void reloadMyOffers(final OfferStatus offerStatus) {
+        if (!AuthManager.instance().sellerCheck()) {
+            return;
+        }
         readFromDB(offerStatus);
         MyOffersResponse myOffersResponseDoing = myOffersResponse[offerStatus.ordinal()];
 
@@ -104,6 +109,9 @@ public class OfferManager {
     }
 
     public void loadMoreOffers(final OfferStatus offerStatus) {
+        if (!AuthManager.instance().sellerCheck()) {
+            return;
+        }
         MyOffersResponse myOffersResponseDoing = myOffersResponse[offerStatus.ordinal()];
         EventBusHelper.post(new MyOffersEvent(BaseListStatusEvent.STARTED, MyIronsEventDoing.RELOAD, offerStatus));
         HttpHelper.wrap(HttpHelper.create(OfferService.class).myIronOffers(myOffersResponseDoing.currentPage, myOffersResponseDoing.pageCount, offerStatus.status)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {

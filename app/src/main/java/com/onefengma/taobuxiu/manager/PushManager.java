@@ -67,12 +67,12 @@ public class PushManager {
     public void setCurrentUserAccount() {
         String userId = "";
         if (MainApplication.IS_SALES_APP) {
-            SalesManDetail salesManDetail = SPHelper.common().get(Constant.StorageKeys.SALES_PROFILE, SalesManDetail.class);
+            SalesManDetail salesManDetail = SPHelper.top().get(Constant.StorageKeys.SALES_PROFILE, SalesManDetail.class);
             if (salesManDetail != null) {
                 userId = salesManDetail.id + "";
             }
         } else {
-            UserProfile userProfile = SPHelper.common().get(Constant.StorageKeys.USER_PROFILE, UserProfile.class);
+            UserProfile userProfile = SPHelper.top().get(Constant.StorageKeys.USER_PROFILE, UserProfile.class);
             if (userProfile != null) {
                 userId = userProfile.userId;
             }

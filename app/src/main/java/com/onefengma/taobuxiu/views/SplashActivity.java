@@ -25,7 +25,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void run() {
                 if(MainApplication.IS_SALES_APP) {
-                    SalesManDetail salesManDetail = SPHelper.common().get(Constant.StorageKeys.SALES_PROFILE, SalesManDetail.class);
+                    SalesManDetail salesManDetail = SPHelper.top().get(Constant.StorageKeys.SALES_PROFILE, SalesManDetail.class);
                     if (salesManDetail == null) {
                         SalesAuthManager.startLoginActivity();
                     } else {
@@ -33,7 +33,7 @@ public class SplashActivity extends BaseActivity {
                         SalesMainActivity.start(SplashActivity.this);
                     }
                 } else {
-                    UserProfile userProfile = SPHelper.common().get(Constant.StorageKeys.USER_PROFILE, UserProfile.class);
+                    UserProfile userProfile = SPHelper.top().get(Constant.StorageKeys.USER_PROFILE, UserProfile.class);
                     if (userProfile == null) {
                         AuthManager.startLoginActivity();
                     } else {

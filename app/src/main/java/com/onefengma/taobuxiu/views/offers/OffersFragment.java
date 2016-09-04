@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.manager.AuthManager;
 import com.onefengma.taobuxiu.manager.OfferManager;
 import com.onefengma.taobuxiu.manager.OfferManager.OfferStatus;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
