@@ -13,7 +13,9 @@ import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.SystemHelper;
+import com.onefengma.taobuxiu.model.IconDataCategory;
 import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
+import com.onefengma.taobuxiu.model.entities.IronBuyPush;
 import com.onefengma.taobuxiu.model.entities.MyIronBuyDetail;
 import com.onefengma.taobuxiu.model.entities.SalesMan;
 import com.onefengma.taobuxiu.model.entities.SupplyBrief;
@@ -32,7 +34,6 @@ import com.onefengma.taobuxiu.views.widgets.listview.XListView;
 
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -126,7 +127,7 @@ public class BuyDetailActivity extends BaseActivity {
             listView.fakePullRefresh();
 
             if (event.totalMoney >= 5000) {
-                DialogUtils.showAlertDialog(this, "是否发送质检请求？", "您已达到质检服务门槛，点『确认』后，您的申请将发送至专员客户端。",  new DialogInterface.OnClickListener() {
+                DialogUtils.showAlertDialog(this, "是否发送质检请求？", "您已达到质检服务门槛，点『确认』后，您的申请将发送至专员客户端。", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         BuyManager.instance().qtIronBuy(event.ironId);
@@ -180,7 +181,7 @@ public class BuyDetailActivity extends BaseActivity {
         if (event.isSuccess()) {
             if (isOnlyShowWinner && event.detail.supplies != null) {
                 List<SupplyBrief> supplies = event.detail.supplies;
-                for(SupplyBrief supplyBrief : supplies) {
+                for (SupplyBrief supplyBrief : supplies) {
                     if (supplyBrief.isWinner) {
                         event.detail.supplies = Arrays.asList(supplyBrief);
                         break;
@@ -194,7 +195,7 @@ public class BuyDetailActivity extends BaseActivity {
     private void setUpViews(MyIronBuyDetail detail) {
         headerViewHolder.display(detail);
         buyDetailSupplyListAdapter.setDetail(detail);
-        rightImage.setVisibility(detail.buy.status == BuyManager.BuyStatus.DOING.ordinal() ? View.VISIBLE: View.GONE);
+        rightImage.setVisibility(detail.buy.status == BuyManager.BuyStatus.DOING.ordinal() ? View.VISIBLE : View.GONE);
     }
 
     public static class BuyDetailSupplyListAdapter extends BaseAdapter {
@@ -317,13 +318,15 @@ public class BuyDetailActivity extends BaseActivity {
         View editView;
         @BindView(R.id.supply_count_icon)
         View supplyCountIcon;
+        @BindView(R.id.message)
+        TextView messageView;
 
         HeaderViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
 
         public void display(MyIronBuyDetail detail) {
-            IronBuyBrief ironBuyBrief = detail.buy;
+            final IronBuyBrief ironBuyBrief = detail.buy;
             if (ironBuyBrief != null) {
                 title.setText(ironBuyBrief.ironType + "/" + ironBuyBrief.material + "/" + ironBuyBrief.surface + "/" + ironBuyBrief.proPlace + "( " + ironBuyBrief.sourceCity + ")");
                 subTitle.setText(ironBuyBrief.length + "*" + ironBuyBrief.width + "*" + ironBuyBrief.height + " " + ironBuyBrief.tolerance + " " + ironBuyBrief.numbers + "" + ironBuyBrief.unit);
@@ -333,14 +336,43 @@ public class BuyDetailActivity extends BaseActivity {
                 buyNum.setText(StringUtils.getString(R.string.buy_detail_buy_num, ironBuyBrief.id));
 
                 String timePrefix = detail.buy.status == BuyManager.BuyStatus.DONE.ordinal() ? "成交时间：" : "过期时间：";
-                String timeStr = detail.buy.status == BuyManager.BuyStatus.DONE.ordinal() ? DateUtils.getDateStr(ironBuyBrief.supplyWinTime) :  DateUtils.getDateStr(ironBuyBrief.timeLimit + ironBuyBrief.pushTime);
+                String timeStr = detail.buy.status == BuyManager.BuyStatus.DONE.ordinal() ? DateUtils.getDateStr(ironBuyBrief.supplyWinTime) : DateUtils.getDateStr(ironBuyBrief.timeLimit + ironBuyBrief.pushTime);
                 timeLimit.setText(timePrefix + timeStr);
-                editView.setVisibility(ironBuyBrief.status == BuyManager.BuyStatus.DOING.ordinal() ? View.VISIBLE : View.GONE);
+                editView.setVisibility(ironBuyBrief.status == BuyManager.BuyStatus.DOING.ordinal() && ironBuyBrief.editStatus == 0 ? View.VISIBLE : View.GONE);
+                messageView.setText(StringUtils.getString(R.string.buy_item_message, ironBuyBrief.message));
             }
+
+            editView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    IronBuyPush ironBuyPush = new IronBuyPush();
+                    ironBuyPush.width = NumbersUtils.parseFloat(ironBuyBrief.width);
+                    ironBuyPush.height = NumbersUtils.parseFloat(ironBuyBrief.height);
+                    ironBuyPush.length = NumbersUtils.parseFloat(ironBuyBrief.length);
+                    ironBuyPush.ironType = ironBuyBrief.ironType;
+                    ironBuyPush.surface = ironBuyBrief.surface;
+                    ironBuyPush.material = ironBuyBrief.material;
+                    ironBuyPush.proPlace = ironBuyBrief.proPlace;
+                    ironBuyPush.locationCityId = ironBuyBrief.locationCityId;
+                    ironBuyPush.numbers = ironBuyBrief.numbers.floatValue();
+                    ironBuyPush.ironId = ironBuyBrief.id;
+                    ironBuyPush.message = ironBuyBrief.message;
+                    ironBuyPush.unit = ironBuyBrief.unit;
+                    ironBuyPush.pushStatus = 1;
+                    ironBuyPush.toleranceTo = NumbersUtils.parseFloat(ironBuyBrief.tolerance.split("-")[1]);
+                    ironBuyPush.toleranceFrom = NumbersUtils.parseFloat(ironBuyBrief.tolerance.split("-")[0]);
+
+                    ironBuyPush.unitIndex = IconDataCategory.get().units.indexOf(ironBuyPush.unit);
+                    ironBuyPush.dayIndex = (int) (ironBuyBrief.timeLimit / (DateUtils.dayTime()));
+                    ironBuyPush.hourIndex = (int) ((ironBuyBrief.timeLimit%DateUtils.dayTime()) / (DateUtils.hourTime()));
+                    ironBuyPush.hourIndex = (int) (((ironBuyBrief.timeLimit%DateUtils.dayTime())%DateUtils.hourTime() / (DateUtils.minuteTime())));
+                    EditBuyActivity.start(BuyDetailActivity.this, ironBuyPush);
+                }
+            });
 
             SalesMan salesMan = detail.salesMan;
             if (salesMan != null) {
-                salesman.setText(StringUtils.getString(R.string.buy_detail_salesman, salesMan.id + "  " + salesMan.tel));
+                salesman.setText(StringUtils.getString(R.string.buy_detail_salesman, salesMan.id + "  " + salesMan.name + "  " + salesMan.tel));
             } else {
                 salesman.setText(StringUtils.getString(R.string.buy_detail_salesman, "暂无"));
             }

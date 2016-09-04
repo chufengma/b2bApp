@@ -9,12 +9,20 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.onefengma.taobuxiu.MainApplication;
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.AuthManager;
+import com.onefengma.taobuxiu.manager.PushManager;
+import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
+import com.onefengma.taobuxiu.model.events.LoginEvent;
 import com.onefengma.taobuxiu.utils.StringUtils;
+import com.onefengma.taobuxiu.views.MainActivity;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.widgets.CountDownTextView;
+import com.onefengma.taobuxiu.views.widgets.ProgressDialog;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +45,8 @@ public class RegisterActivity extends BaseActivity implements CompoundButton.OnC
     @BindView(R.id.agree_btn)
     CheckBox agreeBtn;
 
+    ProgressDialog progressDialog;
+
     public static void start(BaseActivity activity) {
         Intent intent = new Intent(activity, RegisterActivity.class);
         activity.startActivity(intent);
@@ -47,6 +57,7 @@ public class RegisterActivity extends BaseActivity implements CompoundButton.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
+        progressDialog = new ProgressDialog(this);
 
         agreeBtn.setOnCheckedChangeListener(this);
         mobile.addTextChangedListener(this);
@@ -57,6 +68,20 @@ public class RegisterActivity extends BaseActivity implements CompoundButton.OnC
     @OnClick(R.id.verify_code_counter)
     public void onMsgCodeClick() {
         AuthManager.instance().doGetMsgCode(mobile.getText().toString());
+    }
+
+    @Subscribe
+    public void onLoginEvent(LoginEvent event) {
+        if (event.status == BaseListStatusEvent.STARTED) {
+            progressDialog.show("登陆中...");
+            return;
+        }
+        progressDialog.dismiss();
+        if (event.status == BaseListStatusEvent.SUCCESS) {
+            MainApplication.getContext().finishActivities();
+            PushManager.instance().setCurrentUserAccount();
+            MainActivity.start(this);
+        }
     }
 
     @OnClick(R.id.register)

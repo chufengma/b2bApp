@@ -39,12 +39,12 @@ public class DemoMessageReceiver extends PushMessageReceiver {
     @Override
     public void onReceivePassThroughMessage(Context context, final MiPushMessage message) {
         mMessage = message.getContent();
-        if(!TextUtils.isEmpty(message.getTopic())) {
-            mTopic=message.getTopic();
-        } else if(!TextUtils.isEmpty(message.getAlias())) {
-            mAlias=message.getAlias();
-        } else if(!TextUtils.isEmpty(message.getUserAccount())) {
-            mUserAccount=message.getUserAccount();
+        if (!TextUtils.isEmpty(message.getTopic())) {
+            mTopic = message.getTopic();
+        } else if (!TextUtils.isEmpty(message.getAlias())) {
+            mAlias = message.getAlias();
+        } else if (!TextUtils.isEmpty(message.getUserAccount())) {
+            mUserAccount = message.getUserAccount();
         }
 
         String type = message.getExtra().get(BasePushData.PUSH_TYPE_KEY);
@@ -52,10 +52,9 @@ public class DemoMessageReceiver extends PushMessageReceiver {
         if (StringUtils.equals(type, BasePushData.PUSH_TYPE_BUY)) {
             if (MainApplication.getContext().isAppOnForeground()) {
                 EventBusHelper.post(JSON.parseObject(message.getContent(), BuyPushData.class));
-            } else {
-                Intent intent = MainActivity.getIntent(MainApplication.getContext());
-                NotificationHelper.showNotification(message.getTitle(), message.getDescription(), intent);
             }
+            Intent intent = MainActivity.getIntent(MainApplication.getContext());
+            NotificationHelper.showNotification(message.getTitle(), message.getDescription(), intent);
         } else if (StringUtils.equals(type, BasePushData.PUSH_TYPE_WIN_OFFER)) {
             Intent intent = MainActivity.getIntent(MainApplication.getContext());
             NotificationHelper.showNotification(message.getTitle(), message.getDescription(), intent);
@@ -68,23 +67,23 @@ public class DemoMessageReceiver extends PushMessageReceiver {
     @Override
     public void onNotificationMessageClicked(Context context, MiPushMessage message) {
         mMessage = message.getContent();
-        if(!TextUtils.isEmpty(message.getTopic())) {
-            mTopic=message.getTopic();
-        } else if(!TextUtils.isEmpty(message.getAlias())) {
-            mAlias=message.getAlias();
-        } else if(!TextUtils.isEmpty(message.getUserAccount())) {
-            mUserAccount=message.getUserAccount();
+        if (!TextUtils.isEmpty(message.getTopic())) {
+            mTopic = message.getTopic();
+        } else if (!TextUtils.isEmpty(message.getAlias())) {
+            mAlias = message.getAlias();
+        } else if (!TextUtils.isEmpty(message.getUserAccount())) {
+            mUserAccount = message.getUserAccount();
         }
     }
 
     @Override
     public void onNotificationMessageArrived(Context context, MiPushMessage message) {
         mMessage = message.getContent();
-        if(!TextUtils.isEmpty(message.getTopic())) {
+        if (!TextUtils.isEmpty(message.getTopic())) {
             mTopic = message.getTopic();
-        } else if(!TextUtils.isEmpty(message.getAlias())) {
+        } else if (!TextUtils.isEmpty(message.getAlias())) {
             mAlias = message.getAlias();
-        } else if(!TextUtils.isEmpty(message.getUserAccount())) {
+        } else if (!TextUtils.isEmpty(message.getUserAccount())) {
             mUserAccount = message.getUserAccount();
         }
     }

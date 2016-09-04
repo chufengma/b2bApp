@@ -52,8 +52,36 @@
                     android:textColor="@color/black"
                     android:textSize="16dip" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="16dip"
+                android:paddingRight="16dip">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/blue_dot"
+                    android:drawablePadding="10dip"
+                    android:text="材质："
+                    android:textColor="@color/black"
+                    android:textSize="16dip" />
 
+                <TextView
+                    android:id="@+id/material"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_weight="1"
+                    android:background="?attr/actionBarItemBackground"
+                    android:clickable="true"
+                    android:gravity="left"
+                    android:hint="选择材料"
+                    android:padding="7dip"
+                    android:textColor="@color/black"
+                    android:textSize="16dip" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,37 +125,6 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/blue_dot"
                     android:drawablePadding="10dip"
-                    android:text="材料："
-                    android:textColor="@color/black"
-                    android:textSize="16dip" />
-
-                <TextView
-                    android:id="@+id/material"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:layout_weight="1"
-                    android:background="?attr/actionBarItemBackground"
-                    android:clickable="true"
-                    android:gravity="left"
-                    android:hint="选择材料"
-                    android:padding="7dip"
-                    android:textColor="@color/black"
-                    android:textSize="16dip" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingLeft="16dip"
-                android:paddingRight="16dip">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/blue_dot"
-                    android:drawablePadding="10dip"
                     android:text="产地："
                     android:textColor="@color/black"
                     android:textSize="16dip" />
@@ -145,6 +142,210 @@
                     android:padding="7dip"
                     android:textColor="@color/black"
                     android:textSize="16dip" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="16dip"
+                android:paddingRight="16dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/blue_dot"
+                    android:drawablePadding="10dip"
+                    android:text="厚度："
+                    android:textColor="@color/black"
+                    android:textSize="16dip" />
+
+                <EditText
+                    android:id="@+id/height"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:gravity="left"
+                    android:hint="填写厚度"
+                    android:inputType="numberDecimal"
+                    android:padding="7dip"
+                    android:textColor="@color/black"
+                    android:textSize="16dip" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="16dip"
+                android:paddingRight="16dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/blue_dot"
+                    android:drawablePadding="10dip"
+                    android:text="宽度："
+                    android:textColor="@color/black"
+                    android:textSize="16dip" />
+
+                <EditText
+                    android:id="@+id/width"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:gravity="left"
+                    android:hint="填写宽度"
+                    android:inputType="numberDecimal"
+                    android:padding="7dip"
+                    android:textColor="@color/black"
+                    android:textSize="16dip" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="16dip"
+                android:paddingRight="16dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/blue_dot"
+                    android:drawablePadding="10dip"
+                    android:text="长度："
+                    android:textColor="@color/black"
+                    android:textSize="16dip" />
+
+                <EditText
+                    android:id="@+id/length"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:gravity="left"
+                    android:hint="填写长度"
+                    android:inputType="numberDecimal"
+                    android:padding="7dip"
+                    android:textColor="@color/black"
+                    android:textSize="16dip" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="16dip"
+                android:paddingRight="16dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/blue_dot"
+                    android:drawablePadding="10dip"
+                    android:text="公差："
+                    android:textColor="@color/black"
+                    android:textSize="16dip" />
+
+
+                <EditText
+                    android:id="@+id/toleranceFrom"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:gravity="left"
+                    android:hint="公差"
+                    android:inputType="numberDecimal"
+                    android:padding="7dip"
+                    android:textColor="@color/black"
+                    android:textSize="16dip" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:background="?attr/actionBarItemBackground"
+                    android:clickable="true"
+                    android:gravity="left"
+                    android:hint="~"
+                    android:textColor="@color/black"
+                    android:textSize="16dip" />
+
+                <EditText
+                    android:id="@+id/toleranceTo"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:gravity="left"
+                    android:hint="公差"
+                    android:inputType="numberDecimal"
+                    android:padding="7dip"
+                    android:textColor="@color/black"
+                    android:textSize="16dip" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="16dip"
+                android:paddingRight="16dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/blue_dot"
+                    android:drawablePadding="10dip"
+                    android:text="数量："
+                    android:textColor="@color/black"
+                    android:textSize="16dip" />
+
+                <EditText
+                    android:id="@+id/numbers"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:gravity="left"
+                    android:hint="填写数量"
+                    android:inputType="numberDecimal"
+                    android:padding="7dip"
+                    android:textColor="@color/black"
+                    android:textSize="16dip" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/unit"
+                    android:layout_width="80dip"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/units" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -177,206 +378,6 @@
                     android:textColor="@color/black"
                     android:textSize="16dip" />
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingLeft="16dip"
-                android:paddingRight="16dip">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/blue_dot"
-                    android:drawablePadding="10dip"
-                    android:text="公差："
-                    android:textColor="@color/black"
-                    android:textSize="16dip" />
-
-
-                <EditText
-                    android:id="@+id/toleranceFrom"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:clickable="true"
-                    android:gravity="left"
-                    android:hint="公差"
-                    android:inputType="number"
-                    android:padding="7dip"
-                    android:textColor="@color/black"
-                    android:textSize="16dip" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:background="?attr/actionBarItemBackground"
-                    android:clickable="true"
-                    android:gravity="left"
-                    android:hint="~"
-                    android:textColor="@color/black"
-                    android:textSize="16dip" />
-
-                <EditText
-                    android:id="@+id/toleranceTo"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:clickable="true"
-                    android:gravity="left"
-                    android:hint="公差"
-                    android:inputType="number"
-                    android:padding="7dip"
-                    android:textColor="@color/black"
-                    android:textSize="16dip" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingLeft="16dip"
-                android:paddingRight="16dip">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/blue_dot"
-                    android:drawablePadding="10dip"
-                    android:text="厚度："
-                    android:textColor="@color/black"
-                    android:textSize="16dip" />
-
-                <EditText
-                    android:id="@+id/height"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:clickable="true"
-                    android:gravity="left"
-                    android:hint="填写厚度"
-                    android:inputType="number"
-                    android:padding="7dip"
-                    android:textColor="@color/black"
-                    android:textSize="16dip" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingLeft="16dip"
-                android:paddingRight="16dip">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/blue_dot"
-                    android:drawablePadding="10dip"
-                    android:text="长度："
-                    android:textColor="@color/black"
-                    android:textSize="16dip" />
-
-                <EditText
-                    android:id="@+id/length"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:clickable="true"
-                    android:gravity="left"
-                    android:hint="填写长度"
-                    android:inputType="number"
-                    android:padding="7dip"
-                    android:textColor="@color/black"
-                    android:textSize="16dip" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingLeft="16dip"
-                android:paddingRight="16dip">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/blue_dot"
-                    android:drawablePadding="10dip"
-                    android:text="宽度："
-                    android:textColor="@color/black"
-                    android:textSize="16dip" />
-
-                <EditText
-                    android:id="@+id/width"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:clickable="true"
-                    android:gravity="left"
-                    android:hint="填写宽度"
-                    android:inputType="number"
-                    android:padding="7dip"
-                    android:textColor="@color/black"
-                    android:textSize="16dip" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingLeft="16dip"
-                android:paddingRight="16dip">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/blue_dot"
-                    android:drawablePadding="10dip"
-                    android:text="数量："
-                    android:textColor="@color/black"
-                    android:textSize="16dip" />
-
-                <EditText
-                    android:id="@+id/numbers"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:clickable="true"
-                    android:gravity="left"
-                    android:hint="填写数量"
-                    android:inputType="number"
-                    android:padding="7dip"
-                    android:textColor="@color/black"
-                    android:textSize="16dip" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="/" />
-
-                <android.support.v7.widget.AppCompatSpinner
-                    android:id="@+id/unit"
-                    android:layout_width="80dip"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/units" />
-
-            </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -484,6 +485,22 @@
                     android:paddingTop="6dip"
                     android:text="保存"
                     android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/re_push"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dip"
+                    android:background="@drawable/main_action_btn_bg"
+                    android:clickable="true"
+                    android:paddingBottom="6dip"
+                    android:paddingLeft="16dip"
+                    android:paddingRight="16dip"
+                    android:paddingTop="6dip"
+                    android:text="保存更改"
+                    android:textColor="@color/white" />
+
             </LinearLayout>
 
             <TextView

@@ -382,6 +382,29 @@ public class BuyManager {
         }
     }
 
+    public void doRePushIronBuy(IronBuyPush push) {
+        if (push.timeLimit <= 0) {
+            ToastUtils.showInfoTasty("时间期限必须大于0");
+            return;
+        }
+        EventBusHelper.post(new IronBuyPushEvent(BaseStatusEvent.STARTED, true));
+
+        HttpHelper.wrap(HttpHelper.create(BuyService.class)
+                .reBuyPush(push.ironId, push.ironType, push.material, push.surface, push.proPlace, push.locationCityId, push.message, push.length, push.width, push.height, push.toleranceFrom, push.toleranceTo, push.numbers, push.timeLimit, push.unit))
+                .subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse data) {
+                        EventBusHelper.post(new IronBuyPushEvent(BaseStatusEvent.SUCCESS, true));
+                    }
+
+                    @Override
+                    public void onFailed(BaseResponse baseResponse, Throwable e) {
+                        super.onFailed(baseResponse, e);
+                        EventBusHelper.post(new IronBuyPushEvent(BaseStatusEvent.FAILED, true));
+                    }
+                });
+    }
+
     public void doPushIronBuy(IronBuyPush push) {
         deleteIronBuy(push);
 
@@ -482,6 +505,23 @@ public class BuyManager {
         @FormUrlEncoded
         @POST("iron/buy")
         Observable<BaseResponse> ironBuyPush(@Field(("ironType")) String ironType,
+                                             @Field(("material")) String material,
+                                             @Field(("surface")) String surface,
+                                             @Field(("proPlace")) String proPlace,
+                                             @Field(("locationCityId")) String locationCityId,
+                                             @Field(("message")) String message,
+                                             @Field(("length")) float length,
+                                             @Field(("width")) float width,
+                                             @Field(("height")) float height,
+                                             @Field(("toleranceFrom")) float toleranceFrom,
+                                             @Field(("toleranceTo")) float toleranceTo,
+                                             @Field(("numbers")) float numbers,
+                                             @Field(("timeLimit")) long timeLimit,
+                                             @Field(("unit")) String unit);
+
+        @FormUrlEncoded
+        @POST("iron/editBuy")
+        Observable<BaseResponse> reBuyPush(@Field(("ironId")) String ironId, @Field(("ironType")) String ironType,
                                              @Field(("material")) String material,
                                              @Field(("surface")) String surface,
                                              @Field(("proPlace")) String proPlace,

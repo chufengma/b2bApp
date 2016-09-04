@@ -88,6 +88,8 @@ public class EditBuyActivity extends BaseActivity {
 
     Map<String, List<String>> specMap = new HashMap<>();
     Map<String, List<String>> torateMap = new HashMap<>();
+    @BindView(R.id.re_push)
+    TextView rePush;
 
     public static void start(Context context, IronBuyPush push) {
         Intent starter = new Intent(context, EditBuyActivity.class);
@@ -103,10 +105,15 @@ public class EditBuyActivity extends BaseActivity {
         ironBuyPush = (IronBuyPush) getIntent().getSerializableExtra(EXTRA_IRON_BUY);
         if (ironBuyPush == null) {
             ironBuyPush = new IronBuyPush();
+            ironBuyPush.dayIndex = 1;
         }
         progressDialog = new ProgressDialog(this);
         EventBusHelper.register(this);
         setupViews();
+
+        save.setVisibility(ironBuyPush.pushStatus == 0 ? View.VISIBLE : View.GONE);
+        push.setVisibility(ironBuyPush.pushStatus == 0 ? View.VISIBLE : View.GONE);
+        rePush.setVisibility(ironBuyPush.pushStatus == 0 ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -215,14 +222,16 @@ public class EditBuyActivity extends BaseActivity {
         doPush();
     }
 
+    @OnClick(R.id.re_push)
+    public void clickOnRePush() {
+        doRePush();
+    }
+
     @OnClick(R.id.save)
     public void clickOnSave() {
         doSave();
     }
 
-    @OnClick(R.id.length)
-    public void clickOnLength(View view) {
-    }
 
     @Subscribe
     public void onPushEvent(IronBuyPushEvent event) {
@@ -233,10 +242,18 @@ public class EditBuyActivity extends BaseActivity {
             progressDialog.dismiss();
         }
         if (event.isSuccess()) {
-            ToastUtils.showSuccessTasty("发布求购成功！");
+            if (event.isRePush) {
+                ToastUtils.showSuccessTasty("更新求购成功！");
+            } else {
+                ToastUtils.showSuccessTasty("发布求购成功！");
+            }
             finish();
         } else {
-            ToastUtils.showSuccessTasty("发布求购失败，请重试！");
+            if (event.isRePush) {
+                ToastUtils.showErrorTasty("更新求购失败，请重试！");
+            } else {
+                ToastUtils.showErrorTasty("发布求购失败，请重试！");
+            }
         }
     }
 
@@ -311,14 +328,20 @@ public class EditBuyActivity extends BaseActivity {
         BuyManager.instance().doPushIronBuy(ironBuyPush);
     }
 
+    private void doRePush() {
+        if (!doCheck()) {
+            return;
+        }
+        BuyManager.instance().doRePushIronBuy(ironBuyPush);
+    }
+
     private void doSave() {
         if (!doCheck()) {
             return;
         }
         BuyManager.instance().saveIronBuy(ironBuyPush);
-        ToastUtils.showSuccessTasty("保存成功, 您可以继续填写");
+        ToastUtils.showSuccessTasty("保存成功!");
         finish();
-        EditBuyActivity.start(this, null);
     }
 
     @OnClick(R.id.type)

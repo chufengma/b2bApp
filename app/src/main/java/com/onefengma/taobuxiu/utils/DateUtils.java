@@ -14,4 +14,16 @@ public class DateUtils {
         return dateFormat.format(new Date(timestamp));
     }
 
+    public static long dayTime() {
+        return 1000 * 60 * 60 * 24;
+    }
+
+    public static long hourTime() {
+        return 1000 * 60 * 60;
+    }
+
+    public static long minuteTime() {
+        return 1000 * 60;
+    }
+
 }

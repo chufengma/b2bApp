@@ -56,7 +56,7 @@
 
     <string name="offer_detail_type">品类： %1$s</string>
     <string name="offer_detail_surface">表面： %1$s</string>
-    <string name="offer_detail_material">材料： %1$s</string>
+    <string name="offer_detail_material">材质： %1$s</string>
     <string name="offer_detail_pro_place">产地： %1$s</string>
     <string name="offer_detail_locate_place">收货城市： %1$s</string>
     <string name="offer_detail_info">规格： %1$s</string>

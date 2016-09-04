@@ -117,6 +117,7 @@
     <string-array name="units">
         <item>kg</item>
         <item>个</item>
+        <item>T</item>
         <item>平方</item>
         <item>片</item>
         <item>支</item>

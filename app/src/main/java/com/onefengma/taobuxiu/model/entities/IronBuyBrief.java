@@ -30,4 +30,5 @@ public class IronBuyBrief {
     public int supplyCount;
     public int newSupplyNum;
     public String sourceCity;
+    public int editStatus; // 0表示未编辑,1 表示已编辑
 }

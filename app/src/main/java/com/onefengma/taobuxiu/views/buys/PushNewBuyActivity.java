@@ -47,7 +47,11 @@ public class PushNewBuyActivity extends BaseActivity {
 
     @OnClick(R.id.right_image)
     public void clickOnRightImage() {
-        BuyManager.instance().doPushAllIronBuy();
+        if (pushListAdapter.getCount() == 0) {
+            ToastUtils.showInfoTasty("您尚未添加待发布的求购，请添加求购后再来点击我吧！");
+        } else {
+            BuyManager.instance().doPushAllIronBuy();
+        }
     }
 
     @Subscribe

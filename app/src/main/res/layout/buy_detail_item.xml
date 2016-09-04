@@ -70,6 +70,8 @@
         <TextView
             android:id="@+id/winner"
             android:text="已中标"
+            android:textSize="18dip"
+            android:textStyle="bold"
             android:textColor="@color/main_green"
             android:clickable="true"
             android:padding="4dip"

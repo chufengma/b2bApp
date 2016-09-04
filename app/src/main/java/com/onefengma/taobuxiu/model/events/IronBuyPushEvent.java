@@ -6,6 +6,13 @@ package com.onefengma.taobuxiu.model.events;
  */
 public class IronBuyPushEvent extends BaseStatusEvent {
 
+    public boolean isRePush = false;
+
+    public IronBuyPushEvent(int status, boolean isRePush) {
+        this.status = status;
+        this.isRePush = true;
+    }
+
     public IronBuyPushEvent(int status) {
         this.status = status;
     }

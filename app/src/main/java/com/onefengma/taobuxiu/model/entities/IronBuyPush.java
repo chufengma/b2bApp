@@ -29,6 +29,9 @@ public class IronBuyPush implements Serializable {
     public int minuteIndex;
 
     public long id;
+    public String ironId;
+
+    public int pushStatus;// 0 表示发布新的 1 更新已发布的求购
 
     public IronBuyPush() {
         id = System.currentTimeMillis();

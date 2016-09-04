@@ -63,7 +63,7 @@
                     android:drawableLeft="@drawable/blue_dot"
                     android:drawablePadding="10dip"
                     android:padding="5dip"
-                    android:text="材料： 304"
+                    android:text="材质： 304"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -191,7 +191,7 @@
                     android:layout_marginRight="5dip"
                     android:layout_toLeftOf="@id/unit"
                     android:hint="输入报价"
-                    android:inputType="number" />
+                    android:inputType="numberDecimal" />
 
                 <EditText
                     android:id="@+id/message_edit"

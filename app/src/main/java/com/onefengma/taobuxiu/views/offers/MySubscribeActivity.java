@@ -93,10 +93,10 @@ public class MySubscribeActivity extends BaseActivity {
             return;
         }
         SubscribeInfo subscribeInfo = new SubscribeInfo();
-        subscribeInfo.materials = materialAdapter.checkedList;
-        subscribeInfo.proPlaces = proPlaceadapter.checkedList;
-        subscribeInfo.types = typesAdapter.checkedList;
-        subscribeInfo.surfaces = surfacesAdapter.checkedList;
+        subscribeInfo.materials = materialAdapter.getCheckedList();
+        subscribeInfo.proPlaces = proPlaceadapter.getCheckedList();
+        subscribeInfo.types = typesAdapter.getCheckedList();
+        subscribeInfo.surfaces = surfacesAdapter.getCheckedList();
         OfferManager.instance().updateMySubscribeInfo(subscribeInfo);
     }
 
@@ -155,15 +155,15 @@ public class MySubscribeActivity extends BaseActivity {
             recyclerView.setLayoutManager(layoutManager);
             CheckAdapter adapter = null;
 
-            List<String> data ;
+            List<String> data;
             switch (position) {
-                case 0 :
+                case 0:
                     adapter = typesAdapter;
                     break;
-                case 1 :
+                case 1:
                     adapter = surfacesAdapter;
                     break;
-                case 2 :
+                case 2:
                     adapter = materialAdapter;
                     break;
                 default:
@@ -178,12 +178,12 @@ public class MySubscribeActivity extends BaseActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-                case 0 :
+                case 0:
                     return "品类";
-                case 1 :
+                case 1:
                     return "表面";
-                case 2 :
-                    return "材料";
+                case 2:
+                    return "材质";
                 default:
                     return "产地";
             }
@@ -198,22 +198,25 @@ public class MySubscribeActivity extends BaseActivity {
     class CheckAdapter extends RecyclerView.Adapter<ViewHolder> implements CompoundButton.OnCheckedChangeListener {
 
         public List<String> list = new ArrayList<>();
-        public List<String> checkedList = new ArrayList<>();
+        private List<String> checkedList = new ArrayList<>();
+        public boolean isCheckedAll = false;
 
         public void setList(List<String> list) {
             this.list.clear();
             this.list.addAll(list);
+            this.list.add(0, "全部勾选");
             this.notifyDataSetChanged();
         }
 
         public CheckAdapter(List<String> list) {
-            this.list = list;
+            setList(list);
         }
 
         public void setCheckedList(List<String> checkedList) {
             if (checkedList == null) {
                 return;
             }
+            isCheckedAll = checkedList.size() == list.size() - 1;
             this.checkedList.clear();
             this.checkedList.addAll(checkedList);
             this.notifyDataSetChanged();
@@ -229,14 +232,31 @@ public class MySubscribeActivity extends BaseActivity {
         public void onBindViewHolder(ViewHolder holder, int position) {
             String str = list.get(position);
             holder.itemCheckout.setText(str);
-            for(String checked : checkedList) {
-                if (StringUtils.equals(checked, str)) {
-                    holder.itemCheckout.setChecked(true);
-                    return;
-                }
-            }
-            holder.itemCheckout.setChecked(false);
             holder.itemCheckout.setOnCheckedChangeListener(this);
+
+            if (isCheckedAll) {
+                holder.itemCheckout.setChecked(true);
+                if (position != 0) {
+                    holder.itemCheckout.setEnabled(false);
+                }
+            } else {
+                holder.itemCheckout.setEnabled(true);
+                for (String checked : checkedList) {
+                    if (StringUtils.equals(checked, str)) {
+                        holder.itemCheckout.setChecked(true);
+                        return;
+                    }
+                }
+                holder.itemCheckout.setChecked(false);
+            }
+        }
+
+        public List<String> getCheckedList() {
+            if (isCheckedAll) {
+                return list.subList(1, list.size());
+            } else {
+                return checkedList;
+            }
         }
 
         @Override
@@ -246,6 +266,22 @@ public class MySubscribeActivity extends BaseActivity {
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (StringUtils.equals("全部勾选", buttonView.getText().toString())) {
+                if (isCheckedAll == isChecked) {
+                    return;
+                }
+                isCheckedAll = isChecked;
+                buttonView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        notifyDataSetChanged();
+                    }
+                }, 300);
+                return;
+            }
+            if (isCheckedAll) {
+                return;
+            }
             if (isChecked) {
                 checkedList.add(buttonView.getText().toString());
             } else {

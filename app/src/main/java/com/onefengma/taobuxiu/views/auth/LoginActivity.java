@@ -12,8 +12,11 @@ import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.AuthManager;
 import com.onefengma.taobuxiu.manager.PushManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.model.Constant;
+import com.onefengma.taobuxiu.model.entities.UserProfile;
 import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.LoginEvent;
+import com.onefengma.taobuxiu.utils.SPHelper;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.views.MainActivity;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
@@ -47,8 +50,28 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
 
         mobile.addTextChangedListener(this);
         password.addTextChangedListener(this);
-        EventBusHelper.register(this);
         progressDialog = new ProgressDialog(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBusHelper.register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBusHelper.unregister(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String userTel = SPHelper.common().sp().getString(Constant.StorageKeys.USER_TEL, "");
+        if (!StringUtils.isEmpty(userTel)) {
+            mobile.setText(userTel);
+        }
     }
 
     public static void start(BaseActivity activity) {
@@ -83,12 +106,6 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
     @OnClick(R.id.reset_password)
     public void doReset() {
         ResetPasswordActivity.start(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBusHelper.unregister(this);
     }
 
     private void updateRegisterEnable() {

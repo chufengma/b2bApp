@@ -80,6 +80,7 @@ public class AuthManager {
             public void onSuccess(BaseResponse baseResponse) {
                 UserProfile userProfile = JSONHelper.parse(baseResponse.data.toString(), UserProfile.class);
                 SPHelper.common().save(Constant.StorageKeys.USER_PROFILE, userProfile);
+                SPHelper.common().sp().edit().putString(Constant.StorageKeys.USER_TEL, userProfile.mobile).commit();
                 EventBusHelper.post(new LoginEvent(BaseListStatusEvent.SUCCESS));
             }
 
@@ -91,7 +92,7 @@ public class AuthManager {
         });
     }
 
-    public void doRegister(String mobile, String password, String msgCode) {
+    public void doRegister(final String mobile, final String password, String msgCode) {
         if (StringUtils.isEmpty(msgCode)) {
             ToastUtils.showInfoTasty("请输入短信验证码");
         }
@@ -104,6 +105,7 @@ public class AuthManager {
             @Override
             public void onSuccess(BaseResponse baseResponse) {
                 ToastUtils.showSuccessTasty("注册成功");
+                doLogin(mobile, password);
             }
         });
     }
