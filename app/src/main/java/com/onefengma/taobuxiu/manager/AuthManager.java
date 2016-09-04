@@ -96,9 +96,15 @@ public class AuthManager {
     }
 
     public boolean sellerCheck() {
+        return sellerCheck(true);
+    }
+
+    public boolean sellerCheck(boolean showToast) {
         UserProfile userProfile = AuthManager.instance().getUserProfile();
         if (userProfile.seller == null) {
-            ToastUtils.showErrorTasty("您还不是商家，请前往电脑端申请商家身份");
+            if (showToast) {
+                ToastUtils.showErrorTasty("您还不是商家，请前往电脑端申请商家身份");
+            }
             return false;
         } else {
             return true;

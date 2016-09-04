@@ -71,7 +71,7 @@ public class BaseOfferStatusFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (AuthManager.instance().sellerCheck()) {
+        if (AuthManager.instance().sellerCheck(false)) {
             recyclerView.fakePullRefresh();
         }
     }
@@ -110,7 +110,7 @@ public class BaseOfferStatusFragment extends BaseFragment {
 
     @OnClick(R.id.emptyView)
     public void clickOnEmptyView() {
-        if (AuthManager.instance().sellerCheck()) {
+        if (AuthManager.instance().sellerCheck(false)) {
             recyclerView.fakePullRefresh();
         }
     }

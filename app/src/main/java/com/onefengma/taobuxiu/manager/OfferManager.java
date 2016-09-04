@@ -76,7 +76,7 @@ public class OfferManager {
     }
 
     public void reloadMyOffers(final OfferStatus offerStatus) {
-        if (!AuthManager.instance().sellerCheck()) {
+        if (!AuthManager.instance().sellerCheck(false)) {
             return;
         }
         readFromDB(offerStatus);
@@ -109,7 +109,7 @@ public class OfferManager {
     }
 
     public void loadMoreOffers(final OfferStatus offerStatus) {
-        if (!AuthManager.instance().sellerCheck()) {
+        if (!AuthManager.instance().sellerCheck(false)) {
             return;
         }
         MyOffersResponse myOffersResponseDoing = myOffersResponse[offerStatus.ordinal()];
