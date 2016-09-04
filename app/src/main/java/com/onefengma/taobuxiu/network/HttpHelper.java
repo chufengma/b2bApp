@@ -81,11 +81,12 @@ public class HttpHelper {
         @Override
         public okhttp3.Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
-            if (this.cookie != null) {
-                request = request.newBuilder()
-                        .addHeader("Mobile", "isMobile=true")
-                        .build();
-            }
+
+            request = request.newBuilder()
+                    .addHeader("User-Agent", "App")
+                    .addHeader("X-Mobile-Flag", "Android")
+                    .build();
+
             return chain.proceed(request);
         }
     }
@@ -145,6 +146,7 @@ public class HttpHelper {
         }
 
         public abstract void onFailed(BaseResponse t, Throwable e);
+
         public abstract void onSuccess(T t);
     }
 
