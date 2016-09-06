@@ -12,16 +12,25 @@ public class Constant {
         public static final String USER_TEL = "user_tel";
         public static final String SHOW_GUIDANCE = "show_guidance";
         public static final String SALES_PROFILE = "sales_profile";
+        public static final String QT_WAITING = "qt_waiting";
+        public static final String QT_DONE = "qt_done";
+        public static final String QT_DOING = "qt_doing";
+        public static final String QT_CANCEL = "qt_cancel";
 
         public static final String SALES_USERS = "sales_users";
         public static final String SALES_SELLERS = "sales_sellers";
+
+
         public static final String SALES_QT_WAITING = "sales_qt_waiting";
         public static final String SALES_QT_DONE = "sales_qt_done";
+        public static final String SALES_QT_DOING = "sales_qt_doing";
         public static final String SALES_QT_CANCEL = "sales_qt_cancel";
 
         public static final String SALES_BUY_DOING = "sales_buy_doing";
         public static final String SALES_BUY_DONE = "sales_buy_done";
         public static final String SALES_BUY_OUT_OF_DATE = "sales_buy_out_of_date";
+
+        public static final String SETTING_FLAG_SALES = "is_sales";
     }
 
     public static class StorageBuyKeys {

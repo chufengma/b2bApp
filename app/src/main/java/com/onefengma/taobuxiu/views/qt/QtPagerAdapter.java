@@ -1,4 +1,4 @@
-package com.onefengma.taobuxiu.views.sales;
+package com.onefengma.taobuxiu.views.qt;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,9 +8,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 /**
  * Created by chufengma on 16/8/7.
  */
-public class SalesQtPagerAdapter extends FragmentPagerAdapter {
+public class QtPagerAdapter extends FragmentPagerAdapter {
 
-    public SalesQtPagerAdapter(FragmentManager fm) {
+    public QtPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -26,7 +26,7 @@ public class SalesQtPagerAdapter extends FragmentPagerAdapter {
         } else {
             bundle.putInt("status", 2);
         }
-        SalesBaseQtListFragment baseOfferStatusFragment = new SalesBaseQtListFragment();
+        BaseQtListFragment baseOfferStatusFragment = new BaseQtListFragment();
         baseOfferStatusFragment.setArguments(bundle);
         return baseOfferStatusFragment;
     }

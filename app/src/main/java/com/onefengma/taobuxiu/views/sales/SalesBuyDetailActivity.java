@@ -59,6 +59,8 @@ public class SalesBuyDetailActivity extends BaseActivity {
     TextView cancelQt;
     @BindView(R.id.sales_actions)
     LinearLayout salesActions;
+    @BindView(R.id.start_qt)
+    TextView startQt;
 
     private String ironId;
     private String qtId;
@@ -112,6 +114,18 @@ public class SalesBuyDetailActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         listView.fakePullRefresh();
+    }
+
+    @OnClick(R.id.start_qt)
+    public void startQt() {
+        if (!StringUtils.isEmpty(qtId)) {
+            DialogUtils.showAlertDialog(this, "确定开始质检？", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SalesQtManager.instance().startQt(qtId);
+                }
+            });
+        }
     }
 
     @OnClick(R.id.done_qt)
@@ -196,7 +210,24 @@ public class SalesBuyDetailActivity extends BaseActivity {
             }
         }
         totalMoney.setVisibility(find ? View.VISIBLE : View.GONE);
-        salesActions.setVisibility(detail.qtDetail == null || detail.qtDetail.status != 0 ? View.GONE : View.VISIBLE);
+
+        salesActions.setVisibility(detail.qtDetail == null ? View.GONE : View.VISIBLE);
+
+        if (detail.qtDetail != null) {
+            if (detail.qtDetail.status == 0) {
+                startQt.setVisibility(View.VISIBLE);
+                cancelQt.setVisibility(View.VISIBLE);
+                doneQt.setVisibility(View.GONE);
+            } else if (detail.qtDetail.status == 3) {
+                startQt.setVisibility(View.GONE);
+                doneQt.setVisibility(View.VISIBLE);
+                cancelQt.setVisibility(View.VISIBLE);
+            } else {
+                startQt.setVisibility(View.GONE);
+                doneQt.setVisibility(View.GONE);
+                cancelQt.setVisibility(View.GONE);
+            }
+        }
     }
 
     public static class BuyDetailSupplyListAdapter extends BaseAdapter {

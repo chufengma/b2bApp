@@ -42,7 +42,7 @@ public class SalesAuthManager {
     }
 
     public static void quit() {
-        SPHelper.common().save(Constant.StorageKeys.SALES_PROFILE, "");
+        SPHelper.top().save(Constant.StorageKeys.SALES_PROFILE, "");
         startLoginActivity();
     }
 
@@ -56,7 +56,7 @@ public class SalesAuthManager {
             @Override
             public void onSuccess(BaseResponse baseResponse) {
                 SalesManDetail userProfile = JSONHelper.parse(baseResponse.data.toString(), SalesManDetail.class);
-                SPHelper.common().save(Constant.StorageKeys.SALES_PROFILE, userProfile);
+                SPHelper.top().save(Constant.StorageKeys.SALES_PROFILE, userProfile);
                 EventBusHelper.post(new SalesLoginEvent(BaseListStatusEvent.SUCCESS));
             }
 

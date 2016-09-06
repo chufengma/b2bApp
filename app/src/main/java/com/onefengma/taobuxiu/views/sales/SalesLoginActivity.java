@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -36,6 +37,8 @@ public class SalesLoginActivity extends BaseActivity implements TextWatcher {
     TextView login;
 
     ProgressDialog progressDialog;
+    @BindView(R.id.switch_app)
+    TextView switchApp;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,9 @@ public class SalesLoginActivity extends BaseActivity implements TextWatcher {
         password.addTextChangedListener(this);
         EventBusHelper.register(this);
         progressDialog = new ProgressDialog(this);
+
+        switchApp.setVisibility(MainApplication.FEGNMA_FALG ? View.VISIBLE : View.GONE);
+        switchApp.setText(MainApplication.IS_SALES_APP ? R.string.setting_switch_app : R.string.setting_switch_sales);
     }
 
     public static void start(BaseActivity activity) {
@@ -57,6 +63,11 @@ public class SalesLoginActivity extends BaseActivity implements TextWatcher {
     @OnClick(R.id.login)
     public void doLogin() {
         SalesAuthManager.instance().login(mobile.getText().toString(), password.getText().toString());
+    }
+
+    @OnClick(R.id.switch_app)
+    public void doSwitch() {
+        MainApplication.getContext().switchApp(this);
     }
 
     @Subscribe

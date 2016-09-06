@@ -50,7 +50,7 @@ public class SalesMineFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         avator.setImageResource(R.drawable.ic_detault_icon);
 
-        SalesManDetail salesManDetail = SPHelper.common().get(Constant.StorageKeys.SALES_PROFILE, SalesManDetail.class);
+        SalesManDetail salesManDetail = SPHelper.top().get(Constant.StorageKeys.SALES_PROFILE, SalesManDetail.class);
         tel.setText(salesManDetail.tel);
         name.setText(salesManDetail.name);
     }

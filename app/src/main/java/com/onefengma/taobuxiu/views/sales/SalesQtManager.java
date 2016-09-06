@@ -5,15 +5,11 @@ import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.JSONHelper;
 import com.onefengma.taobuxiu.model.BaseResponse;
 import com.onefengma.taobuxiu.model.Constant;
-import com.onefengma.taobuxiu.model.entities.MyIronBuyDetail;
-import com.onefengma.taobuxiu.model.entities.MyOffersResponse;
 import com.onefengma.taobuxiu.model.entities.QtListResponse;
 import com.onefengma.taobuxiu.model.entities.SalesIronBuyDetail;
 import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
-import com.onefengma.taobuxiu.model.events.MyIronDetailEvent;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
-import com.onefengma.taobuxiu.model.events.QtListEvent;
 import com.onefengma.taobuxiu.model.events.sales.SalesActionQtEvent;
 import com.onefengma.taobuxiu.model.events.sales.SalesIronDetailEvent;
 import com.onefengma.taobuxiu.model.events.sales.SalesQtListEvent;
@@ -27,8 +23,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
-import static com.onefengma.taobuxiu.model.Constant.StorageBuyKeys.QT_LIST;
-
 /**
  * Created by chufengma on 16/9/3.
  */
@@ -36,14 +30,15 @@ public class SalesQtManager {
 
     private static SalesQtManager instance;
 
-    public QtListResponse qtListResponses[] = new QtListResponse[3];
+    public QtListResponse qtListResponses[] = new QtListResponse[4];
 
     public enum SalesQtStatus {
         QT_WAITING(0),
         QT_DONE(1),
-        QT_CANCEL(2);
+        QT_CANCEL(2),
+        QT_DOING(3);
 
-        int status;
+        public int status;
 
         SalesQtStatus(int status) {
             this.status = status;
@@ -142,6 +137,10 @@ public class SalesQtManager {
         actionQt(qtId, 2);
     }
 
+    public void startQt(String qtId) {
+        actionQt(qtId, 3);
+    }
+
     private void actionQt(String qtId, final int status) {
         EventBusHelper.post(new SalesActionQtEvent(BaseStatusEvent.STARTED, status));
         HttpHelper.wrap(HttpHelper.create(SalesQtService.class).updateQtStatus(qtId, status)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
@@ -162,6 +161,7 @@ public class SalesQtManager {
         switch (status) {
             case QT_WAITING:return Constant.StorageKeys.SALES_QT_WAITING;
             case QT_DONE:return Constant.StorageKeys.SALES_QT_DONE;
+            case QT_DOING:return Constant.StorageKeys.SALES_QT_DOING;
             default: QT_CANCEL:return Constant.StorageKeys.SALES_QT_CANCEL;
         }
     }

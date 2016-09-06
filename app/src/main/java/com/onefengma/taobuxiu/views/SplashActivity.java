@@ -1,5 +1,6 @@
 package com.onefengma.taobuxiu.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.onefengma.taobuxiu.MainApplication;
@@ -17,6 +18,11 @@ import com.onefengma.taobuxiu.views.sales.SalesManDetail;
 
 public class SplashActivity extends BaseActivity {
 
+    public static void start(BaseActivity activity) {
+        Intent intent = new Intent(activity, SplashActivity.class);
+        activity.startActivity(intent);
+    }
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

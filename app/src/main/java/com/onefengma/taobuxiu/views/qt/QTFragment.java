@@ -3,26 +3,25 @@ package com.onefengma.taobuxiu.views.qt;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.AuthManager;
-import com.onefengma.taobuxiu.manager.QtManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.SystemHelper;
 import com.onefengma.taobuxiu.model.events.OnMineTabEvent;
-import com.onefengma.taobuxiu.model.events.QtListEvent;
 import com.onefengma.taobuxiu.utils.DialogUtils;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
+import com.onefengma.taobuxiu.views.sales.SalesQtPagerAdapter;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
-import com.onefengma.taobuxiu.views.widgets.listview.XListView;
 import com.sdsmdg.tastytoast.TastyToast;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -39,12 +38,10 @@ public class QTFragment extends BaseFragment {
 
     @BindView(R.id.toolbar)
     ToolBar toolbar;
-    @BindView(R.id.list_view)
-    XListView listView;
-    @BindView(R.id.emptyView)
-    TextView emptyView;
-
-    QtListAdapter qtListAdapter;
+    @BindView(R.id.tab)
+    TabLayout tab;
+    @BindView(R.id.qt_view_pager)
+    ViewPager viewPager;
 
     @Nullable
     @Override
@@ -57,23 +54,6 @@ public class QTFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        qtListAdapter = new QtListAdapter();
-        listView.setAdapter(qtListAdapter);
-        listView.setEmptyView(emptyView);
-
-        listView.setOnRefreshListener(new XListView.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                QtManager.instance().refreshQtList();
-            }
-        });
-
-        listView.setOnLoadMoreListener(new XListView.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                QtManager.instance().loadMoreQtList();
-            }
-        });
 
         setLeftViewListener(new View.OnClickListener() {
             @Override
@@ -90,33 +70,13 @@ public class QTFragment extends BaseFragment {
                 });
             }
         });
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        listView.fakePullRefresh();
-    }
+        QtPagerAdapter adapter = new QtPagerAdapter(getFragmentManager());
+        viewPager.setOffscreenPageLimit(3);
+        viewPager.setAdapter(adapter);
 
-    @OnClick(R.id.emptyView)
-    public void onEmptyViewClick() {
-        listView.fakePullRefresh();
-    }
-
-    @Subscribe
-    public void onQtListEvent(QtListEvent event) {
-        if (event.isRefreshComplete()) {
-            listView.onRefreshComplete(false);
-        }
-
-        if (event.isLoadComplete()) {
-            listView.onLoadMoreComplete();
-        }
-        listView.enableLoadMore(QtManager.instance().qtListResponse.qts != null
-                && QtManager.instance().qtListResponse.qts.size() > 0
-                && QtManager.instance().qtListResponse.qts.size() % 15 == 0);
-
-        qtListAdapter.setMyBuys(QtManager.instance().qtListResponse.qts);
+        tab.setupWithViewPager(viewPager);
+        toolbar.getLeftImageLayout().setVisibility(View.GONE);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

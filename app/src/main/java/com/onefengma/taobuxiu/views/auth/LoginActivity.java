@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -13,7 +14,6 @@ import com.onefengma.taobuxiu.manager.AuthManager;
 import com.onefengma.taobuxiu.manager.PushManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.Constant;
-import com.onefengma.taobuxiu.model.entities.UserProfile;
 import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.LoginEvent;
 import com.onefengma.taobuxiu.utils.SPHelper;
@@ -41,6 +41,8 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
     TextView login;
 
     ProgressDialog progressDialog;
+    @BindView(R.id.switch_app)
+    TextView switchApp;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,14 @@ public class LoginActivity extends BaseActivity implements TextWatcher {
         mobile.addTextChangedListener(this);
         password.addTextChangedListener(this);
         progressDialog = new ProgressDialog(this);
+
+        switchApp.setVisibility(MainApplication.FEGNMA_FALG ? View.VISIBLE : View.GONE);
+        switchApp.setText(MainApplication.IS_SALES_APP ? R.string.setting_switch_app : R.string.setting_switch_sales);
+    }
+
+    @OnClick(R.id.switch_app)
+    public void doSwitch() {
+        MainApplication.getContext().switchApp(this);
     }
 
     @Override

@@ -76,4 +76,8 @@
     <string name="title_activity_guidance">GuidanceActivity</string>
     <string name="title_activity_my_history">MyHistoryActivity</string>
     <string name="title_activity_qt_desc">QtDescActivity</string>
+
+
+    <string name="setting_switch_app">切换至淘不锈App</string>
+    <string name="setting_switch_sales">切换至专员App</string>
 </resources>

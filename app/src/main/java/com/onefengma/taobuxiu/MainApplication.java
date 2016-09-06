@@ -8,6 +8,9 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.onefengma.taobuxiu.manager.PushManager;
+import com.onefengma.taobuxiu.model.Constant;
+import com.onefengma.taobuxiu.utils.SPHelper;
+import com.onefengma.taobuxiu.views.SplashActivity;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 
 import java.util.ArrayList;
@@ -23,7 +26,9 @@ public class MainApplication extends Application {
     private boolean isClearAll = false;
     private BaseActivity currentActivity;
 
-    public static boolean IS_SALES_APP = false;
+    public static boolean FEGNMA_FALG = true;
+
+    public static boolean IS_SALES_APP = true;
 
     @Override
     public void onCreate() {
@@ -35,8 +40,16 @@ public class MainApplication extends Application {
 
         ImageLoaderConfiguration configuration = (new ImageLoaderConfiguration.Builder(this).defaultDisplayImageOptions(new DisplayImageOptions.Builder().showImageOnFail(R.drawable.ic_detault_icon).build())).build();
         ImageLoader.getInstance().init(configuration);
+
+        IS_SALES_APP = SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_FLAG_SALES, true);
     }
 
+    public void switchApp(BaseActivity context) {
+        IS_SALES_APP = !IS_SALES_APP;
+        SPHelper.top().sp().edit().putBoolean(Constant.StorageKeys.SETTING_FLAG_SALES, IS_SALES_APP).commit();
+        finishActivities();
+        SplashActivity.start(context);
+    }
 
     public static MainApplication getContext() {
         if (instance == null) {

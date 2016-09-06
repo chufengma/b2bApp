@@ -38,6 +38,21 @@
         android:gravity="center"
         android:layout_marginTop="20dip"
         android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/start_qt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/main_action_btn_bg"
+            android:clickable="true"
+            android:paddingBottom="6dip"
+            android:paddingLeft="16dip"
+            android:paddingRight="16dip"
+            android:paddingTop="6dip"
+            android:text="开始质检"
+            android:textColor="@color/white" />
+
         <TextView
             android:id="@+id/done_qt"
             android:layout_width="wrap_content"
