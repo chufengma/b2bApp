@@ -12,12 +12,10 @@ import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.AuthManager;
 import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
-import com.onefengma.taobuxiu.model.entities.UserProfile;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDone;
 import com.onefengma.taobuxiu.model.events.MyIronsEventOutOfDate;
 import com.onefengma.taobuxiu.model.events.OnBuyTabEvent;
-import com.onefengma.taobuxiu.utils.ToastUtils;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 import com.onefengma.taobuxiu.views.widgets.TabItem;
@@ -123,6 +121,12 @@ public class BuyFragment extends BaseFragment {
         tabItemOut.titleView.setTextColor(getResources().getColorStateList(R.color.buy_outofdate_indicator_text_colors));
         tabOut.setCustomView(tabItemOut);
         buyTab.addTab(tabOut);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BuyManager.instance().showBuyGuidance(getActivity(), toolbar.rightImage);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -192,6 +192,12 @@ public class BuyDetailActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BuyManager.instance().showBuyDetailGuidance(this);
+    }
+
     private void setUpViews(MyIronBuyDetail detail) {
         headerViewHolder.display(detail);
         buyDetailSupplyListAdapter.setDetail(detail);

@@ -23,11 +23,11 @@ import butterknife.ButterKnife;
 public class ToolBar extends RelativeLayout {
 
     @BindView(R.id.left_image_view)
-    ImageView leftImage;
+    public ImageView leftImage;
     @BindView(R.id.title)
     TextView titleView;
     @BindView(R.id.right_image_view)
-    ImageView rightImage;
+    public ImageView rightImage;
 
     String title;
     int color;

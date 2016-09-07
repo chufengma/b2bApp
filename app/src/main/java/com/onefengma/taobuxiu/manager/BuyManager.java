@@ -1,8 +1,13 @@
 package com.onefengma.taobuxiu.manager;
 
 
+import android.app.Activity;
+import android.view.View;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.jaydenxiao.guider.HighLightGuideView;
+import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.JSONHelper;
 import com.onefengma.taobuxiu.model.BaseResponse;
@@ -575,6 +580,26 @@ public class BuyManager {
                 myIronsResponseForOutOfDate.maxCount = cache.maxCount;
                 myIronsResponseForOutOfDate.newSupplyNums = cache.newSupplyNums;
             }
+        }
+    }
+
+    public void showBuyGuidance(Activity activity, View view) {
+        if (!SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_BUY_GUIDANCE, false)) {
+            HighLightGuideView.builder(activity)
+                    .addHighLightGuidView(view, R.drawable.ic_launcher)
+                    .setHighLightStyle(HighLightGuideView.VIEWSTYLE_CIRCLE)
+                    .show();
+            SPHelper.top().sp().edit().putBoolean(Constant.StorageKeys.SETTING_BUY_GUIDANCE, true).commit();
+        }
+    }
+
+
+    public void showBuyDetailGuidance(Activity activity) {
+        if (!SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_BUY_DETAIL_GUIDANCE, false)) {
+            HighLightGuideView.builder(activity)
+                    .addNoHighLightGuidView(R.drawable.ic_mine_pressed)
+                    .show();
+            SPHelper.top().sp().edit().putBoolean(Constant.StorageKeys.SETTING_BUY_DETAIL_GUIDANCE, true).commit();
         }
     }
 

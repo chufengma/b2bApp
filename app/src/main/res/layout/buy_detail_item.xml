@@ -88,6 +88,7 @@
             android:paddingRight="8dip"
             android:paddingTop="2dip"
             android:paddingBottom="2dip"
+            android:layout_marginBottom="10dip"
             android:background="@drawable/get_verify_code_bg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

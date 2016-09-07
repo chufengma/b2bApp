@@ -1,9 +1,15 @@
 package com.onefengma.taobuxiu.manager;
 
+import android.app.Activity;
+import android.view.View;
+
 import com.alibaba.fastjson.JSON;
+import com.jaydenxiao.guider.HighLightGuideView;
+import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.JSONHelper;
 import com.onefengma.taobuxiu.model.BaseResponse;
+import com.onefengma.taobuxiu.model.Constant;
 import com.onefengma.taobuxiu.model.entities.MyOfferHistoryInfo;
 import com.onefengma.taobuxiu.model.entities.MyOffersResponse;
 import com.onefengma.taobuxiu.model.entities.OfferDetail;
@@ -20,8 +26,6 @@ import com.onefengma.taobuxiu.model.events.MyOffersEvent;
 import com.onefengma.taobuxiu.model.events.UpdateSubscribeInfoEvent;
 import com.onefengma.taobuxiu.network.HttpHelper;
 import com.onefengma.taobuxiu.utils.SPHelper;
-import com.onefengma.taobuxiu.views.buys.PushNewBuyActivity;
-import com.onefengma.taobuxiu.views.core.BaseActivity;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -309,5 +313,15 @@ public class OfferManager {
             this.dataNumKey = dataNumKey;
         }
     }
+
+    public void showOfferGuidance(Activity activity, View view) {
+        if (!SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_OFFER_GUIDANCE, false)) {
+            HighLightGuideView.builder(activity)
+                    .addHighLightGuidView(view, R.drawable.ic_launcher)
+                    .show();
+            SPHelper.top().sp().edit().putBoolean(Constant.StorageKeys.SETTING_OFFER_GUIDANCE, true).commit();
+        }
+    }
+
 
 }

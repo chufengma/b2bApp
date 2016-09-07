@@ -9,7 +9,7 @@
     <com.onefengma.taobuxiu.views.widgets.ToolBar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        app:tool_bar_title="成交细节"
+        app:tool_bar_title="报价状态"
         app:tool_bar_right="@drawable/ic_delete"
         android:layout_height="56dip" />
 

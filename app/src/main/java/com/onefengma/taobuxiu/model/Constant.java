@@ -31,6 +31,9 @@ public class Constant {
         public static final String SALES_BUY_OUT_OF_DATE = "sales_buy_out_of_date";
 
         public static final String SETTING_FLAG_SALES = "is_sales";
+        public static final String SETTING_BUY_GUIDANCE = "buy_guidance";
+        public static final String SETTING_OFFER_GUIDANCE = "offer_guidance";
+        public static final String SETTING_BUY_DETAIL_GUIDANCE = "buy_detail_guidance";
     }
 
     public static class StorageBuyKeys {
