@@ -12,15 +12,16 @@ import android.widget.Toast;
 
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.AuthManager;
+import com.onefengma.taobuxiu.manager.QtManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.SystemHelper;
 import com.onefengma.taobuxiu.model.events.OnMineTabEvent;
+import com.onefengma.taobuxiu.model.events.QtListEvent;
 import com.onefengma.taobuxiu.utils.DialogUtils;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
-import com.onefengma.taobuxiu.views.sales.SalesQtPagerAdapter;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
 import com.sdsmdg.tastytoast.TastyToast;
 
@@ -100,6 +101,25 @@ public class QTFragment extends BaseFragment {
         super.onDestroy();
         EventBusHelper.unregister(this);
     }
+
+    @Subscribe
+    public void onQtListEvent(QtListEvent event) {
+        switch (event.qtStatus) {
+            case QT_DOING:
+                tab.getTabAt(0).setText("质检中(" +QtManager.instance().qtListResponses[1].maxCount  + ")");
+                break;
+            case QT_WAITING:
+                tab.getTabAt(0).setText("等待质检(" +QtManager.instance().qtListResponses[0].maxCount  + ")");
+                break;
+            case QT_CANCEL:
+                tab.getTabAt(0).setText("质检取消(" +QtManager.instance().qtListResponses[3].maxCount  + ")");
+                break;
+            case QT_DONE:
+                tab.getTabAt(0).setText("质检完成(" +QtManager.instance().qtListResponses[2].maxCount  + ")");
+                break;
+        };
+    }
+
 }
 
 
