@@ -106,16 +106,16 @@ public class QTFragment extends BaseFragment {
     public void onQtListEvent(QtListEvent event) {
         switch (event.qtStatus) {
             case QT_WAITING:
-                tab.getTabAt(0).setText("等待质检(" +QtManager.instance().qtListResponses[0].maxCount  + ")");
+                tab.getTabAt(0).setText("等待质检(" +QtManager.instance().qtListResponses[event.qtStatus.ordinal()].maxCount  + ")");
                 break;
             case QT_DOING:
-                tab.getTabAt(1).setText("质检中(" +QtManager.instance().qtListResponses[1].maxCount  + ")");
+                tab.getTabAt(1).setText("质检中(" +QtManager.instance().qtListResponses[event.qtStatus.ordinal()].maxCount  + ")");
                 break;
             case QT_DONE:
-                tab.getTabAt(2).setText("质检完成(" +QtManager.instance().qtListResponses[2].maxCount  + ")");
+                tab.getTabAt(2).setText("质检完成(" +QtManager.instance().qtListResponses[event.qtStatus.ordinal()].maxCount  + ")");
                 break;
             case QT_CANCEL:
-                tab.getTabAt(3).setText("质检取消(" +QtManager.instance().qtListResponses[3].maxCount  + ")");
+                tab.getTabAt(3).setText("质检取消(" +QtManager.instance().qtListResponses[event.qtStatus.ordinal()].maxCount  + ")");
                 break;
         };
     }
