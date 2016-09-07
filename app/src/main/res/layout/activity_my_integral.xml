@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/main_content_bg"
+    android:orientation="vertical"
+    tools:context="com.onefengma.taobuxiu.views.mine.MyIntegralActivity">
+
+    <com.onefengma.taobuxiu.views.widgets.ToolBar
+        android:layout_width="match_parent"
+        app:tool_bar_title="我的积分"
+        android:layout_height="@dimen/tool_bar_height" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dip"
+            android:paddingTop="5dip"
+            android:paddingBottom="5dip"
+            android:background="@drawable/abc_item_background_holo_dark"
+            android:clickable="true"
+            android:paddingLeft="15dip">
+
+            <ImageView
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_margin="5dip"
+                android:src="@drawable/ic_buy_integral" />
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dip"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="买入积分"
+                android:textColor="@color/main_blue" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dip"
+                android:id="@+id/buyer_integral"
+                android:layout_marginRight="50dip"
+                android:gravity="center_vertical"
+                android:text="0"
+                android:textColor="@color/main_yellow" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@color/main_content_bg"
+            android:layout_marginLeft="10dip"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dip"
+            android:paddingBottom="5dip"
+            android:layout_marginTop="1dip"
+            android:background="@drawable/abc_item_background_holo_dark"
+            android:clickable="true"
+            android:paddingLeft="15dip">
+
+            <ImageView
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_margin="5dip"
+                android:src="@drawable/ic_seller_integral" />
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dip"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="卖出积分"
+                android:textColor="@color/main_blue" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="50dip"
+                android:gravity="center_vertical"
+                android:id="@+id/seller_integral"
+                android:text="0"
+                android:textColor="@color/main_yellow" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

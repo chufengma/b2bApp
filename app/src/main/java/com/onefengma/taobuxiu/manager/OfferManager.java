@@ -14,6 +14,7 @@ import com.onefengma.taobuxiu.model.entities.MyOfferHistoryInfo;
 import com.onefengma.taobuxiu.model.entities.MyOffersResponse;
 import com.onefengma.taobuxiu.model.entities.OfferDetail;
 import com.onefengma.taobuxiu.model.entities.SubscribeInfo;
+import com.onefengma.taobuxiu.model.events.ActionMissEvent;
 import com.onefengma.taobuxiu.model.events.ActionSupplyEvent;
 import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
@@ -180,6 +181,22 @@ public class OfferManager {
         });
     }
 
+    public void missIronBuyOffer(final String ironId) {
+        EventBusHelper.post(new ActionMissEvent(BaseStatusEvent.STARTED));
+        HttpHelper.wrap(HttpHelper.create(OfferService.class).missIronBuyOffer(ironId)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
+            @Override
+            public void onSuccess(BaseResponse data) {
+                EventBusHelper.post(new ActionMissEvent(BaseStatusEvent.SUCCESS));
+            }
+
+            @Override
+            public void onFailed(BaseResponse baseResponse, Throwable e) {
+                super.onFailed(baseResponse, e);
+                EventBusHelper.post(new ActionMissEvent(BaseStatusEvent.FAILED));
+            }
+        });
+    }
+
     public void getMySubscribeInfo() {
         EventBusHelper.post(new GetSubscribeInfoEvent(BaseStatusEvent.STARTED, null));
         HttpHelper.wrap(HttpHelper.create(OfferService.class).mySubscribeInfo()).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
@@ -284,6 +301,9 @@ public class OfferManager {
         @GET("seller/myIronBuyDetail")
         Observable<BaseResponse> myIronOfferDetails(@Query("ironId") String ironId);
 
+        @FormUrlEncoded
+        @POST("seller/missIronBuyOffer")
+        Observable<BaseResponse> missIronBuyOffer(@Field("ironId") String ironId);
 
         @FormUrlEncoded
         @POST("seller/offerIronBuy")
@@ -317,7 +337,7 @@ public class OfferManager {
     public void showOfferGuidance(Activity activity, View view) {
         if (!SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_OFFER_GUIDANCE, false)) {
             HighLightGuideView.builder(activity)
-                    .addHighLightGuidView(view, R.drawable.ic_launcher)
+                    .addHighLightGuidView(view, R.drawable.ic_guidance_offer)
                     .show();
             SPHelper.top().sp().edit().putBoolean(Constant.StorageKeys.SETTING_OFFER_GUIDANCE, true).commit();
         }

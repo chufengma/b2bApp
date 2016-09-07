@@ -1,15 +1,16 @@
 package com.onefengma.taobuxiu.views.buys;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
-import com.onefengma.taobuxiu.model.entities.IronBuyPush;
 import com.onefengma.taobuxiu.model.events.IronBuyPushEvent;
+import com.onefengma.taobuxiu.utils.DialogUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.widgets.ProgressDialog;
@@ -81,6 +82,27 @@ public class PushNewBuyActivity extends BaseActivity {
         progressDialog = new ProgressDialog(this);
         pushListAdapter = new PushListAdapter();
         list.setAdapter(pushListAdapter);
+
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                DialogUtils.showItemDialog(view.getContext(), null, new String[]{"删除该项"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        BuyManager.instance().deleteIronBuy(pushListAdapter.getItem(position - list.getHeaderViewsCount()));
+                        pushListAdapter.setMyBuys(BuyManager.instance().getCachedIronBuys());
+                    }
+                });
+                return false;
+            }
+        });
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                EditBuyActivity.start((BaseActivity) parent.getContext(), pushListAdapter.getItem(position - list.getHeaderViewsCount()));
+            }
+        });
     }
 
     @Override

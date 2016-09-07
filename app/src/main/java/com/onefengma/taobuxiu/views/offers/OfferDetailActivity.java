@@ -13,9 +13,8 @@ import com.onefengma.taobuxiu.manager.OfferManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
 import com.onefengma.taobuxiu.model.entities.OfferDetail;
-import com.onefengma.taobuxiu.model.entities.SupplyBrief;
+import com.onefengma.taobuxiu.model.events.ActionMissEvent;
 import com.onefengma.taobuxiu.model.events.ActionSupplyEvent;
-import com.onefengma.taobuxiu.model.events.MyIronDetailEvent;
 import com.onefengma.taobuxiu.model.events.MyOfferDetailEvent;
 import com.onefengma.taobuxiu.utils.NumbersUtils;
 import com.onefengma.taobuxiu.utils.StringUtils;
@@ -25,9 +24,6 @@ import com.onefengma.taobuxiu.views.widgets.ProgressDialog;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
 
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.Arrays;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -140,6 +136,11 @@ public class OfferDetailActivity extends BaseActivity {
         OfferManager.instance().offerIronBuy(ironId, Float.valueOf(price), message, unit);
     }
 
+    @OnClick(R.id.miss)
+    public void onMissClick() {
+        OfferManager.instance().missIronBuyOffer(ironId);
+    }
+
     @Subscribe
     public void onSupplyEvent(ActionSupplyEvent event) {
         if (event.isStarted()) {
@@ -156,7 +157,26 @@ public class OfferDetailActivity extends BaseActivity {
             ToastUtils.showSuccessTasty("提交报价信息成功！");
             OfferManager.instance().loadIronOfferDetail(ironId);
         }
+
     }
+    @Subscribe
+    public void onSupplyEvent(ActionMissEvent event) {
+        if (event.isStarted()) {
+            progressDialog.show("提交中...");
+            return;
+        } else {
+            progressDialog.dismiss();
+        }
+        if (event.isFailed()) {
+            ToastUtils.showErrorTasty("操作失败，请重试！");
+            return;
+        }
+        if (event.isSuccess()) {
+            ToastUtils.showSuccessTasty("没关系，以后还有合作机会");
+            OfferManager.instance().loadIronOfferDetail(ironId);
+        }
+    }
+
 
     private void setUpViews(OfferDetail offerDetail) {
         IronBuyBrief buy = offerDetail.buy;

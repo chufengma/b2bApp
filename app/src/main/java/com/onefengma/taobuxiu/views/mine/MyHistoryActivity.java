@@ -2,17 +2,14 @@ package com.onefengma.taobuxiu.views.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.BuyManager;
-import com.onefengma.taobuxiu.manager.OfferManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
-import com.onefengma.taobuxiu.model.events.MyIronBuyHistoryEvent;
-import com.onefengma.taobuxiu.model.events.MyIronOfferHistoryEvent;
-import com.onefengma.taobuxiu.utils.NumbersUtils;
+import com.onefengma.taobuxiu.model.events.MyIronAllHistoryEvent;
 import com.onefengma.taobuxiu.utils.ToastUtils;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
-import com.onefengma.taobuxiu.views.widgets.HistoryCardView;
 import com.onefengma.taobuxiu.views.widgets.ProgressDialog;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -24,18 +21,14 @@ public class MyHistoryActivity extends BaseActivity {
 
 
     ProgressDialog progressDialog;
-    @BindView(R.id.month_buy)
-    HistoryCardView monthBuy;
-    @BindView(R.id.month_done)
-    HistoryCardView monthDone;
-    @BindView(R.id.month_done_rate)
-    HistoryCardView monthDoneRate;
-    @BindView(R.id.month_offer)
-    HistoryCardView monthOffer;
-    @BindView(R.id.month_win)
-    HistoryCardView monthWin;
-    @BindView(R.id.month_win_rate)
-    HistoryCardView monthWinRate;
+    @BindView(R.id.buy_times)
+    TextView buyTimes;
+    @BindView(R.id.buy_win_times)
+    TextView buyWinTimes;
+    @BindView(R.id.offer_times)
+    TextView offerTimes;
+    @BindView(R.id.offer_win_times)
+    TextView offerWinTimes;
 
     public static void start(BaseActivity activity) {
         Intent intent = new Intent(activity, MyHistoryActivity.class);
@@ -50,8 +43,7 @@ public class MyHistoryActivity extends BaseActivity {
         EventBusHelper.register(this);
         progressDialog = new ProgressDialog(this);
 
-        BuyManager.instance().getIronBuyHistroy();
-        OfferManager.instance().getIronOfferHistroy();
+        BuyManager.instance().getIronAllHistroy();
     }
 
     @Override
@@ -61,7 +53,7 @@ public class MyHistoryActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void onIronBuyHistroyEvent(MyIronBuyHistoryEvent event) {
+    public void onIronBuyHistroyEvent(MyIronAllHistoryEvent event) {
         if (event.isStarted()) {
             progressDialog.show("加载中...");
             return;
@@ -69,32 +61,15 @@ public class MyHistoryActivity extends BaseActivity {
             progressDialog.dismiss();
         }
 
-        if (event.isSuccess()) {
-            monthBuy.setValue(event.myBuyHistoryInfo.monthBuy + "次");
-            monthDone.setValue(event.myBuyHistoryInfo.monthDone + "次");
-            monthDoneRate.setValue(NumbersUtils.getHS(NumbersUtils.round(event.myBuyHistoryInfo.monthDoneRate, 4)));
+        if (event.isSuccess() && event.myAllHistoryInfo != null) {
+            buyTimes.setText(event.myAllHistoryInfo.buyTimes + "");
+            buyWinTimes.setText(event.myAllHistoryInfo.buyWinTimes + "");
+            offerTimes.setText(event.myAllHistoryInfo.offerTimes + "");
+            offerWinTimes.setText(event.myAllHistoryInfo.offerWinTimes + "");
         } else {
             ToastUtils.showErrorTasty("加载历史失败, 请重试！");
             finish();
         }
     }
 
-    @Subscribe
-    public void onIronBuyHistroyEvent(MyIronOfferHistoryEvent event) {
-        if (event.isStarted()) {
-            progressDialog.show("加载中...");
-            return;
-        } else {
-            progressDialog.dismiss();
-        }
-
-        if (event.isSuccess()) {
-            monthOffer.setValue(event.myOfferHistoryInfo.monthOffer + "次");
-            monthWin.setValue(event.myOfferHistoryInfo.monthWin + "次");
-            monthWinRate.setValue(NumbersUtils.getHS(NumbersUtils.round(event.myOfferHistoryInfo.monthWinRate, 4)));
-        } else {
-            ToastUtils.showErrorTasty("加载历史失败, 请重试！");
-            finish();
-        }
-    }
 }

@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
@@ -12,7 +11,6 @@ import com.onefengma.taobuxiu.model.CityCategory;
 import com.onefengma.taobuxiu.model.entities.IronBuyPush;
 import com.onefengma.taobuxiu.utils.DateUtils;
 import com.onefengma.taobuxiu.utils.StringUtils;
-import com.onefengma.taobuxiu.views.core.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,13 +67,6 @@ public class PushListAdapter extends BaseAdapter {
         viewHolder.subTitle.setText(ironBuyBrief.length + "*" + ironBuyBrief.width + "*" + ironBuyBrief.height + " " + ironBuyBrief.toleranceFrom + "-" + ironBuyBrief.toleranceTo + " " + ironBuyBrief.numbers + "" + ironBuyBrief.unit);
         viewHolder.message.setText(StringUtils.getString(R.string.buy_item_message, ironBuyBrief.message));
         viewHolder.deadLine.setText(StringUtils.getString(R.string.buy_item_time_limit, DateUtils.getDateStr(System.currentTimeMillis() + ironBuyBrief.timeLimit)));
-
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditBuyActivity.start((BaseActivity) parent.getContext(), ironBuyBrief);
-            }
-        });
 
         return convertView;
     }

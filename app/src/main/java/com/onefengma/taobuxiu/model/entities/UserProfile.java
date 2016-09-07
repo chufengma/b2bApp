@@ -12,4 +12,6 @@ public class UserProfile {
     public int becomeStatus = 0;
     public Seller seller;
     public SalesMan salesMan;
+    public UserInfo userData;
+    public UserInfo sellerData;
 }

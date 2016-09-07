@@ -14,6 +14,7 @@ import com.onefengma.taobuxiu.model.BaseResponse;
 import com.onefengma.taobuxiu.model.Constant;
 import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
 import com.onefengma.taobuxiu.model.entities.IronBuyPush;
+import com.onefengma.taobuxiu.model.entities.MyAllHistoryInfo;
 import com.onefengma.taobuxiu.model.entities.MyBuyHistoryInfo;
 import com.onefengma.taobuxiu.model.entities.MyIronBuyDetail;
 import com.onefengma.taobuxiu.model.entities.MyIronBuysNewNums;
@@ -23,6 +24,7 @@ import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
 import com.onefengma.taobuxiu.model.events.DeleteIronBuyEvent;
 import com.onefengma.taobuxiu.model.events.GetBuyNumbersEvent;
 import com.onefengma.taobuxiu.model.events.IronBuyPushEvent;
+import com.onefengma.taobuxiu.model.events.MyIronAllHistoryEvent;
 import com.onefengma.taobuxiu.model.events.MyIronBuyHistoryEvent;
 import com.onefengma.taobuxiu.model.events.MyIronDetailEvent;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
@@ -462,6 +464,23 @@ public class BuyManager {
         });
     }
 
+    public void getIronAllHistroy() {
+        EventBusHelper.post(new MyIronAllHistoryEvent(BaseStatusEvent.STARTED, null));
+        HttpHelper.wrap(HttpHelper.create(BuyService.class).getMyIronAllHistory()).subscribe(new SimpleNetworkSubscriber<BaseResponse>() {
+            @Override
+            public void onSuccess(BaseResponse data) {
+                MyAllHistoryInfo myAllHistoryInfo = JSON.parseObject(data.data.toString(), MyAllHistoryInfo.class);
+                EventBusHelper.post(new MyIronAllHistoryEvent(BaseStatusEvent.SUCCESS, myAllHistoryInfo));
+            }
+
+            @Override
+            public void onFailed(BaseResponse baseResponse, Throwable e) {
+                super.onFailed(baseResponse, e);
+                EventBusHelper.post(new MyIronAllHistoryEvent(BaseStatusEvent.FAILED, null));
+            }
+        });
+    }
+
     public void saveIronBuy(IronBuyPush push) {
         deleteIronBuy(push);
         ironBuyPushList.add(0, push);
@@ -494,6 +513,9 @@ public class BuyManager {
 
         @GET("iron/myIronBuyHistory")
         Observable<BaseResponse> getMyIronBuyHistory();
+
+        @GET("iron/myIronAllHistory")
+        Observable<BaseResponse> getMyIronAllHistory();
 
         @FormUrlEncoded
         @POST("iron/selectSupply")
@@ -584,20 +606,20 @@ public class BuyManager {
     }
 
     public void showBuyGuidance(Activity activity, View view) {
-        if (!SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_BUY_GUIDANCE, false)) {
+         if (!SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_BUY_GUIDANCE, false)) {
             HighLightGuideView.builder(activity)
-                    .addHighLightGuidView(view, R.drawable.ic_launcher)
+                    .addHighLightGuidView(view, R.drawable.ic_guidance_edit)
                     .setHighLightStyle(HighLightGuideView.VIEWSTYLE_CIRCLE)
                     .show();
             SPHelper.top().sp().edit().putBoolean(Constant.StorageKeys.SETTING_BUY_GUIDANCE, true).commit();
-        }
+         }
     }
 
 
     public void showBuyDetailGuidance(Activity activity) {
-        if (!SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_BUY_DETAIL_GUIDANCE, false)) {
+       if (!SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_BUY_DETAIL_GUIDANCE, false)) {
             HighLightGuideView.builder(activity)
-                    .addNoHighLightGuidView(R.drawable.ic_mine_pressed)
+                    .addNoHighLightGuidView(R.drawable.ic_guidance_buy_detail)
                     .show();
             SPHelper.top().sp().edit().putBoolean(Constant.StorageKeys.SETTING_BUY_DETAIL_GUIDANCE, true).commit();
         }

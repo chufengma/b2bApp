@@ -25,6 +25,7 @@ public class NotificationHelper {
                 .setContentTitle(title)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
+                .setDefaults(Notification.DEFAULT_SOUND)
                 .setContentText(text).build();
 
         notificationManager.notify(0, notification);

@@ -88,6 +88,11 @@ public class MineFragment extends BaseFragment {
 
     }
 
+    @OnClick(R.id.mine_integral)
+    public void clickOnIntegral() {
+        MyIntegralActivity.start((BaseActivity) getActivity());
+    }
+
     @OnClick(R.id.mine_subscribe)
     public void clickOnSubscribe() {
         MySubscribeActivity.start((BaseActivity) getActivity());
@@ -111,6 +116,8 @@ public class MineFragment extends BaseFragment {
             }
         });
     }
+
+
 
     @OnClick(R.id.mine_history)
     public void clickOnHistory() {
