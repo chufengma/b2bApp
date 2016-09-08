@@ -9,8 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.model.events.sales.SalesBuyListEvent;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,4 +51,32 @@ public class SalesBuyFragment extends BaseFragment {
         tab.setupWithViewPager(salesBuyViewPager);
         toolbar.getLeftImageLayout().setVisibility(View.GONE);
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBusHelper.register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusHelper.unregister(this);
+    }
+
+    @Subscribe
+    public void onQtListEvent(SalesBuyListEvent event) {
+        switch (event.buyStatus) {
+            case DOING:
+                tab.getTabAt(0).setText("求购中(" + SalesBuyManager.instance().salesIronsBuyResponses[event.buyStatus.ordinal()].maxCount  + ")");
+                break;
+            case DONE:
+                tab.getTabAt(1).setText("已完成(" +SalesBuyManager.instance().salesIronsBuyResponses[event.buyStatus.ordinal()].maxCount  + ")");
+                break;
+            case OUT_OF_DATE:
+                tab.getTabAt(2).setText("已过期(" +SalesBuyManager.instance().salesIronsBuyResponses[event.buyStatus.ordinal()].maxCount  + ")");
+                break;
+        };
+    }
+
 }

@@ -7,8 +7,27 @@
     <TextView
         android:layout_width="wrap_content"
         android:id="@+id/company"
-        android:text="风马科技有限公司"
-        android:padding="10dip"
+        android:text="风马科"
+        android:paddingTop="5dip"
+        android:paddingBottom="5dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:textColor="@color/black"
+        android:layout_alignParentLeft="true"
+        android:textSize="14dip"
+        android:layout_toLeftOf="@+id/locationCity"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@id/locationCity"
+        android:text="所在地： 江苏无锡"
+        android:paddingTop="5dip"
+        android:paddingBottom="5dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:layout_alignParentRight="true"
         android:textColor="@color/black"
         android:textSize="14dip"
         android:layout_height="wrap_content" />
@@ -18,7 +37,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:padding="10dip"
+        android:paddingTop="5dip"
+        android:paddingBottom="5dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
         android:layout_below="@id/company"
         android:textColor="@color/black"
         android:textSize="16dip"
@@ -31,7 +53,10 @@
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
-        android:padding="10dip"
+        android:paddingTop="5dip"
+        android:paddingBottom="5dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
         android:textColor="@color/black"
         android:textSize="16dip"
         android:layout_below="@id/company"
@@ -42,7 +67,10 @@
         android:id="@id/contact"
         android:layout_width="wrap_content"
         android:text="联系商家"
-        android:padding="10dip"
+        android:paddingTop="5dip"
+        android:paddingBottom="5dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
         android:layout_height="wrap_content"
         android:textColor="@color/main_green"
         android:layout_below="@id/company"
@@ -51,14 +79,4 @@
         android:background="@drawable/abc_item_background_holo_dark"
         android:clickable="true" />
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:id="@+id/locationCity"
-        android:text="所在地： 江苏无锡"
-        android:padding="10dip"
-        android:layout_below="@id/mobile"
-        android:textColor="@color/black"
-        android:textSize="14dip"
-        android:layout_height="wrap_content" />
 </RelativeLayout>

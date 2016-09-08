@@ -9,7 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.model.events.sales.SalesGetSellersEvent;
+import com.onefengma.taobuxiu.model.events.sales.SalesGetUsers;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +29,18 @@ public class SalesUserFragment extends BaseFragment {
     TabLayout tab;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBusHelper.register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusHelper.unregister(this);
+    }
 
     @Nullable
     @Override
@@ -42,6 +59,16 @@ public class SalesUserFragment extends BaseFragment {
         viewPager.setAdapter(adapter);
 
         tab.setupWithViewPager(viewPager);
+    }
+
+    @Subscribe
+    public void onLoadUserEvent(SalesGetUsers event) {
+        tab.getTabAt(1).setText("普通用户(" + SalesUserManager.instance().salesBindUserResponse.maxCount  + ")");
+    }
+
+    @Subscribe
+    public void onLoadSellersEvent(SalesGetSellersEvent event) {
+        tab.getTabAt(0).setText("商家用户(" +SalesUserManager.instance().salesBindSellerResponse.maxCount  + ")");
     }
 
 }

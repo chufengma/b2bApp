@@ -9,8 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.onefengma.taobuxiu.R;
+import com.onefengma.taobuxiu.manager.QtManager;
+import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.model.events.sales.SalesQtListEvent;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,4 +52,35 @@ public class SalesQtFragment extends BaseFragment {
         tab.setupWithViewPager(viewPager);
         toolbar.getLeftImageLayout().setVisibility(View.GONE);
     }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBusHelper.register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBusHelper.unregister(this);
+    }
+    @Subscribe
+    public void onQtListEvent(SalesQtListEvent event) {
+        switch (event.qtStatus) {
+            case QT_WAITING:
+                tab.getTabAt(0).setText("等待质检(" + SalesQtManager.instance().qtListResponses[event.qtStatus.ordinal()].maxCount  + ")");
+                break;
+            case QT_DOING:
+                tab.getTabAt(1).setText("质检中(" +SalesQtManager.instance().qtListResponses[event.qtStatus.ordinal()].maxCount  + ")");
+                break;
+            case QT_DONE:
+                tab.getTabAt(2).setText("质检完成(" +SalesQtManager.instance().qtListResponses[event.qtStatus.ordinal()].maxCount  + ")");
+                break;
+            case QT_CANCEL:
+                tab.getTabAt(3).setText("质检取消(" +SalesQtManager.instance().qtListResponses[event.qtStatus.ordinal()].maxCount  + ")");
+                break;
+        };
+    }
+
 }
