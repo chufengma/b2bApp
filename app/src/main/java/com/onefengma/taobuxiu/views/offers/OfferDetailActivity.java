@@ -193,7 +193,7 @@ public class OfferDetailActivity extends BaseActivity {
         info.setText(getString(R.string.offer_detail_info, buy.length + "*" + buy.width + "*" + buy.height));
         tolerate.setText(getString(R.string.offer_detail_tolerate, buy.tolerance));
         message.setText(getString(R.string.offer_detail_message, buy.message));
-        numbers.setText(StringUtils.getString(R.string.offer_detail_numbers, buy.numbers));
+        numbers.setText(StringUtils.getString(R.string.offer_detail_numbers, buy.numbers + "/" + buy.unit));
 
         if (offerDetail.myOffer != null) {
             myPrice.setText(getString(R.string.offer_detail_my_price, offerDetail.myOffer.price + "/" + offerDetail.myOffer.unit));
