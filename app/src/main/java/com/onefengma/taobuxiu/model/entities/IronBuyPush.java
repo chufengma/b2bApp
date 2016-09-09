@@ -35,27 +35,29 @@ public class IronBuyPush implements Serializable {
         id = System.currentTimeMillis();
     }
 
-    public IronBuyPush(IronBuyPush oldPush) {
-        this.ironType = ironType;
-        this.material = material;
-        this.surface = surface;
-        this.proPlace = proPlace;
-        this.locationCityId = locationCityId;
-        this.message = message;
-        this.length = length;
-        this.width = width;
-        this.height = height;
-        this.toleranceFrom = toleranceFrom;
-        this.toleranceTo = toleranceTo;
-        this.numbers = numbers;
-        this.timeLimit = timeLimit;
-        this.unit = unit;
-        this.unitIndex = unitIndex;
-        this.dayIndex = dayIndex;
-        this.hourIndex = hourIndex;
-        this.minuteIndex = minuteIndex;
-        this.id = id;
-        this.ironId = ironId;
-        this.pushStatus = pushStatus;
+    public IronBuyPush copy() {
+        IronBuyPush newPush = new IronBuyPush();
+        newPush.ironType = ironType;
+        newPush.material = material;
+        newPush.surface = surface;
+        newPush.proPlace = proPlace;
+        newPush.locationCityId = locationCityId;
+        newPush.message = message;
+        newPush.length = length;
+        newPush.width = width;
+        newPush.height = height;
+        newPush.toleranceFrom = toleranceFrom;
+        newPush.toleranceTo = toleranceTo;
+        newPush.numbers = numbers;
+        newPush.timeLimit = timeLimit;
+        newPush.unit = unit;
+        newPush.unitIndex = unitIndex;
+        newPush.dayIndex = dayIndex;
+        newPush.hourIndex = hourIndex;
+        newPush.minuteIndex = minuteIndex;
+        newPush.id = id;
+        newPush.ironId = ironId;
+        newPush.pushStatus = pushStatus;
+        return newPush;
     }
 }

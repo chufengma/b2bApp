@@ -86,10 +86,14 @@ public class PushNewBuyActivity extends BaseActivity {
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                DialogUtils.showItemDialog(view.getContext(), null, new String[]{"删除该项"}, new DialogInterface.OnClickListener() {
+                DialogUtils.showItemDialog(view.getContext(), null, new String[]{"删除该项", "复制该项"}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        BuyManager.instance().deleteIronBuy(pushListAdapter.getItem(position - list.getHeaderViewsCount()));
+                        if (which == 0) {
+                            BuyManager.instance().deleteIronBuy(pushListAdapter.getItem(position - list.getHeaderViewsCount()));
+                        } else if (which == 1) {
+                            BuyManager.instance().copyIronBuy(pushListAdapter.getItem(position - list.getHeaderViewsCount()));
+                        }
                         pushListAdapter.setMyBuys(BuyManager.instance().getCachedIronBuys());
                     }
                 });

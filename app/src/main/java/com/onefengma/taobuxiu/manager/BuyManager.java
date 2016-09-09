@@ -488,6 +488,8 @@ public class BuyManager {
     }
 
     public void copyIronBuy(IronBuyPush push) {
+        IronBuyPush newPush = push.copy();
+        newPush.id = System.currentTimeMillis();
         ironBuyPushList.add(0, push);
         SPHelper.buy().save(Constant.StorageBuyKeys.CACHED_IRON_PUSH, ironBuyPushList);
     }
