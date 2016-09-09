@@ -110,7 +110,7 @@ public class BuyListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if (onBuyItemClickListener == null) {
-                    BuyDetailActivity.start((BaseActivity) parent.getContext(), ironBuyBrief.id);
+                    BuyDetailActivity.start((BaseActivity) parent.getContext(), ironBuyBrief.id, buyStatus == BuyManager.BuyStatus.DONE ? "成交细节" : "报价状态");
                 } else {
                     onBuyItemClickListener.onClickItem(ironBuyBrief.id);
                 }

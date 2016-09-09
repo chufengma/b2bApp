@@ -14,6 +14,7 @@ import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.widgets.ProgressDialog;
+import com.onefengma.taobuxiu.views.widgets.ToolBar;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -31,6 +32,8 @@ public class ResetPasswordActivity extends BaseActivity {
     EditText password;
     @BindView(R.id.save)
     TextView save;
+    @BindView(R.id.toolbar)
+    ToolBar toolbar;
 
     private ProgressDialog progressDialog;
 
@@ -38,6 +41,13 @@ public class ResetPasswordActivity extends BaseActivity {
         Intent intent = new Intent(activity, ResetPasswordActivity.class);
         activity.startActivity(intent);
     }
+
+    public static void start(BaseActivity activity, String title) {
+        Intent intent = new Intent(activity, ResetPasswordActivity.class);
+        intent.putExtra("title", title);
+        activity.startActivity(intent);
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +57,10 @@ public class ResetPasswordActivity extends BaseActivity {
         EventBusHelper.register(this);
 
         progressDialog = new ProgressDialog(this);
+        String title = getIntent().getStringExtra("title");
+        if (!StringUtils.isEmpty(title)) {
+            toolbar.setTitle(title);
+        }
     }
 
     @Override

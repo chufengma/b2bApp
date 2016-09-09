@@ -487,6 +487,11 @@ public class BuyManager {
         SPHelper.buy().save(Constant.StorageBuyKeys.CACHED_IRON_PUSH, ironBuyPushList);
     }
 
+    public void copyIronBuy(IronBuyPush push) {
+        ironBuyPushList.add(0, push);
+        SPHelper.buy().save(Constant.StorageBuyKeys.CACHED_IRON_PUSH, ironBuyPushList);
+    }
+
     public void deleteIronBuy(IronBuyPush push) {
         int index = -1;
         for (int i = 0; i < ironBuyPushList.size(); i++) {

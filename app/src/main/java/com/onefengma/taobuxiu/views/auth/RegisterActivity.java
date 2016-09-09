@@ -89,6 +89,11 @@ public class RegisterActivity extends BaseActivity implements CompoundButton.OnC
         AuthManager.instance().doRegister(mobile.getText().toString(), password.getText().toString(), verify.getText().toString());
     }
 
+    @OnClick(R.id.goto_info)
+    public void onGotoInfoClick() {
+        WebViewActivity.start(this, "file:///android_asset/register_agree.html", "用户注册协议");
+    }
+
     private void updateRegisterEnable() {
         register.setEnabled(agreeBtn.isChecked() && !StringUtils.isEmpty(mobile.getText().toString())
                     && !StringUtils.isEmpty(verify.getText().toString())

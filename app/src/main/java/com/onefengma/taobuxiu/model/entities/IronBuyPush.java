@@ -1,7 +1,5 @@
 package com.onefengma.taobuxiu.model.entities;
 
-import com.onefengma.taobuxiu.manager.helpers.SystemHelper;
-
 import java.io.Serializable;
 
 /**
@@ -35,5 +33,29 @@ public class IronBuyPush implements Serializable {
 
     public IronBuyPush() {
         id = System.currentTimeMillis();
+    }
+
+    public IronBuyPush(IronBuyPush oldPush) {
+        this.ironType = ironType;
+        this.material = material;
+        this.surface = surface;
+        this.proPlace = proPlace;
+        this.locationCityId = locationCityId;
+        this.message = message;
+        this.length = length;
+        this.width = width;
+        this.height = height;
+        this.toleranceFrom = toleranceFrom;
+        this.toleranceTo = toleranceTo;
+        this.numbers = numbers;
+        this.timeLimit = timeLimit;
+        this.unit = unit;
+        this.unitIndex = unitIndex;
+        this.dayIndex = dayIndex;
+        this.hourIndex = hourIndex;
+        this.minuteIndex = minuteIndex;
+        this.id = id;
+        this.ironId = ironId;
+        this.pushStatus = pushStatus;
     }
 }

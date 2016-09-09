@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         app:tool_bar_title="我的质检"
-        app:tool_bar_left="@drawable/ic_buy_sum"
+        app:tool_bar_left_title="联系专员"
         app:tool_bar_right="@drawable/ic_qt_info"
         app:tool_bar_icon_size="30dip"
         android:layout_height="56dip" />
@@ -23,7 +23,7 @@
         android:layout_height="40dip"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/main_blue"
-        app:tabMode="fixed"
+        app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/main_blue"
         app:tabTextColor="#d11E7CBA" />
 

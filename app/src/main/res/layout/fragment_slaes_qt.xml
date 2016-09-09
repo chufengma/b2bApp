@@ -19,7 +19,7 @@
         android:layout_height="40dip"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/main_blue"
-        app:tabMode="fixed"
+        app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/main_blue"
         app:tabTextColor="#d11E7CBA" />
 

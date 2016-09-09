@@ -62,11 +62,13 @@
     <string name="offer_detail_info">规格： %1$s</string>
     <string name="offer_detail_tolerate">公差： %1$s</string>
     <string name="offer_detail_message">备注： %1$s</string>
+    <string name="offer_detail_numbers">数量： %1$s</string>
 
     <string name="offer_detail_buy_times">求购总次数：%1$s</string>
     <string name="offer_detail_buy_rate">求购成功率：%1$s</string>
     <string name="offer_detail_my_price">报价：%1$s</string>
     <string name="offer_detail_my_message">备注：%1$s</string>
+    <string name="offer_detail_total_money">总成交额：%1$s</string>
     <string name="title_activity_my_subscribe">MySubscribeActivity</string>
 
 
@@ -80,4 +82,5 @@
 
     <string name="setting_switch_app">切换至淘不锈App</string>
     <string name="setting_switch_sales">切换至专员App</string>
+
 </resources>

@@ -20,6 +20,7 @@ import com.onefengma.taobuxiu.model.events.QtListEvent;
 import com.onefengma.taobuxiu.utils.DialogUtils;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
+import com.onefengma.taobuxiu.views.auth.WebViewActivity;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 import com.onefengma.taobuxiu.views.widgets.ToolBar;
@@ -80,6 +81,12 @@ public class QTFragment extends BaseFragment {
         toolbar.getLeftImageLayout().setVisibility(View.GONE);
     }
 
+
+    @OnClick(R.id.left_title)
+    public void clickOnLeftTitle() {
+        QtManager.instance().cantactSalesMan((BaseActivity) getActivity());
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onTabEvent(OnMineTabEvent OnQtTabEvent) {
         System.out.println("-----------------OnQtTabEvent");
@@ -87,7 +94,7 @@ public class QTFragment extends BaseFragment {
 
     @OnClick(R.id.right_image)
     public void onRightImageClick() {
-        QtDescActivity.start((BaseActivity) getActivity());
+        WebViewActivity.start((BaseActivity) getActivity(), "file:///android_asset/qt_info.html", "质检说明");
     }
 
     @Override

@@ -12,13 +12,16 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.AuthManager;
+import com.onefengma.taobuxiu.manager.QtManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.manager.helpers.ImageHelper;
 import com.onefengma.taobuxiu.model.entities.UserProfile;
 import com.onefengma.taobuxiu.model.events.OnMineTabEvent;
 import com.onefengma.taobuxiu.utils.DialogUtils;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
 import com.onefengma.taobuxiu.views.auth.ResetPasswordActivity;
+import com.onefengma.taobuxiu.views.auth.WebViewActivity;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 import com.onefengma.taobuxiu.views.offers.MySubscribeActivity;
@@ -81,7 +84,7 @@ public class MineFragment extends BaseFragment {
         }
 
         if (userProfile != null && !StringUtils.isEmpty(userProfile.avator)) {
-            ImageLoader.getInstance().displayImage(userProfile.avator, avator);
+            ImageLoader.getInstance().displayImage(ImageHelper.getImageUrl(userProfile.avator), avator);
         } else {
             ImageLoader.getInstance().displayImage("drawable://" + R.drawable.ic_detault_icon, avator);
         }
@@ -109,7 +112,7 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0) {
-                    ResetPasswordActivity.start((BaseActivity) getActivity());
+                    ResetPasswordActivity.start((BaseActivity) getActivity(), "修改密码");
                 } else {
                     AuthManager.quit();
                 }
@@ -117,7 +120,15 @@ public class MineFragment extends BaseFragment {
         });
     }
 
+    @OnClick(R.id.mine_contact)
+    public void clickOnContact() {
+        QtManager.instance().cantactSalesMan((BaseActivity) getActivity());
+    }
 
+    @OnClick(R.id.mine_about)
+    public void clickOnAbout() {
+        WebViewActivity.start((BaseActivity) getActivity(), "file:///android_asset/about_us.html", "关于我们");
+    }
 
     @OnClick(R.id.mine_history)
     public void clickOnHistory() {

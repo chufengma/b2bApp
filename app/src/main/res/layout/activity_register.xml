@@ -132,17 +132,34 @@
 
     </RelativeLayout>
 
-    <CheckBox
-        android:layout_marginTop="15dip"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:padding="8dip"
-        android:text="@string/user_doc_title"
-        android:layout_gravity="left"
-        android:id="@+id/agree_btn"
-        android:buttonTint="@color/login_btn_border"
-        android:paddingLeft="5dip"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingLeft="5dip"
+        android:baselineAligned="false"
+        android:layout_height="40dip">
+
+        <CheckBox
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_gravity="left"
+            android:id="@+id/agree_btn"
+            android:paddingTop="20dip"
+            android:buttonTint="@color/login_btn_border"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/user_doc_title"
+            android:textColor="@color/white"
+            android:clickable="true"
+            android:gravity="center"
+            android:id="@+id/goto_info"
+            android:textSize="14dip"
+            android:layout_height="20dip" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/register"

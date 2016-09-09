@@ -1,15 +1,21 @@
 package com.onefengma.taobuxiu.manager;
 
+import android.content.DialogInterface;
+
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.JSONHelper;
+import com.onefengma.taobuxiu.manager.helpers.SystemHelper;
 import com.onefengma.taobuxiu.model.BaseResponse;
 import com.onefengma.taobuxiu.model.Constant;
 import com.onefengma.taobuxiu.model.entities.QtListResponse;
+import com.onefengma.taobuxiu.model.entities.UserProfile;
 import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
 import com.onefengma.taobuxiu.model.events.QtListEvent;
 import com.onefengma.taobuxiu.network.HttpHelper;
+import com.onefengma.taobuxiu.utils.DialogUtils;
 import com.onefengma.taobuxiu.utils.SPHelper;
+import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.sales.SalesQtManager.SalesQtStatus;
 
 import retrofit2.http.GET;
@@ -106,6 +112,25 @@ public class QtManager {
         if (cache != null) {
             qtListResponses[status.ordinal()].qts = cache.qts;
             qtListResponses[status.ordinal()].maxCount = cache.maxCount;
+        }
+    }
+
+    public void cantactSalesMan(BaseActivity activity) {
+        final UserProfile userProfile = AuthManager.instance().getUserProfile();
+        if (userProfile != null && userProfile.salesMan != null) {
+            DialogUtils.showAlertDialog(activity, "确认拨打专员电话：" + userProfile.salesMan.tel + " ?", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SystemHelper.call(userProfile.salesMan.tel);
+                }
+            });
+        } else {
+            DialogUtils.showAlertDialog(activity, "确认拨打客服电话：0510-81812186 ?", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SystemHelper.call("0510-81812186");
+                }
+            });
         }
     }
 

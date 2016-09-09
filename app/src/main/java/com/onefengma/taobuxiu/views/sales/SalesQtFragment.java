@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.onefengma.taobuxiu.R;
-import com.onefengma.taobuxiu.manager.QtManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.events.sales.SalesQtListEvent;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
@@ -53,7 +52,6 @@ public class SalesQtFragment extends BaseFragment {
         toolbar.getLeftImageLayout().setVisibility(View.GONE);
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +70,7 @@ public class SalesQtFragment extends BaseFragment {
                 tab.getTabAt(0).setText("等待质检(" + SalesQtManager.instance().qtListResponses[event.qtStatus.ordinal()].maxCount  + ")");
                 break;
             case QT_DOING:
-                tab.getTabAt(1).setText("质检中(" +SalesQtManager.instance().qtListResponses[event.qtStatus.ordinal()].maxCount  + ")");
+                tab.getTabAt(1).setText(" 质检中(" +SalesQtManager.instance().qtListResponses[event.qtStatus.ordinal()].maxCount  + ")");
                 break;
             case QT_DONE:
                 tab.getTabAt(2).setText("质检完成(" +SalesQtManager.instance().qtListResponses[event.qtStatus.ordinal()].maxCount  + ")");

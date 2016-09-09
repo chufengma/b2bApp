@@ -140,17 +140,19 @@
         <activity android:name=".views.auth.SettingActivity" />
         <activity
             android:name=".views.sales.SalesBuyDetailActivity"
-            android:label="@string/title_activity_sales_buy_detail"></activity>
+            android:label="@string/title_activity_sales_buy_detail" />
         <activity
             android:name=".views.GuidanceActivity"
-            android:label="@string/title_activity_guidance"></activity>
+            android:label="@string/title_activity_guidance" />
         <activity
             android:name=".views.mine.MyHistoryActivity"
-            android:label="@string/title_activity_my_history"></activity>
+            android:label="@string/title_activity_my_history" />
         <activity
             android:name=".views.qt.QtDescActivity"
-            android:label="@string/title_activity_qt_desc"></activity>
-        <activity android:name=".views.mine.MyIntegralActivity"></activity>
+            android:label="@string/title_activity_qt_desc" />
+        <activity android:name=".views.mine.MyIntegralActivity" />
+        <activity android:name=".views.mine.AboutUsActivity" />
+        <activity android:name=".views.auth.WebViewActivity" />
     </application>
 
 </manifest>

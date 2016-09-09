@@ -261,7 +261,13 @@ public class MySubscribeActivity extends BaseActivity {
             if (isCheckedAll) {
                 return list.subList(1, list.size());
             } else {
-                return checkedList;
+                List<String> realList = new ArrayList<>();
+                for(String item : checkedList) {
+                    if (!realList.contains(item)) {
+                        realList.add(item);
+                    }
+                }
+                return realList;
             }
         }
 
@@ -289,7 +295,9 @@ public class MySubscribeActivity extends BaseActivity {
                 return;
             }
             if (isChecked) {
-                checkedList.add(buttonView.getText().toString());
+                if (!checkedList.contains(buttonView.getText().toString())) {
+                    checkedList.add(buttonView.getText().toString());
+                }
             } else {
                 checkedList.remove(buttonView.getText().toString());
             }

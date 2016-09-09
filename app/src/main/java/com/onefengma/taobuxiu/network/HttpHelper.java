@@ -38,8 +38,8 @@ import rx.schedulers.Schedulers;
  * Created by chufengma on 16/8/7.
  */
 public class HttpHelper {
-
-    private static final String BASE_URL = "http://118.178.17.15:9090/";
+//    118.178.17.15
+    public static final String BASE_URL = "http://10.32.24.114:5389/";
 
     private static Retrofit retrofit;
 

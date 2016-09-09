@@ -71,6 +71,10 @@ public class OfferDetailActivity extends BaseActivity {
     TextView myMessage;
     @BindView(R.id.my_offer_layout)
     LinearLayout myOfferLayout;
+    @BindView(R.id.numbers)
+    TextView numbers;
+    @BindView(R.id.totalMoney)
+    TextView totalMoney;
 
     private ProgressDialog progressDialog;
     private static final String IRON_ID = "ironId";
@@ -159,6 +163,7 @@ public class OfferDetailActivity extends BaseActivity {
         }
 
     }
+
     @Subscribe
     public void onSupplyEvent(ActionMissEvent event) {
         if (event.isStarted()) {
@@ -188,10 +193,12 @@ public class OfferDetailActivity extends BaseActivity {
         info.setText(getString(R.string.offer_detail_info, buy.length + "*" + buy.width + "*" + buy.height));
         tolerate.setText(getString(R.string.offer_detail_tolerate, buy.tolerance));
         message.setText(getString(R.string.offer_detail_message, buy.message));
+        numbers.setText(StringUtils.getString(R.string.offer_detail_numbers, buy.numbers));
 
         if (offerDetail.myOffer != null) {
             myPrice.setText(getString(R.string.offer_detail_my_price, offerDetail.myOffer.price + "/" + offerDetail.myOffer.unit));
             myMessage.setText(getString(R.string.offer_detail_my_message, offerDetail.myOffer.supplyMsg));
+            totalMoney.setText(getString(R.string.offer_detail_total_money, NumbersUtils.round(offerDetail.myOffer.price * buy.numbers.floatValue(), 2)));
         }
         unit.setText("/" + buy.unit);
 
@@ -216,6 +223,9 @@ public class OfferDetailActivity extends BaseActivity {
         } else if (buy.status == 6) {
             offerTitle = "(未中标)";
         }
+
+        totalMoney.setVisibility(buy.status == 4 ? View.VISIBLE : View.GONE);
+
         myOfferTitle.setText("我的报价" + offerTitle);
     }
 

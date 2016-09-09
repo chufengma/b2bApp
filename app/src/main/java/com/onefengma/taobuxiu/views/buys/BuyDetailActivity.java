@@ -30,6 +30,7 @@ import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.widgets.ProgressDialog;
+import com.onefengma.taobuxiu.views.widgets.ToolBar;
 import com.onefengma.taobuxiu.views.widgets.listview.XListView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -50,6 +51,8 @@ public class BuyDetailActivity extends BaseActivity {
     XListView listView;
     @BindView(R.id.right_image)
     View rightImage;
+    @BindView(R.id.toolbar)
+    ToolBar toolbar;
 
     private String ironId;
     private boolean isOnlyShowWinner;
@@ -60,6 +63,13 @@ public class BuyDetailActivity extends BaseActivity {
     public static void start(BaseActivity activity, String ironId) {
         Intent intent = new Intent(activity, BuyDetailActivity.class);
         intent.putExtra(IRON_ID, ironId);
+        activity.startActivity(intent);
+    }
+
+    public static void start(BaseActivity activity, String ironId, String title) {
+        Intent intent = new Intent(activity, BuyDetailActivity.class);
+        intent.putExtra(IRON_ID, ironId);
+        intent.putExtra("title", title);
         activity.startActivity(intent);
     }
 
@@ -96,6 +106,11 @@ public class BuyDetailActivity extends BaseActivity {
         });
 
         rightImage.setVisibility(View.GONE);
+
+        String title = getIntent().getStringExtra("title");
+        if (!StringUtils.isEmpty(title)) {
+            toolbar.setTitle(title);
+        }
     }
 
     @OnClick(R.id.right_image)
@@ -326,6 +341,8 @@ public class BuyDetailActivity extends BaseActivity {
         View supplyCountIcon;
         @BindView(R.id.message)
         TextView messageView;
+        @BindView(R.id.totalMoney)
+        TextView totalMoney;
 
         HeaderViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -341,11 +358,23 @@ public class BuyDetailActivity extends BaseActivity {
                 supplyCount.setText(StringUtils.getString(R.string.buy_detail_supply_count, count + ""));
                 buyNum.setText(StringUtils.getString(R.string.buy_detail_buy_num, ironBuyBrief.id));
 
+                totalMoney.setVisibility(detail.buy.status == BuyManager.BuyStatus.DONE.ordinal() ? View.VISIBLE : View.GONE);
+
+                if (detail.supplies != null) {
+                    for (SupplyBrief supplyBrief : detail.supplies) {
+                        if (supplyBrief.isWinner) {
+                            totalMoney.setText(StringUtils.getString(R.string.offer_detail_total_money, NumbersUtils.round(supplyBrief.supplyPrice * ironBuyBrief.numbers.floatValue(), 2)));
+                        }
+                    }
+                }
+
                 String timePrefix = detail.buy.status == BuyManager.BuyStatus.DONE.ordinal() ? "成交时间：" : "过期时间：";
                 String timeStr = detail.buy.status == BuyManager.BuyStatus.DONE.ordinal() ? DateUtils.getDateStr(ironBuyBrief.supplyWinTime) : DateUtils.getDateStr(ironBuyBrief.timeLimit + ironBuyBrief.pushTime);
                 timeLimit.setText(timePrefix + timeStr);
                 editView.setVisibility(ironBuyBrief.status == BuyManager.BuyStatus.DOING.ordinal() && ironBuyBrief.editStatus == 0 ? View.VISIBLE : View.GONE);
                 messageView.setText(StringUtils.getString(R.string.buy_item_message, ironBuyBrief.message));
+
+
             }
 
             editView.setOnClickListener(new View.OnClickListener() {
@@ -370,8 +399,8 @@ public class BuyDetailActivity extends BaseActivity {
 
                     ironBuyPush.unitIndex = IconDataCategory.get().units.indexOf(ironBuyPush.unit);
                     ironBuyPush.dayIndex = (int) (ironBuyBrief.timeLimit / (DateUtils.dayTime()));
-                    ironBuyPush.hourIndex = (int) ((ironBuyBrief.timeLimit%DateUtils.dayTime()) / (DateUtils.hourTime()));
-                    ironBuyPush.hourIndex = (int) (((ironBuyBrief.timeLimit%DateUtils.dayTime())%DateUtils.hourTime() / (DateUtils.minuteTime())));
+                    ironBuyPush.hourIndex = (int) ((ironBuyBrief.timeLimit % DateUtils.dayTime()) / (DateUtils.hourTime()));
+                    ironBuyPush.hourIndex = (int) (((ironBuyBrief.timeLimit % DateUtils.dayTime()) % DateUtils.hourTime() / (DateUtils.minuteTime())));
                     EditBuyActivity.start(BuyDetailActivity.this, ironBuyPush);
                 }
             });
