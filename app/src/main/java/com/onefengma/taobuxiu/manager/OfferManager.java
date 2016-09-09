@@ -320,7 +320,7 @@ public class OfferManager {
         Observable<BaseResponse> mySubscribeInfo();
 
 
-        @GET("iron/myIronBuyHistory")
+        @GET("iron/myIronOfferHistory")
         Observable<BaseResponse> getMyIronOfferHistory();
     }
 

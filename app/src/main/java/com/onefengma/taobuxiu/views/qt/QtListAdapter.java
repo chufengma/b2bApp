@@ -90,7 +90,7 @@ public class QtListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if (contentClickListener == null) {
-                    BuyDetailActivity.start((BaseActivity) parent.getContext(), ironBuyBrief.id, true);
+                    BuyDetailActivity.start((BaseActivity) parent.getContext(), ironBuyBrief.id, true, "成交细节");
                 } else {
                     contentClickListener.onClick(ironBuyBrief.id);
                 }

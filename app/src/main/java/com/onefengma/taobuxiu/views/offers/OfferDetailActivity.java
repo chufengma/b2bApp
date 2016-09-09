@@ -1,5 +1,6 @@
 package com.onefengma.taobuxiu.views.offers;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.onefengma.taobuxiu.model.entities.OfferDetail;
 import com.onefengma.taobuxiu.model.events.ActionMissEvent;
 import com.onefengma.taobuxiu.model.events.ActionSupplyEvent;
 import com.onefengma.taobuxiu.model.events.MyOfferDetailEvent;
+import com.onefengma.taobuxiu.utils.DialogUtils;
 import com.onefengma.taobuxiu.utils.NumbersUtils;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
@@ -142,7 +144,12 @@ public class OfferDetailActivity extends BaseActivity {
 
     @OnClick(R.id.miss)
     public void onMissClick() {
-        OfferManager.instance().missIronBuyOffer(ironId);
+        DialogUtils.showAlertDialog(this, "是否确认放弃对此单的报价", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                OfferManager.instance().missIronBuyOffer(ironId);
+            }
+        });
     }
 
     @Subscribe
@@ -178,7 +185,7 @@ public class OfferDetailActivity extends BaseActivity {
         }
         if (event.isSuccess()) {
             ToastUtils.showSuccessTasty("没关系，以后还有合作机会");
-            OfferManager.instance().loadIronOfferDetail(ironId);
+            finish();
         }
     }
 

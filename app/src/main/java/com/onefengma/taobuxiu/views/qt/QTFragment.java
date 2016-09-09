@@ -94,7 +94,7 @@ public class QTFragment extends BaseFragment {
 
     @OnClick(R.id.right_image)
     public void onRightImageClick() {
-        WebViewActivity.start((BaseActivity) getActivity(), "file:///android_asset/qt_info.html", "质检说明");
+        WebViewActivity.start((BaseActivity) getActivity(), "file:///android_asset/qt_info.html", "上门质检服务说明");
     }
 
     @Override

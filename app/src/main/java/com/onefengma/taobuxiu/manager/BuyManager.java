@@ -82,6 +82,7 @@ public class BuyManager {
         DONE(1),
         OUT_OF_DATE(2);
         int status;
+
         BuyStatus(int status) {
             this.status = status;
         }
@@ -482,19 +483,23 @@ public class BuyManager {
     }
 
     public void saveIronBuy(IronBuyPush push) {
-        deleteIronBuy(push);
-        ironBuyPushList.add(0, push);
+        int index = deleteIronBuy(push);
+        if (index != -1) {
+            ironBuyPushList.add(index, push);
+        } else {
+            ironBuyPushList.add(push);
+        }
         SPHelper.buy().save(Constant.StorageBuyKeys.CACHED_IRON_PUSH, ironBuyPushList);
     }
 
     public void copyIronBuy(IronBuyPush push) {
         IronBuyPush newPush = push.copy();
         newPush.id = System.currentTimeMillis();
-        ironBuyPushList.add(0, push);
+        ironBuyPushList.add(newPush);
         SPHelper.buy().save(Constant.StorageBuyKeys.CACHED_IRON_PUSH, ironBuyPushList);
     }
 
-    public void deleteIronBuy(IronBuyPush push) {
+    public int deleteIronBuy(IronBuyPush push) {
         int index = -1;
         for (int i = 0; i < ironBuyPushList.size(); i++) {
             IronBuyPush item = ironBuyPushList.get(i);
@@ -506,6 +511,7 @@ public class BuyManager {
             ironBuyPushList.remove(index);
         }
         SPHelper.buy().save(Constant.StorageBuyKeys.CACHED_IRON_PUSH, ironBuyPushList);
+        return index;
     }
 
     public interface BuyService {
@@ -556,19 +562,19 @@ public class BuyManager {
         @FormUrlEncoded
         @POST("iron/editBuy")
         Observable<BaseResponse> reBuyPush(@Field(("ironId")) String ironId, @Field(("ironType")) String ironType,
-                                             @Field(("material")) String material,
-                                             @Field(("surface")) String surface,
-                                             @Field(("proPlace")) String proPlace,
-                                             @Field(("locationCityId")) String locationCityId,
-                                             @Field(("message")) String message,
-                                             @Field(("length")) float length,
-                                             @Field(("width")) float width,
-                                             @Field(("height")) float height,
-                                             @Field(("toleranceFrom")) float toleranceFrom,
-                                             @Field(("toleranceTo")) float toleranceTo,
-                                             @Field(("numbers")) float numbers,
-                                             @Field(("timeLimit")) long timeLimit,
-                                             @Field(("unit")) String unit);
+                                           @Field(("material")) String material,
+                                           @Field(("surface")) String surface,
+                                           @Field(("proPlace")) String proPlace,
+                                           @Field(("locationCityId")) String locationCityId,
+                                           @Field(("message")) String message,
+                                           @Field(("length")) float length,
+                                           @Field(("width")) float width,
+                                           @Field(("height")) float height,
+                                           @Field(("toleranceFrom")) float toleranceFrom,
+                                           @Field(("toleranceTo")) float toleranceTo,
+                                           @Field(("numbers")) float numbers,
+                                           @Field(("timeLimit")) long timeLimit,
+                                           @Field(("unit")) String unit);
     }
 
     public void getBuyNumbers() {
@@ -613,18 +619,18 @@ public class BuyManager {
     }
 
     public void showBuyGuidance(Activity activity, View view) {
-         if (!SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_BUY_GUIDANCE, false)) {
+        if (!SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_BUY_GUIDANCE, false)) {
             HighLightGuideView.builder(activity)
                     .addHighLightGuidView(view, R.drawable.ic_guidance_edit)
                     .setHighLightStyle(HighLightGuideView.VIEWSTYLE_CIRCLE)
                     .show();
             SPHelper.top().sp().edit().putBoolean(Constant.StorageKeys.SETTING_BUY_GUIDANCE, true).commit();
-         }
+        }
     }
 
 
     public void showBuyDetailGuidance(Activity activity) {
-       if (!SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_BUY_DETAIL_GUIDANCE, false)) {
+        if (!SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_BUY_DETAIL_GUIDANCE, false)) {
             HighLightGuideView.builder(activity)
                     .addNoHighLightGuidView(R.drawable.ic_guidance_buy_detail)
                     .show();

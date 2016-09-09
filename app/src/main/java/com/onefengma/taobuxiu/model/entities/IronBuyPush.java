@@ -55,7 +55,6 @@ public class IronBuyPush implements Serializable {
         newPush.dayIndex = dayIndex;
         newPush.hourIndex = hourIndex;
         newPush.minuteIndex = minuteIndex;
-        newPush.id = id;
         newPush.ironId = ironId;
         newPush.pushStatus = pushStatus;
         return newPush;

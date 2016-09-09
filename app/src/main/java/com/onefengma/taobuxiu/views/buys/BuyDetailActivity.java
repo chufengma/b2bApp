@@ -35,6 +35,7 @@ import com.onefengma.taobuxiu.views.widgets.listview.XListView;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -77,6 +78,14 @@ public class BuyDetailActivity extends BaseActivity {
         Intent intent = new Intent(activity, BuyDetailActivity.class);
         intent.putExtra(IRON_ID, ironId);
         intent.putExtra(ONLY_SHOW_WINNER, onlyShowWinner);
+        activity.startActivity(intent);
+    }
+
+    public static void start(BaseActivity activity, String ironId, boolean onlyShowWinner, String title) {
+        Intent intent = new Intent(activity, BuyDetailActivity.class);
+        intent.putExtra(IRON_ID, ironId);
+        intent.putExtra(ONLY_SHOW_WINNER, onlyShowWinner);
+        intent.putExtra("title", title);
         activity.startActivity(intent);
     }
 
@@ -214,6 +223,19 @@ public class BuyDetailActivity extends BaseActivity {
     }
 
     private void setUpViews(MyIronBuyDetail detail) {
+
+        if (detail.supplies != null) {
+            List<SupplyBrief> newList = new ArrayList<>();
+            for(SupplyBrief supplyBrief : detail.supplies) {
+                if (supplyBrief.isWinner) {
+                    newList.add(0, supplyBrief);
+                } else {
+                    newList.add(supplyBrief);
+                }
+            }
+            detail.supplies = newList;
+        }
+
         headerViewHolder.display(detail);
         buyDetailSupplyListAdapter.setDetail(detail);
         rightImage.setVisibility(detail.buy.status == BuyManager.BuyStatus.DOING.ordinal() ? View.VISIBLE : View.GONE);

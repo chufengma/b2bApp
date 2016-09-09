@@ -97,7 +97,7 @@ public class PushNewBuyActivity extends BaseActivity {
                         pushListAdapter.setMyBuys(BuyManager.instance().getCachedIronBuys());
                     }
                 });
-                return false;
+                return true;
             }
         });
 
