@@ -32,6 +32,7 @@ import com.onefengma.taobuxiu.views.widgets.listview.XListView;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -198,6 +199,14 @@ public class SalesBuyDetailActivity extends BaseActivity {
     }
 
     private void setUpViews(SalesIronBuyDetail detail) {
+        if (detail.supplies == null) {
+            detail.supplies = new ArrayList<>();
+        }
+
+        if (detail.missSupplies != null) {
+            detail.supplies.addAll(detail.missSupplies);
+        }
+
         headerViewHolder.display(detail);
         buyDetailSupplyListAdapter.setDetail(detail);
 
@@ -284,6 +293,8 @@ public class SalesBuyDetailActivity extends BaseActivity {
             TextView contact;
             @BindView(R.id.winner)
             TextView winnerView;
+            @BindView(R.id.missed)
+            TextView missedView;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);
@@ -295,6 +306,19 @@ public class SalesBuyDetailActivity extends BaseActivity {
                 message.setText(StringUtils.getString(R.string.buy_item_message, supplyBrief.supplyMsg));
                 info.setText(StringUtils.getString(R.string.buy_detail_info, supplyBrief.winningTimes + "", supplyBrief.contact));
                 winnerView.setVisibility(supplyBrief.isWinner ? View.VISIBLE : View.GONE);
+
+                if (supplyBrief.supplyPrice == -1) {
+                    message.setVisibility(View.GONE);
+                    price.setVisibility(View.GONE);
+                    winnerView.setVisibility(View.GONE);
+                    missedView.setVisibility(View.VISIBLE);
+                } else {
+                    missedView.setVisibility(View.GONE);
+                    message.setVisibility(View.VISIBLE);
+                    price.setVisibility(View.VISIBLE);
+                    winnerView.setVisibility(supplyBrief.isWinner ? View.VISIBLE : View.GONE);
+                }
+
 
                 contact.setOnClickListener(new View.OnClickListener() {
                     @Override

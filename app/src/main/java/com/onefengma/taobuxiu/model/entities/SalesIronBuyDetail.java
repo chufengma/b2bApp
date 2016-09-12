@@ -10,6 +10,7 @@ import java.util.List;
 public class SalesIronBuyDetail {
     public IronBuyBrief buy;
     public List<SupplyBrief> supplies;
+    public List<SupplyBrief> missSupplies;
     public String salesManPhone;
     public SalesMan salesMan;
     public QtDetail qtDetail;

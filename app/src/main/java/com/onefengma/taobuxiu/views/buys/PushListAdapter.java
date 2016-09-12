@@ -64,7 +64,7 @@ public class PushListAdapter extends BaseAdapter {
         final IronBuyPush ironBuyBrief = getItem(position);
 
         viewHolder.title.setText(ironBuyBrief.ironType + "/" + ironBuyBrief.material + "/" + ironBuyBrief.surface + "/" + ironBuyBrief.proPlace + "( " + CityCategory.instance().getCityDesc(ironBuyBrief.locationCityId) + ")");
-        viewHolder.subTitle.setText(ironBuyBrief.height + "*" + ironBuyBrief.length + "*" + ironBuyBrief.width + " " + ironBuyBrief.toleranceFrom + "-" + ironBuyBrief.toleranceTo + " " + ironBuyBrief.numbers + "" + ironBuyBrief.unit);
+        viewHolder.subTitle.setText(ironBuyBrief.height + "*" + ironBuyBrief.width + "*" + ironBuyBrief.length + " " + ironBuyBrief.toleranceFrom + "-" + ironBuyBrief.toleranceTo + " " + ironBuyBrief.numbers + "" + ironBuyBrief.unit);
         viewHolder.message.setText(StringUtils.getString(R.string.buy_item_message, ironBuyBrief.message));
         viewHolder.deadLine.setText(StringUtils.getString(R.string.buy_item_time_limit, DateUtils.getDateStr(System.currentTimeMillis() + ironBuyBrief.timeLimit)));
 

@@ -677,9 +677,9 @@ public class BuyManager {
             @Override
             public int compare(SupplyBrief one, SupplyBrief two) {
                 if (one.supplyPrice < two.supplyPrice) {
-                    return 1;
-                } else if (one.supplyPrice > two.supplyPrice) {
                     return -1;
+                } else if (one.supplyPrice > two.supplyPrice) {
+                    return 1;
                 }
                 return 0;
             }
