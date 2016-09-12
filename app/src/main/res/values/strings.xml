@@ -38,6 +38,7 @@
     <string name="buy_detail_buy_num">求购单号：%1$s</string>
     <string name="buy_detail_supply_count">%1$s家已报价</string>
     <string name="buy_detail_buy_company">买家公司名：%1$s</string>
+    <string name="buy_detail_buy_contact">买家联系人：%1$s</string>
     <string name="buy_detail_info">卖家中标次数：%1$s次  联系人：%2$s</string>
 
     <!-- XListView -->

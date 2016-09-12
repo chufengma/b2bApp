@@ -19,6 +19,7 @@ import com.onefengma.taobuxiu.model.entities.MyBuyHistoryInfo;
 import com.onefengma.taobuxiu.model.entities.MyIronBuyDetail;
 import com.onefengma.taobuxiu.model.entities.MyIronBuysNewNums;
 import com.onefengma.taobuxiu.model.entities.MyIronsResponse;
+import com.onefengma.taobuxiu.model.entities.SupplyBrief;
 import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
 import com.onefengma.taobuxiu.model.events.DeleteIronBuyEvent;
@@ -46,6 +47,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.http.Field;
@@ -650,6 +654,38 @@ public class BuyManager {
                     })
                     .show();
             SPHelper.top().sp().edit().putBoolean(Constant.StorageKeys.SETTING_BUY_DETAIL_GUIDANCE, true).commit();
+        }
+    }
+
+    public void sortSupplyByMoney(List<SupplyBrief> oldSupplies) {
+        if (oldSupplies == null || oldSupplies.size() == 1) {
+            return;
+        }
+        List<SupplyBrief> supplies = oldSupplies;
+        SupplyBrief winOne = null;
+        for (SupplyBrief supplyBrief : supplies) {
+            if (supplyBrief.isWinner) {
+                winOne = supplyBrief;
+                break;
+            }
+        }
+        if (winOne != null) {
+            oldSupplies.remove(winOne);
+        }
+
+        Collections.sort(oldSupplies, new Comparator<SupplyBrief>() {
+            @Override
+            public int compare(SupplyBrief one, SupplyBrief two) {
+                if (one.supplyPrice < two.supplyPrice) {
+                    return 1;
+                } else if (one.supplyPrice > two.supplyPrice) {
+                    return 0;
+                }
+                return 0;
+            }
+        });
+        if (winOne != null) {
+            oldSupplies.add(0, winOne);
         }
     }
 

@@ -335,6 +335,8 @@ public class SalesBuyDetailActivity extends BaseActivity {
         View contactUser;
         @BindView(R.id.buy_company)
         TextView companyName;
+        @BindView(R.id.buy_contact)
+        TextView contactName;
 
         HeaderViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -369,8 +371,10 @@ public class SalesBuyDetailActivity extends BaseActivity {
             }
 
             companyName.setVisibility(detail.sellerInfo == null ? View.GONE : View.VISIBLE);
+            contactName.setVisibility(detail.sellerInfo == null ? View.GONE : View.VISIBLE);
             if (detail.sellerInfo != null) {
                 companyName.setText(StringUtils.getString(R.string.buy_detail_buy_company, detail.sellerInfo.companyName));
+                contactName.setText(StringUtils.getString(R.string.buy_detail_buy_contact, detail.sellerInfo.contact));
             }
 
             SalesMan salesMan = detail.salesMan;

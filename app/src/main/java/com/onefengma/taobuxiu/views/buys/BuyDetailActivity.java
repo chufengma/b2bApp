@@ -230,6 +230,8 @@ public class BuyDetailActivity extends BaseActivity {
             detail.supplies = newList;
         }
 
+        BuyManager.instance().sortSupplyByMoney(detail.supplies);
+
         headerViewHolder.display(detail);
         buyDetailSupplyListAdapter.setDetail(detail);
         rightImage.setVisibility(detail.buy.status == BuyManager.BuyStatus.DOING.ordinal() ? View.VISIBLE : View.GONE);
@@ -392,8 +394,6 @@ public class BuyDetailActivity extends BaseActivity {
                 timeLimit.setText(timePrefix + timeStr);
                 editView.setVisibility(ironBuyBrief.status == BuyManager.BuyStatus.DOING.ordinal() && ironBuyBrief.editStatus == 0 ? View.VISIBLE : View.GONE);
                 messageView.setText(StringUtils.getString(R.string.buy_item_message, ironBuyBrief.message));
-
-
             }
 
             editView.setOnClickListener(new View.OnClickListener() {

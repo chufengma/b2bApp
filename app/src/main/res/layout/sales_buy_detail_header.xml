@@ -68,9 +68,21 @@
             android:text="买家公司名：风马"
             android:textSize="12dip" />
 
+
+        <TextView
+            android:id="@+id/buy_contact"
+            android:layout_below="@id/buy_company"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="4dip"
+            android:text="买家联系人：风马"
+            android:textSize="12dip" />
+
         <TextView
             android:id="@+id/buy_num"
-            android:layout_below="@id/buy_company"
+            android:layout_below="@id/buy_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
