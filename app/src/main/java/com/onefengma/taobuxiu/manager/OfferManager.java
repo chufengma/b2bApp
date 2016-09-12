@@ -19,6 +19,7 @@ import com.onefengma.taobuxiu.model.events.ActionSupplyEvent;
 import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
 import com.onefengma.taobuxiu.model.events.GetSubscribeInfoEvent;
+import com.onefengma.taobuxiu.model.events.GuidanceSwipeEvent;
 import com.onefengma.taobuxiu.model.events.MyIronDetailEvent;
 import com.onefengma.taobuxiu.model.events.MyIronOfferHistoryEvent;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
@@ -227,7 +228,8 @@ public class OfferManager {
             surfaces = JSON.toJSONString(subscribeInfo.surfaces);
             materials = JSON.toJSONString(subscribeInfo.materials);
             proPlaces = JSON.toJSONString(subscribeInfo.proPlaces);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
         HttpHelper.wrap(HttpHelper.create(OfferService.class).updateSubscribeInfo(types, surfaces, materials, proPlaces)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
             @Override
@@ -337,7 +339,12 @@ public class OfferManager {
     public void showOfferGuidance(Activity activity, View view) {
         if (!SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_OFFER_GUIDANCE, false)) {
             HighLightGuideView.builder(activity)
-                    .addHighLightGuidView(view, R.drawable.ic_guidance_offer)
+                    .addHighLightGuidView(view, R.drawable.ic_guidance_offer).setOnDismissListener(new HighLightGuideView.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            EventBusHelper.post(new GuidanceSwipeEvent());
+                        }
+                    })
                     .show();
             SPHelper.top().sp().edit().putBoolean(Constant.StorageKeys.SETTING_OFFER_GUIDANCE, true).commit();
         }

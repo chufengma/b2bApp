@@ -23,6 +23,9 @@ import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
 import com.onefengma.taobuxiu.model.events.DeleteIronBuyEvent;
 import com.onefengma.taobuxiu.model.events.GetBuyNumbersEvent;
+import com.onefengma.taobuxiu.model.events.GuidanceEditEvent;
+import com.onefengma.taobuxiu.model.events.GuidanceRefreshEvent;
+import com.onefengma.taobuxiu.model.events.GuidanceSwipeEvent;
 import com.onefengma.taobuxiu.model.events.IronBuyPushEvent;
 import com.onefengma.taobuxiu.model.events.MyIronAllHistoryEvent;
 import com.onefengma.taobuxiu.model.events.MyIronBuyHistoryEvent;
@@ -550,11 +553,11 @@ public class BuyManager {
                                              @Field(("proPlace")) String proPlace,
                                              @Field(("locationCityId")) String locationCityId,
                                              @Field(("message")) String message,
-                                             @Field(("length")) float length,
-                                             @Field(("width")) float width,
-                                             @Field(("height")) float height,
-                                             @Field(("toleranceFrom")) float toleranceFrom,
-                                             @Field(("toleranceTo")) float toleranceTo,
+                                             @Field(("length")) String length,
+                                             @Field(("width")) String width,
+                                             @Field(("height")) String height,
+                                             @Field(("toleranceFrom")) String toleranceFrom,
+                                             @Field(("toleranceTo")) String toleranceTo,
                                              @Field(("numbers")) float numbers,
                                              @Field(("timeLimit")) long timeLimit,
                                              @Field(("unit")) String unit);
@@ -567,11 +570,11 @@ public class BuyManager {
                                            @Field(("proPlace")) String proPlace,
                                            @Field(("locationCityId")) String locationCityId,
                                            @Field(("message")) String message,
-                                           @Field(("length")) float length,
-                                           @Field(("width")) float width,
-                                           @Field(("height")) float height,
-                                           @Field(("toleranceFrom")) float toleranceFrom,
-                                           @Field(("toleranceTo")) float toleranceTo,
+                                           @Field(("length")) String length,
+                                           @Field(("width")) String width,
+                                           @Field(("height")) String height,
+                                           @Field(("toleranceFrom")) String toleranceFrom,
+                                           @Field(("toleranceTo")) String toleranceTo,
                                            @Field(("numbers")) float numbers,
                                            @Field(("timeLimit")) long timeLimit,
                                            @Field(("unit")) String unit);
@@ -623,6 +626,12 @@ public class BuyManager {
             HighLightGuideView.builder(activity)
                     .addHighLightGuidView(view, R.drawable.ic_guidance_edit)
                     .setHighLightStyle(HighLightGuideView.VIEWSTYLE_CIRCLE)
+                    .setOnDismissListener(new HighLightGuideView.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            EventBusHelper.post(new GuidanceEditEvent());
+                        }
+                    })
                     .show();
             SPHelper.top().sp().edit().putBoolean(Constant.StorageKeys.SETTING_BUY_GUIDANCE, true).commit();
         }
@@ -633,6 +642,12 @@ public class BuyManager {
         if (!SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_BUY_DETAIL_GUIDANCE, false)) {
             HighLightGuideView.builder(activity)
                     .addNoHighLightGuidView(R.drawable.ic_guidance_buy_detail)
+                    .setOnDismissListener(new HighLightGuideView.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            EventBusHelper.post(new GuidanceRefreshEvent());
+                        }
+                    })
                     .show();
             SPHelper.top().sp().edit().putBoolean(Constant.StorageKeys.SETTING_BUY_DETAIL_GUIDANCE, true).commit();
         }

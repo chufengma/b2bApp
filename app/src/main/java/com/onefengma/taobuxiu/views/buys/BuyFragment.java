@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.AuthManager;
 import com.onefengma.taobuxiu.manager.BuyManager;
+import com.onefengma.taobuxiu.manager.OfferManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.model.events.GuidanceRefreshEvent;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDone;
 import com.onefengma.taobuxiu.model.events.MyIronsEventOutOfDate;
@@ -127,6 +129,11 @@ public class BuyFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         BuyManager.instance().showBuyGuidance(getActivity(), toolbar.rightImage);
+    }
+
+    @Subscribe
+    public void guidanceOnRefreshEvent(GuidanceRefreshEvent event) {
+        OfferManager.instance().showOfferGuidance(getActivity(), buyTab);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -333,6 +333,8 @@ public class SalesBuyDetailActivity extends BaseActivity {
         View supplyCountIcon;
         @BindView(R.id.contact_user)
         View contactUser;
+        @BindView(R.id.buy_company)
+        TextView companyName;
 
         HeaderViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -342,7 +344,7 @@ public class SalesBuyDetailActivity extends BaseActivity {
             IronBuyBrief ironBuyBrief = detail.buy;
             if (ironBuyBrief != null) {
                 title.setText(ironBuyBrief.ironType + "/" + ironBuyBrief.material + "/" + ironBuyBrief.surface + "/" + ironBuyBrief.proPlace + "( " + ironBuyBrief.sourceCity + ")");
-                subTitle.setText(ironBuyBrief.length + "*" + ironBuyBrief.width + "*" + ironBuyBrief.height + " " + ironBuyBrief.tolerance + " " + ironBuyBrief.numbers + "" + ironBuyBrief.unit);
+                subTitle.setText(ironBuyBrief.height + "*" + ironBuyBrief.width + "*" + ironBuyBrief.length + " " + ironBuyBrief.tolerance + " " + ironBuyBrief.numbers + "" + ironBuyBrief.unit);
 
                 int count = detail.supplies == null ? 0 : detail.supplies.size();
                 supplyCount.setText(StringUtils.getString(R.string.buy_detail_supply_count, count + ""));
@@ -364,6 +366,11 @@ public class SalesBuyDetailActivity extends BaseActivity {
                         });
                     }
                 });
+            }
+
+            companyName.setVisibility(detail.sellerInfo == null ? View.GONE : View.VISIBLE);
+            if (detail.sellerInfo != null) {
+                companyName.setText(StringUtils.getString(R.string.buy_detail_buy_company, detail.sellerInfo.companyName));
             }
 
             SalesMan salesMan = detail.salesMan;

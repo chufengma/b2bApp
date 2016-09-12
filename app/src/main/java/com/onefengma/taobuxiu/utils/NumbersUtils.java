@@ -8,9 +8,19 @@ import java.math.BigDecimal;
  */
 public class NumbersUtils {
 
-    public static float round(float number, int count) {
+    public static String round(float number, int count) {
+        float value = roundFloat(number, count);
+        if (value-(int)value == 0) {
+            return (int)value + "";
+        } else {
+            return value + "";
+        }
+    }
+
+    public static float roundFloat(float number, int count) {
         BigDecimal bd = new BigDecimal(number + "");
-        return bd.setScale(count, BigDecimal.ROUND_HALF_UP).floatValue();
+        float value = bd.setScale(count, BigDecimal.ROUND_HALF_UP).floatValue();
+        return value;
     }
 
     public static BigDecimal round(BigDecimal number, int count) {

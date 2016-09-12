@@ -86,8 +86,6 @@ public class EditBuyActivity extends BaseActivity {
 
     ProgressDialog progressDialog;
 
-    Map<String, List<String>> specMap = new HashMap<>();
-    Map<String, List<String>> torateMap = new HashMap<>();
     @BindView(R.id.re_push)
     TextView rePush;
 
@@ -129,22 +127,22 @@ public class EditBuyActivity extends BaseActivity {
         proPlace.setText(ironBuyPush.proPlace);
         message.setText(ironBuyPush.message);
 
-        if (ironBuyPush.width != 0) {
+        if (!StringUtils.isEmpty(ironBuyPush.width)) {
             width.setText(ironBuyPush.width + "");
         }
-        if (ironBuyPush.length != 0) {
+        if (!StringUtils.isEmpty(ironBuyPush.length)) {
             length.setText(ironBuyPush.length + "");
         }
-        if (ironBuyPush.height != 0) {
+        if (!StringUtils.isEmpty(ironBuyPush.height)) {
             height.setText(ironBuyPush.height + "");
         }
         if (ironBuyPush.numbers != 0) {
             numbers.setText(ironBuyPush.numbers + "");
         }
-        if (ironBuyPush.toleranceFrom != 0) {
+        if (!StringUtils.isEmpty(ironBuyPush.toleranceFrom)) {
             toleranceFrom.setText(ironBuyPush.toleranceFrom + "");
         }
-        if (ironBuyPush.toleranceTo != 0) {
+        if (!StringUtils.isEmpty(ironBuyPush.toleranceTo)) {
             toleranceTo.setText(ironBuyPush.toleranceTo + "");
         }
 
@@ -160,58 +158,45 @@ public class EditBuyActivity extends BaseActivity {
         }
 
 
-        specMap.put("1000*100*50", Arrays.asList("1000", "100", "50"));
-        specMap.put("100*100*50", Arrays.asList("100", "100", "50"));
-        specMap.put("1000*5000*50", Arrays.asList("1000", "5000", "50"));
-
         View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if (hasFocus) {
-
-                    new BubbleView().init(EditBuyActivity.this, view, "推荐使用以下规格：", Arrays.asList(specMap.keySet().toArray(new String[specMap.size()])), new BubbleView.OnItemSelectedListener() {
+                    final Map<String, List<String>> specMapBan;
+                    if (StringUtils.equals("不锈钢板", type.getText().toString()) &&
+                            StringUtils.equals("2B", surface.getText().toString())) {
+                        specMapBan = IconDataCategory.get().specMapBan2B;
+                    } else if (StringUtils.equals("不锈钢板", type.getText().toString()) &&
+                            StringUtils.equals("No.1", surface.getText().toString())) {
+                        specMapBan = IconDataCategory.get().specMapBanNo;
+                    } else if (StringUtils.equals("不锈钢卷", type.getText().toString()) &&
+                            StringUtils.equals("2B", surface.getText().toString())) {
+                        specMapBan = IconDataCategory.get().specMapJuan2B;
+                    } else if (StringUtils.equals("不锈钢卷", type.getText().toString()) &&
+                            StringUtils.equals("No.1", surface.getText().toString())) {
+                        specMapBan = IconDataCategory.get().specMapJuanNo;
+                    } else {
+                        specMapBan = new HashMap<>();
+                    }
+                    if (specMapBan.isEmpty()) {
+                        return;
+                    }
+                    new BubbleView().init(EditBuyActivity.this, view, "推荐使用以下规格：", Arrays.asList(specMapBan.keySet().toArray(new String[specMapBan.size()])), new BubbleView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(String item) {
-                            if (specMap.containsKey(item)) {
-                                List<String> values = specMap.get(item);
-                                length.setText(values.get(0));
+                            if (specMapBan.containsKey(item)) {
+                                List<String> values = specMapBan.get(item);
                                 width.setText(values.get(1));
-                                height.setText(values.get(2));
+                                length.setText(values.get(0));
                             }
                         }
                     });
                 }
             }
         };
-
-
-        torateMap.put("1000*100", Arrays.asList("1000", "100"));
-        torateMap.put("800*1600", Arrays.asList("800", "1600"));
-        View.OnFocusChangeListener onTolerateChangeListener = new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-
-                    new BubbleView().init(EditBuyActivity.this, view, "推荐使用以下公差范围：", Arrays.asList(torateMap.keySet().toArray(new String[torateMap.size()])), new BubbleView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(String item) {
-                            if (torateMap.containsKey(item)) {
-                                List<String> values = torateMap.get(item);
-                                toleranceFrom.setText(values.get(0));
-                                toleranceTo.setText(values.get(1));
-                            }
-                        }
-                    });
-                }
-            }
-        };
-
-        toleranceTo.setOnFocusChangeListener(onTolerateChangeListener);
-        toleranceFrom.setOnFocusChangeListener(onTolerateChangeListener);
 
         length.setOnFocusChangeListener(onFocusChangeListener);
         width.setOnFocusChangeListener(onFocusChangeListener);
-        height.setOnFocusChangeListener(onFocusChangeListener);
 
         message.requestFocus();
         message.requestFocusFromTouch();
@@ -265,13 +250,13 @@ public class EditBuyActivity extends BaseActivity {
 
         ironBuyPush.message = message.getText().toString();
 
-        ironBuyPush.width = NumbersUtils.parseFloat(width.getText().toString());
-        ironBuyPush.height = NumbersUtils.parseFloat(height.getText().toString());
-        ironBuyPush.length = NumbersUtils.parseFloat(length.getText().toString());
+        ironBuyPush.width = width.getText().toString();
+        ironBuyPush.height = height.getText().toString();
+        ironBuyPush.length = length.getText().toString();
         ironBuyPush.numbers = NumbersUtils.parseFloat(numbers.getText().toString());
 
-        ironBuyPush.toleranceFrom = NumbersUtils.parseFloat(toleranceFrom.getText().toString());
-        ironBuyPush.toleranceTo = NumbersUtils.parseFloat(toleranceTo.getText().toString());
+        ironBuyPush.toleranceFrom = toleranceFrom.getText().toString();
+        ironBuyPush.toleranceTo = toleranceTo.getText().toString();
 
         ironBuyPush.unit = getResources().getStringArray(R.array.units)[unit.getSelectedItemPosition()];
 

@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.model.entities.IronBuyPush;
 import com.onefengma.taobuxiu.model.events.IronBuyPushEvent;
 import com.onefengma.taobuxiu.utils.DialogUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
@@ -86,13 +87,15 @@ public class PushNewBuyActivity extends BaseActivity {
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                DialogUtils.showItemDialog(view.getContext(), null, new String[]{"删除该项", "复制该项"}, new DialogInterface.OnClickListener() {
+                DialogUtils.showItemDialog(view.getContext(), null, new String[]{"删除该项", "复制添加类似求购"}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == 0) {
                             BuyManager.instance().deleteIronBuy(pushListAdapter.getItem(position - list.getHeaderViewsCount()));
                         } else if (which == 1) {
-                            BuyManager.instance().copyIronBuy(pushListAdapter.getItem(position - list.getHeaderViewsCount()));
+                            IronBuyPush newPush = pushListAdapter.getItem(position - list.getHeaderViewsCount()).copy();
+                            newPush.id = System.currentTimeMillis();
+                            EditBuyActivity.start(PushNewBuyActivity.this, newPush);
                         }
                         pushListAdapter.setMyBuys(BuyManager.instance().getCachedIronBuys());
                     }

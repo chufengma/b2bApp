@@ -12,11 +12,11 @@ public class IronBuyPush implements Serializable {
     public String proPlace;
     public String locationCityId;
     public String message;
-    public float length;
-    public float width;
-    public float height;
-    public float toleranceFrom;
-    public float toleranceTo;
+    public String length;
+    public String width;
+    public String height;
+    public String toleranceFrom;
+    public String toleranceTo;
     public float numbers;
     public long timeLimit;
     public String unit;

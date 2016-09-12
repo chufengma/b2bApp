@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dip"
         app:tool_bar_icon_size="30dip"
-        app:tool_bar_right="@drawable/ic_buy_add"
+        app:tool_bar_right="@drawable/ic_buy_push"
         app:tool_bar_title="我要求购" />
 
     <com.onefengma.taobuxiu.views.widgets.listview.XListView

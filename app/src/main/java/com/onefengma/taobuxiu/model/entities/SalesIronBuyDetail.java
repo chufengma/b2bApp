@@ -14,4 +14,5 @@ public class SalesIronBuyDetail {
     public SalesMan salesMan;
     public QtDetail qtDetail;
     public NormalUserInfo userInfo;
+    public Seller sellerInfo;
 }

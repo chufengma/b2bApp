@@ -73,11 +73,11 @@ public class MyBuyHistoryActivity extends BaseActivity {
     private void setupViews(MyBuyHistoryInfo myBuyHistoryInfo) {
         todayBuy.setValue(myBuyHistoryInfo.todayBuy + "次");
         todayDone.setValue(myBuyHistoryInfo.todayDone + "次");
-        todayDoneRate.setValue(NumbersUtils.getHS(NumbersUtils.round(myBuyHistoryInfo.todayDoneRate, 4)));
+        todayDoneRate.setValue(NumbersUtils.getHS(NumbersUtils.roundFloat(myBuyHistoryInfo.todayDoneRate, 4)));
 
         monthBuy.setValue(myBuyHistoryInfo.monthBuy + "次");
         monthDone.setValue(myBuyHistoryInfo.monthDone + "次");
-        monthDoneRate.setValue(NumbersUtils.getHS(NumbersUtils.round(myBuyHistoryInfo.monthDoneRate, 4)));
+        monthDoneRate.setValue(NumbersUtils.getHS(NumbersUtils.roundFloat(myBuyHistoryInfo.monthDoneRate, 4)));
     }
 
     @Override

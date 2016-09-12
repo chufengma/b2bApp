@@ -1,7 +1,9 @@
 package com.onefengma.taobuxiu.model;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by chufengma on 16/8/27.
@@ -26,6 +28,12 @@ public class IconDataCategory {
 
     public List<String> units = Arrays.asList("kg", "个", "T", "平方", "片", "支", "千支", "条", "捆");
 
+    public Map<String, List<String>> specMapBan2B = new HashMap<>();
+    public Map<String, List<String>> specMapBanNo = new HashMap<>();
+
+    public Map<String, List<String>> specMapJuan2B = new HashMap<>();
+    public Map<String, List<String>> specMapJuanNo = new HashMap<>();
+
     private static IconDataCategory iconDataCategory;
 
     public static IconDataCategory get() {
@@ -35,4 +43,29 @@ public class IconDataCategory {
         return iconDataCategory;
     }
 
+
+    public IconDataCategory() {
+        specMapBan2B.put("1000*2000", Arrays.asList("1000", "2000"));
+        specMapBan2B.put("1219*2438", Arrays.asList("1219", "2438"));
+        specMapBan2B.put("1500*3000", Arrays.asList("1500", "3000"));
+        specMapBan2B.put("1800*3000", Arrays.asList("1800", "3000"));
+        specMapBan2B.put("2000*3000", Arrays.asList("2000", "3000"));
+
+        specMapBanNo.put("1500*6000", Arrays.asList("1500", "6000"));
+        specMapBanNo.put("1800*6000", Arrays.asList("1800", "6000"));
+        specMapBanNo.put("2000*6000", Arrays.asList("2000", "6000"));
+        specMapBanNo.put("1240*6000", Arrays.asList("1240", "6000"));
+        specMapBanNo.put("2500*6000", Arrays.asList("2500", "6000"));
+
+        specMapJuan2B.put("1000*C", Arrays.asList("1000", "C"));
+        specMapJuan2B.put("1219*C", Arrays.asList("1219", "C"));
+        specMapJuan2B.put("1500*C", Arrays.asList("1500", "C"));
+        specMapJuan2B.put("1800*C", Arrays.asList("1800", "C"));
+        specMapJuan2B.put("2000*C", Arrays.asList("2000", "C"));
+
+        specMapJuanNo.put("1500*C，毛边", Arrays.asList("1500", "C，毛边"));
+        specMapJuanNo.put("1800*C，毛边", Arrays.asList("1800", "C，毛边"));
+        specMapJuanNo.put("2000*C，毛边", Arrays.asList("2000", "C，毛边"));
+        specMapJuanNo.put("1240*C，毛边", Arrays.asList("1240", "C，毛边"));
+    }
 }

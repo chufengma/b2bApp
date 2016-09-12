@@ -8,6 +8,7 @@ import android.widget.TabHost;
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.model.events.GuidanceEditEvent;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
 import com.onefengma.taobuxiu.model.events.OnBuyTabEvent;
 import com.onefengma.taobuxiu.model.events.OnMineTabEvent;
@@ -69,6 +70,11 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBusHelper.unregister(this);
+    }
+
+    @Subscribe
+    public void onGuidanceEditEvent(GuidanceEditEvent event) {
+        BuyManager.instance().showBuyDetailGuidance(this);
     }
 
     private void initTabs() {

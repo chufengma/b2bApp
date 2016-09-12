@@ -216,17 +216,11 @@ public class BuyDetailActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        BuyManager.instance().showBuyDetailGuidance(this);
-    }
-
     private void setUpViews(MyIronBuyDetail detail) {
 
         if (detail.supplies != null) {
             List<SupplyBrief> newList = new ArrayList<>();
-            for(SupplyBrief supplyBrief : detail.supplies) {
+            for (SupplyBrief supplyBrief : detail.supplies) {
                 if (supplyBrief.isWinner) {
                     newList.add(0, supplyBrief);
                 } else {
@@ -316,7 +310,10 @@ public class BuyDetailActivity extends BaseActivity {
                         String message = supplyBrief.companyName + " "
                                 + supplyBrief.supplyPrice + "/"
                                 + supplyBrief.unit + " ";
-                        final float totalMoney = NumbersUtils.round(ironBuyBrief.numbers.floatValue() * supplyBrief.supplyPrice, 2);
+
+                        String moneyStr = NumbersUtils.round(ironBuyBrief.numbers.floatValue() * supplyBrief.supplyPrice, 2);
+                        final float totalMoney = NumbersUtils.parseFloat(moneyStr);
+
                         DialogUtils.showAlertDialog(winnerView.getContext(), "确定选「" + message + "」中标？", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -374,7 +371,7 @@ public class BuyDetailActivity extends BaseActivity {
             final IronBuyBrief ironBuyBrief = detail.buy;
             if (ironBuyBrief != null) {
                 title.setText(ironBuyBrief.ironType + "/" + ironBuyBrief.material + "/" + ironBuyBrief.surface + "/" + ironBuyBrief.proPlace + "( " + ironBuyBrief.sourceCity + ")");
-                subTitle.setText(ironBuyBrief.length + "*" + ironBuyBrief.width + "*" + ironBuyBrief.height + " " + ironBuyBrief.tolerance + " " + ironBuyBrief.numbers + "" + ironBuyBrief.unit);
+                subTitle.setText(ironBuyBrief.height + "*" + ironBuyBrief.width + "*" + ironBuyBrief.length + " " + ironBuyBrief.tolerance + " " + ironBuyBrief.numbers + "" + ironBuyBrief.unit);
 
                 int count = detail.supplies == null ? 0 : detail.supplies.size();
                 supplyCount.setText(StringUtils.getString(R.string.buy_detail_supply_count, count + ""));
@@ -403,9 +400,9 @@ public class BuyDetailActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     IronBuyPush ironBuyPush = new IronBuyPush();
-                    ironBuyPush.width = NumbersUtils.parseFloat(ironBuyBrief.width);
-                    ironBuyPush.height = NumbersUtils.parseFloat(ironBuyBrief.height);
-                    ironBuyPush.length = NumbersUtils.parseFloat(ironBuyBrief.length);
+                    ironBuyPush.width = ironBuyBrief.width;
+                    ironBuyPush.height = ironBuyBrief.height;
+                    ironBuyPush.length = ironBuyBrief.length;
                     ironBuyPush.ironType = ironBuyBrief.ironType;
                     ironBuyPush.surface = ironBuyBrief.surface;
                     ironBuyPush.material = ironBuyBrief.material;
@@ -416,8 +413,8 @@ public class BuyDetailActivity extends BaseActivity {
                     ironBuyPush.message = ironBuyBrief.message;
                     ironBuyPush.unit = ironBuyBrief.unit;
                     ironBuyPush.pushStatus = 1;
-                    ironBuyPush.toleranceTo = NumbersUtils.parseFloat(ironBuyBrief.tolerance.split("-")[1]);
-                    ironBuyPush.toleranceFrom = NumbersUtils.parseFloat(ironBuyBrief.tolerance.split("-")[0]);
+                    ironBuyPush.toleranceTo = ironBuyBrief.tolerance.split("-")[1];
+                    ironBuyPush.toleranceFrom = ironBuyBrief.tolerance.split("-")[0];
 
                     ironBuyPush.unitIndex = IconDataCategory.get().units.indexOf(ironBuyPush.unit);
                     ironBuyPush.dayIndex = (int) (ironBuyBrief.timeLimit / (DateUtils.dayTime()));

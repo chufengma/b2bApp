@@ -96,12 +96,6 @@ public class OffersFragment extends BaseFragment {
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        OfferManager.instance().showOfferGuidance(getActivity(), offerTab);
-    }
-
     private void setupTabs() {
         int width = (int) (getResources().getDisplayMetrics().widthPixels / 4.5);
 
