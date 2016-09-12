@@ -140,7 +140,6 @@
                     android:clickable="true"
                     android:gravity="left"
                     android:hint="填写厚度"
-                    android:inputType="numberDecimal"
                     android:padding="7dip"
                     android:textColor="@color/black"
                     android:textSize="16dip" />
@@ -173,7 +172,6 @@
                     android:clickable="true"
                     android:gravity="left"
                     android:hint="填写宽度"
-                    android:inputType="numberDecimal"
                     android:padding="7dip"
                     android:textColor="@color/black"
                     android:textSize="16dip" />
@@ -206,7 +204,6 @@
                     android:clickable="true"
                     android:gravity="left"
                     android:hint="填写长度"
-                    android:inputType="numberDecimal"
                     android:padding="7dip"
                     android:textColor="@color/black"
                     android:textSize="16dip" />

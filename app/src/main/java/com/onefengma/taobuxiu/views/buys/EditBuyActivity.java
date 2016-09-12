@@ -186,8 +186,8 @@ public class EditBuyActivity extends BaseActivity {
                         public void onItemSelected(String item) {
                             if (specMapBan.containsKey(item)) {
                                 List<String> values = specMapBan.get(item);
-                                width.setText(values.get(1));
-                                length.setText(values.get(0));
+                                width.setText(values.get(0));
+                                length.setText(values.get(1));
                             }
                         }
                     });

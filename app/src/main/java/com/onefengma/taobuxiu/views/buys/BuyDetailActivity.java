@@ -232,6 +232,14 @@ public class BuyDetailActivity extends BaseActivity {
 
         BuyManager.instance().sortSupplyByMoney(detail.supplies);
 
+        if (detail.supplies == null) {
+            detail.supplies = new ArrayList<>();
+        }
+
+        if (detail.missSupplies != null) {
+            detail.supplies.addAll(detail.missSupplies);
+        }
+
         headerViewHolder.display(detail);
         buyDetailSupplyListAdapter.setDetail(detail);
         rightImage.setVisibility(detail.buy.status == BuyManager.BuyStatus.DOING.ordinal() ? View.VISIBLE : View.GONE);
@@ -293,6 +301,8 @@ public class BuyDetailActivity extends BaseActivity {
             TextView contact;
             @BindView(R.id.winner)
             TextView winnerView;
+            @BindView(R.id.missed)
+            TextView missedView;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);
@@ -303,8 +313,20 @@ public class BuyDetailActivity extends BaseActivity {
                 price.setText(supplyBrief.supplyPrice + "/" + supplyBrief.unit);
                 message.setText(StringUtils.getString(R.string.buy_item_message, supplyBrief.supplyMsg));
                 info.setText(StringUtils.getString(R.string.buy_detail_info, supplyBrief.winningTimes + "", supplyBrief.contact));
-                chooseSupply.setVisibility(ironBuyBrief.status == BuyManager.BuyStatus.DOING.ordinal() ? View.VISIBLE : View.GONE);
-                winnerView.setVisibility(supplyBrief.isWinner ? View.VISIBLE : View.GONE);
+
+                if (supplyBrief.supplyPrice == -1) {
+                    message.setVisibility(View.GONE);
+                    price.setVisibility(View.GONE);
+                    chooseSupply.setVisibility(View.GONE);
+                    winnerView.setVisibility(View.GONE);
+                    missedView.setVisibility(View.VISIBLE);
+                } else {
+                    missedView.setVisibility(View.GONE);
+                    message.setVisibility(View.VISIBLE);
+                    price.setVisibility(View.VISIBLE);
+                    chooseSupply.setVisibility(ironBuyBrief.status == BuyManager.BuyStatus.DOING.ordinal() ? View.VISIBLE : View.GONE);
+                    winnerView.setVisibility(supplyBrief.isWinner ? View.VISIBLE : View.GONE);
+                }
 
                 chooseSupply.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -364,6 +386,8 @@ public class BuyDetailActivity extends BaseActivity {
         TextView messageView;
         @BindView(R.id.totalMoney)
         TextView totalMoney;
+        @BindView(R.id.missed_count)
+        TextView missedCount;
 
         HeaderViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -387,6 +411,13 @@ public class BuyDetailActivity extends BaseActivity {
                             totalMoney.setText(StringUtils.getString(R.string.offer_detail_total_money, NumbersUtils.round(supplyBrief.supplyPrice * ironBuyBrief.numbers.floatValue(), 2)));
                         }
                     }
+                }
+
+                if (detail.missSupplies != null || !detail.missSupplies.isEmpty()) {
+                    missedCount.setText(detail.missSupplies.size() + "家已错过");
+                    missedCount.setVisibility(View.VISIBLE);
+                } else {
+                    missedCount.setVisibility(View.GONE);
                 }
 
                 String timePrefix = detail.buy.status == BuyManager.BuyStatus.DONE.ordinal() ? "成交时间：" : "过期时间：";

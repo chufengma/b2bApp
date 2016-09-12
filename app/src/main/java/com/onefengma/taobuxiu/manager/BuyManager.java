@@ -679,7 +679,7 @@ public class BuyManager {
                 if (one.supplyPrice < two.supplyPrice) {
                     return 1;
                 } else if (one.supplyPrice > two.supplyPrice) {
-                    return 0;
+                    return -1;
                 }
                 return 0;
             }

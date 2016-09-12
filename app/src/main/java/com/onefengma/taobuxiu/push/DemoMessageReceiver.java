@@ -10,6 +10,7 @@ import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.NotificationHelper;
 import com.onefengma.taobuxiu.model.push.BasePushData;
 import com.onefengma.taobuxiu.model.push.BuyPushData;
+import com.onefengma.taobuxiu.model.push.OfferMissPushData;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.views.MainActivity;
 import com.orhanobut.logger.Logger;
@@ -49,7 +50,7 @@ public class DemoMessageReceiver extends PushMessageReceiver {
 
         String type = message.getExtra().get(BasePushData.PUSH_TYPE_KEY);
         Logger.d(message.getContent());
-        if (StringUtils.equals(type, BasePushData.PUSH_TYPE_BUY)) {
+        if (StringUtils.equals(type, BasePushData.PUSH_TYPE_BUY) || StringUtils.equals(type, BasePushData.PUSH_TYPE_OFFER_MISS)) {
             if (MainApplication.getContext().isAppOnForeground()) {
                 EventBusHelper.post(JSON.parseObject(message.getContent(), BuyPushData.class));
             }
