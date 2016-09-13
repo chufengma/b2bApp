@@ -197,13 +197,13 @@ public class OfferDetailActivity extends BaseActivity {
         material.setText(getString(R.string.offer_detail_material, offerDetail.buy.material));
         proPlace.setText(getString(R.string.offer_detail_pro_place, offerDetail.buy.proPlace));
         locateCity.setText(getString(R.string.offer_detail_locate_place, offerDetail.buy.sourceCity));
-        info.setText(getString(R.string.offer_detail_info, buy.length + "*" + buy.width + "*" + buy.height));
+        info.setText(getString(R.string.offer_detail_info, buy.height + "*" + buy.width + "*" + buy.length));
         tolerate.setText(getString(R.string.offer_detail_tolerate, buy.tolerance));
         message.setText(getString(R.string.offer_detail_message, buy.message));
-        numbers.setText(StringUtils.getString(R.string.offer_detail_numbers, buy.numbers + "/" + buy.unit));
+        numbers.setText(StringUtils.getString(R.string.offer_detail_numbers, buy.numbers + "" + buy.unit));
 
         if (offerDetail.myOffer != null) {
-            myPrice.setText(getString(R.string.offer_detail_my_price, offerDetail.myOffer.price + "/" + offerDetail.myOffer.unit));
+            myPrice.setText(getString(R.string.offer_detail_my_price, offerDetail.myOffer.price + "元/" + offerDetail.myOffer.unit));
             myMessage.setText(getString(R.string.offer_detail_my_message, offerDetail.myOffer.supplyMsg));
             totalMoney.setText(getString(R.string.offer_detail_total_money, NumbersUtils.round(offerDetail.myOffer.price * buy.numbers.floatValue(), 2)));
         }

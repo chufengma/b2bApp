@@ -1,5 +1,6 @@
 package com.onefengma.taobuxiu.views.buys;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,7 +11,10 @@ import android.widget.TextView;
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
+import com.onefengma.taobuxiu.model.entities.IronBuyPush;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDone;
+import com.onefengma.taobuxiu.utils.DialogUtils;
 import com.onefengma.taobuxiu.utils.ThreadUtils;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 import com.onefengma.taobuxiu.views.widgets.listview.XListView;
@@ -60,6 +64,24 @@ public class BuyFragmentForDone extends BaseFragment {
         customAdapter = new BuyListAdapter(BuyManager.BuyStatus.DONE);
         recyclerView.setAdapter(customAdapter);
         recyclerView.enableLoadMore(true);
+
+        customAdapter.setOnBuyItemLongClickListener(new BuyListAdapter.OnBuyItemLongClickListener() {
+            @Override
+            public void onClickItem(final IronBuyBrief ironBuyBrief) {
+                DialogUtils.showItemDialog(getActivity(), null, new String[]{"复制添加类似求购"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0) {
+                            IronBuyPush newPush = BuyManager.instance().transIronBuyPush(ironBuyBrief);
+                            newPush.id = System.currentTimeMillis();
+                            newPush.pushStatus = 0;
+                            EditBuyActivity.start(getActivity(), newPush);
+                        }
+                    }
+                });
+            }
+        });
+
 
         recyclerView.setOnRefreshListener(new XListView.OnRefreshListener() {
             @Override

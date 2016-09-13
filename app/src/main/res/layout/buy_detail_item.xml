@@ -99,7 +99,7 @@
             android:paddingTop="2dip"
             android:paddingBottom="2dip"
             android:visibility="visible"
-            android:layout_marginBottom="14dip"
+            android:layout_marginBottom="20dip"
             android:background="@drawable/get_verify_code_bg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

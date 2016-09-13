@@ -33,6 +33,9 @@
 
     <string name="buy_item_message">备注：%1$s</string>
     <string name="buy_item_time_limit">求购期限：%1$s</string>
+    <string name="buy_item_time_done">成交时间：%1$s</string>
+    <string name="qt_item_time_apply">申请时间：%1$s</string>
+    <string name="qt_item_time_done">完成时间：%1$s</string>
 
     <string name="buy_detail_salesman">跟进专员：%1$s</string>
     <string name="buy_detail_buy_num">求购单号：%1$s</string>

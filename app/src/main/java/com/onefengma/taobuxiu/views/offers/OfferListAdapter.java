@@ -8,10 +8,8 @@ import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
-import com.onefengma.taobuxiu.model.entities.QtDetail;
 import com.onefengma.taobuxiu.utils.DateUtils;
 import com.onefengma.taobuxiu.utils.StringUtils;
-import com.onefengma.taobuxiu.views.buys.BuyDetailActivity;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 
 import java.util.ArrayList;
@@ -66,7 +64,7 @@ public class OfferListAdapter extends BaseAdapter {
         final IronBuyBrief ironBuyBrief = getItem(position);
 
         viewHolder.title.setText(ironBuyBrief.ironType + "/" + ironBuyBrief.material + "/" + ironBuyBrief.surface + "/" + ironBuyBrief.proPlace + "( " + ironBuyBrief.sourceCity + ")");
-        viewHolder.subTitle.setText(ironBuyBrief.length + "*" + ironBuyBrief.width + "*" + ironBuyBrief.height + " " + ironBuyBrief.tolerance + " " + ironBuyBrief.numbers + "" + ironBuyBrief.unit);
+        viewHolder.subTitle.setText( ironBuyBrief.height + "*" + ironBuyBrief.width + "*" + ironBuyBrief.length + ", " + ironBuyBrief.tolerance + ", " + ironBuyBrief.numbers + "" + ironBuyBrief.unit);
         viewHolder.message.setText(StringUtils.getString(R.string.buy_item_message, ironBuyBrief.message));
         viewHolder.deadLine.setText(StringUtils.getString(R.string.buy_item_time_limit, DateUtils.getDateStr(ironBuyBrief.pushTime + ironBuyBrief.timeLimit)));
 

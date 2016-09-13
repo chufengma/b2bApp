@@ -13,9 +13,7 @@ import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.SystemHelper;
-import com.onefengma.taobuxiu.model.IconDataCategory;
 import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
-import com.onefengma.taobuxiu.model.entities.IronBuyPush;
 import com.onefengma.taobuxiu.model.entities.MyIronBuyDetail;
 import com.onefengma.taobuxiu.model.entities.SalesMan;
 import com.onefengma.taobuxiu.model.entities.SupplyBrief;
@@ -310,7 +308,7 @@ public class BuyDetailActivity extends BaseActivity {
 
             public void display(final SupplyBrief supplyBrief, final IronBuyBrief ironBuyBrief) {
                 title.setText(supplyBrief.companyName);
-                price.setText(supplyBrief.supplyPrice + "/" + supplyBrief.unit);
+                price.setText(supplyBrief.supplyPrice + "元/" + supplyBrief.unit);
                 message.setText(StringUtils.getString(R.string.buy_item_message, supplyBrief.supplyMsg));
                 info.setText(StringUtils.getString(R.string.buy_detail_info, supplyBrief.winningTimes + "", supplyBrief.contact));
 
@@ -400,6 +398,7 @@ public class BuyDetailActivity extends BaseActivity {
                 subTitle.setText(ironBuyBrief.height + "*" + ironBuyBrief.width + "*" + ironBuyBrief.length + " " + ironBuyBrief.tolerance + " " + ironBuyBrief.numbers + "" + ironBuyBrief.unit);
 
                 int count = detail.supplies == null ? 0 : detail.supplies.size();
+                count = count - (detail.missSupplies == null ? 0 : detail.missSupplies.size());
                 supplyCount.setText(StringUtils.getString(R.string.buy_detail_supply_count, count + ""));
                 buyNum.setText(StringUtils.getString(R.string.buy_detail_buy_num, ironBuyBrief.id));
 
@@ -430,28 +429,7 @@ public class BuyDetailActivity extends BaseActivity {
             editView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    IronBuyPush ironBuyPush = new IronBuyPush();
-                    ironBuyPush.width = ironBuyBrief.width;
-                    ironBuyPush.height = ironBuyBrief.height;
-                    ironBuyPush.length = ironBuyBrief.length;
-                    ironBuyPush.ironType = ironBuyBrief.ironType;
-                    ironBuyPush.surface = ironBuyBrief.surface;
-                    ironBuyPush.material = ironBuyBrief.material;
-                    ironBuyPush.proPlace = ironBuyBrief.proPlace;
-                    ironBuyPush.locationCityId = ironBuyBrief.locationCityId;
-                    ironBuyPush.numbers = ironBuyBrief.numbers.floatValue();
-                    ironBuyPush.ironId = ironBuyBrief.id;
-                    ironBuyPush.message = ironBuyBrief.message;
-                    ironBuyPush.unit = ironBuyBrief.unit;
-                    ironBuyPush.pushStatus = 1;
-                    ironBuyPush.toleranceTo = ironBuyBrief.tolerance.split("-")[1];
-                    ironBuyPush.toleranceFrom = ironBuyBrief.tolerance.split("-")[0];
-
-                    ironBuyPush.unitIndex = IconDataCategory.get().units.indexOf(ironBuyPush.unit);
-                    ironBuyPush.dayIndex = (int) (ironBuyBrief.timeLimit / (DateUtils.dayTime()));
-                    ironBuyPush.hourIndex = (int) ((ironBuyBrief.timeLimit % DateUtils.dayTime()) / (DateUtils.hourTime()));
-                    ironBuyPush.hourIndex = (int) (((ironBuyBrief.timeLimit % DateUtils.dayTime()) % DateUtils.hourTime() / (DateUtils.minuteTime())));
-                    EditBuyActivity.start(BuyDetailActivity.this, ironBuyPush);
+                    EditBuyActivity.start(BuyDetailActivity.this, BuyManager.instance().transIronBuyPush(ironBuyBrief));
                 }
             });
 

@@ -28,13 +28,22 @@ public class BuyListAdapter extends BaseAdapter {
 
     public List<IronBuyBrief> myBuys = new ArrayList<>();
     private OnBuyItemClickListener onBuyItemClickListener;
+    private OnBuyItemLongClickListener onBuyItemLongClickListener;
 
     public interface OnBuyItemClickListener {
         void onClickItem(String ironId);
     }
 
+    public interface OnBuyItemLongClickListener {
+        void onClickItem(IronBuyBrief ironBuyBrief);
+    }
+
     public void setOnBuyItemClickListener(OnBuyItemClickListener onBuyItemClickListener) {
         this.onBuyItemClickListener = onBuyItemClickListener;
+    }
+
+    public void setOnBuyItemLongClickListener(OnBuyItemLongClickListener onBuyItemLongClickListener) {
+        this.onBuyItemLongClickListener = onBuyItemLongClickListener;
     }
 
     private BuyManager.BuyStatus buyStatus = BuyManager.BuyStatus.DOING;
@@ -100,9 +109,14 @@ public class BuyListAdapter extends BaseAdapter {
         }
 
         viewHolder.title.setText(ironBuyBrief.ironType + "/" + ironBuyBrief.material + "/" + ironBuyBrief.surface + "/" + ironBuyBrief.proPlace + "( " + ironBuyBrief.sourceCity + ")");
-        viewHolder.subTitle.setText(ironBuyBrief.height + "*" + ironBuyBrief.width + "*" + ironBuyBrief.length + "  " + ironBuyBrief.tolerance + " " + ironBuyBrief.numbers + "" + ironBuyBrief.unit);
+        viewHolder.subTitle.setText(ironBuyBrief.height + "*" + ironBuyBrief.width + "*" + ironBuyBrief.length + ",  " + ironBuyBrief.tolerance + ", " + ironBuyBrief.numbers + "" + ironBuyBrief.unit);
         viewHolder.message.setText(StringUtils.getString(R.string.buy_item_message, ironBuyBrief.message));
-        viewHolder.deadLine.setText(StringUtils.getString(R.string.buy_item_time_limit, DateUtils.getDateStr(ironBuyBrief.pushTime + ironBuyBrief.timeLimit)));
+
+        if (buyStatus == BuyManager.BuyStatus.DONE) {
+            viewHolder.deadLine.setText("成交时间：" + DateUtils.getDateStr(ironBuyBrief.supplyWinTime));
+        } else {
+            viewHolder.deadLine.setText(StringUtils.getString(R.string.buy_item_time_limit, DateUtils.getDateStr(ironBuyBrief.pushTime + ironBuyBrief.timeLimit)));
+        }
 
         viewHolder.supplyCount.setText(ironBuyBrief.supplyCount + "");
 
@@ -114,6 +128,17 @@ public class BuyListAdapter extends BaseAdapter {
                 } else {
                     onBuyItemClickListener.onClickItem(ironBuyBrief.id);
                 }
+            }
+        });
+
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (onBuyItemLongClickListener != null) {
+                    onBuyItemLongClickListener.onClickItem(ironBuyBrief);
+                    return true;
+                }
+                return false;
             }
         });
 

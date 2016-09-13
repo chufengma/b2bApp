@@ -4,11 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
-import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
 import com.onefengma.taobuxiu.model.entities.QtDetail;
 import com.onefengma.taobuxiu.utils.DateUtils;
@@ -79,9 +77,14 @@ public class QtListAdapter extends BaseAdapter {
         final IronBuyBrief ironBuyBrief = qtDetail.ironBuyBrief;
 
         viewHolder.title.setText(ironBuyBrief.ironType + "/" + ironBuyBrief.material + "/" + ironBuyBrief.surface + "/" + ironBuyBrief.proPlace + "( " + ironBuyBrief.sourceCity + ")");
-        viewHolder.subTitle.setText(ironBuyBrief.height + "*" + ironBuyBrief.width + "*" + ironBuyBrief.length + " " + ironBuyBrief.tolerance + " " + ironBuyBrief.numbers + "" + ironBuyBrief.unit);
+        viewHolder.subTitle.setText(ironBuyBrief.height + "*" + ironBuyBrief.width + "*" + ironBuyBrief.length + ", " + ironBuyBrief.tolerance + ", " + ironBuyBrief.numbers + "" + ironBuyBrief.unit);
         viewHolder.message.setText(StringUtils.getString(R.string.buy_item_message, ironBuyBrief.message));
-        viewHolder.deadLine.setText(StringUtils.getString(R.string.buy_item_time_limit, DateUtils.getDateStr(ironBuyBrief.pushTime + ironBuyBrief.timeLimit)));
+
+        if (qtDetail.status == 1) {
+            viewHolder.deadLine.setText(StringUtils.getString(R.string.qt_item_time_done, DateUtils.getDateStr(qtDetail.pushTime)));
+        } else {
+            viewHolder.deadLine.setText(StringUtils.getString(R.string.qt_item_time_apply, DateUtils.getDateStr(qtDetail.finishTime)));
+        }
 
         viewHolder.orderNum.setText(StringUtils.getString(R.string.qt_item_id, ironBuyBrief.id));
         viewHolder.qtStatus.setText(qtDetail.getStatusStr());

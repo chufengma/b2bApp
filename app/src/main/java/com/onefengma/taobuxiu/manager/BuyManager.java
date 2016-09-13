@@ -12,6 +12,7 @@ import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.JSONHelper;
 import com.onefengma.taobuxiu.model.BaseResponse;
 import com.onefengma.taobuxiu.model.Constant;
+import com.onefengma.taobuxiu.model.IconDataCategory;
 import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
 import com.onefengma.taobuxiu.model.entities.IronBuyPush;
 import com.onefengma.taobuxiu.model.entities.MyAllHistoryInfo;
@@ -26,7 +27,6 @@ import com.onefengma.taobuxiu.model.events.DeleteIronBuyEvent;
 import com.onefengma.taobuxiu.model.events.GetBuyNumbersEvent;
 import com.onefengma.taobuxiu.model.events.GuidanceEditEvent;
 import com.onefengma.taobuxiu.model.events.GuidanceRefreshEvent;
-import com.onefengma.taobuxiu.model.events.GuidanceSwipeEvent;
 import com.onefengma.taobuxiu.model.events.IronBuyPushEvent;
 import com.onefengma.taobuxiu.model.events.MyIronAllHistoryEvent;
 import com.onefengma.taobuxiu.model.events.MyIronBuyHistoryEvent;
@@ -39,6 +39,7 @@ import com.onefengma.taobuxiu.model.events.SelectSupplyEvent;
 import com.onefengma.taobuxiu.model.push.BuyPushData;
 import com.onefengma.taobuxiu.network.HttpHelper;
 import com.onefengma.taobuxiu.network.HttpHelper.SimpleNetworkSubscriber;
+import com.onefengma.taobuxiu.utils.DateUtils;
 import com.onefengma.taobuxiu.utils.SPHelper;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
@@ -47,7 +48,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -519,6 +519,31 @@ public class BuyManager {
         }
         SPHelper.buy().save(Constant.StorageBuyKeys.CACHED_IRON_PUSH, ironBuyPushList);
         return index;
+    }
+
+    public IronBuyPush transIronBuyPush(IronBuyBrief ironBuyBrief) {
+        IronBuyPush ironBuyPush = new IronBuyPush();
+        ironBuyPush.width = ironBuyBrief.width;
+        ironBuyPush.height = ironBuyBrief.height;
+        ironBuyPush.length = ironBuyBrief.length;
+        ironBuyPush.ironType = ironBuyBrief.ironType;
+        ironBuyPush.surface = ironBuyBrief.surface;
+        ironBuyPush.material = ironBuyBrief.material;
+        ironBuyPush.proPlace = ironBuyBrief.proPlace;
+        ironBuyPush.locationCityId = ironBuyBrief.locationCityId;
+        ironBuyPush.numbers = ironBuyBrief.numbers.floatValue();
+        ironBuyPush.ironId = ironBuyBrief.id;
+        ironBuyPush.message = ironBuyBrief.message;
+        ironBuyPush.unit = ironBuyBrief.unit;
+        ironBuyPush.pushStatus = 1;
+        ironBuyPush.toleranceTo = ironBuyBrief.tolerance.split("-")[1];
+        ironBuyPush.toleranceFrom = ironBuyBrief.tolerance.split("-")[0];
+
+        ironBuyPush.unitIndex = IconDataCategory.get().units.indexOf(ironBuyPush.unit);
+        ironBuyPush.dayIndex = (int) (ironBuyBrief.timeLimit / (DateUtils.dayTime()));
+        ironBuyPush.hourIndex = (int) ((ironBuyBrief.timeLimit % DateUtils.dayTime()) / (DateUtils.hourTime()));
+        ironBuyPush.hourIndex = (int) (((ironBuyBrief.timeLimit % DateUtils.dayTime()) % DateUtils.hourTime() / (DateUtils.minuteTime())));
+        return ironBuyPush;
     }
 
     public interface BuyService {
