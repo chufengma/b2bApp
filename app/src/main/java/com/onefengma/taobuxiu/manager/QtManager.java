@@ -118,7 +118,7 @@ public class QtManager {
     public void cantactSalesMan(BaseActivity activity) {
         final UserProfile userProfile = AuthManager.instance().getUserProfile();
         if (userProfile != null && userProfile.salesMan != null) {
-            DialogUtils.showAlertDialog(activity, "确认拨打专员" + userProfile.salesMan.name + "的电话：" + userProfile.salesMan.tel + " ?", new DialogInterface.OnClickListener() {
+            DialogUtils.showAlertDialog(activity, "确认拨打专员" + userProfile.salesMan.name + "的电话：\n" + userProfile.salesMan.tel + " ?", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     SystemHelper.call(userProfile.salesMan.tel);

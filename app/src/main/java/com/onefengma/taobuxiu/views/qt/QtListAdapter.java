@@ -81,9 +81,9 @@ public class QtListAdapter extends BaseAdapter {
         viewHolder.message.setText(StringUtils.getString(R.string.buy_item_message, ironBuyBrief.message));
 
         if (qtDetail.status == 1) {
-            viewHolder.deadLine.setText(StringUtils.getString(R.string.qt_item_time_done, DateUtils.getDateStr(qtDetail.pushTime)));
+            viewHolder.deadLine.setText(StringUtils.getString(R.string.qt_item_time_done, DateUtils.getDateStr(qtDetail.finishTime)));
         } else {
-            viewHolder.deadLine.setText(StringUtils.getString(R.string.qt_item_time_apply, DateUtils.getDateStr(qtDetail.finishTime)));
+            viewHolder.deadLine.setText(StringUtils.getString(R.string.qt_item_time_apply, DateUtils.getDateStr(ironBuyBrief.supplyWinTime)));
         }
 
         viewHolder.orderNum.setText(StringUtils.getString(R.string.qt_item_id, ironBuyBrief.id));
