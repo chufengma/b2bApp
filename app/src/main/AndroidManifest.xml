@@ -111,7 +111,10 @@
             android:name=".views.auth.ResetPasswordActivity"
             android:label="@string/title_activity_reset_password" />
         <activity android:name=".views.buys.BuyDetailActivity" />
-        <activity android:name=".views.buys.PushNewBuyActivity" />
+        <activity android:name=".views.buys.PushNewBuyActivity"
+            android:launchMode="singleTask"
+            />
+
         <activity
             android:name=".views.buys.EditBuyActivity"
             android:label="@string/title_activity_edit_buy"

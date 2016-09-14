@@ -10,7 +10,6 @@ import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.NotificationHelper;
 import com.onefengma.taobuxiu.model.push.BasePushData;
 import com.onefengma.taobuxiu.model.push.BuyPushData;
-import com.onefengma.taobuxiu.model.push.OfferMissPushData;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.views.MainActivity;
 import com.orhanobut.logger.Logger;
@@ -56,10 +55,9 @@ public class DemoMessageReceiver extends PushMessageReceiver {
             }
             Intent intent = MainActivity.getIntent(MainApplication.getContext());
             NotificationHelper.showNotification(message.getTitle(), message.getDescription(), intent);
-        } else if (StringUtils.equals(type, BasePushData.PUSH_TYPE_WIN_OFFER)) {
-            Intent intent = MainActivity.getIntent(MainApplication.getContext());
-            NotificationHelper.showNotification(message.getTitle(), message.getDescription(), intent);
-        } else if (StringUtils.equals(type, BasePushData.PUSH_TYPE_NEW_IRON_BUY)) {
+        } else if (StringUtils.equals(type, BasePushData.PUSH_TYPE_WIN_OFFER)
+                || StringUtils.equals(type, BasePushData.PUSH_TYPE_NEW_IRON_BUY)
+                || StringUtils.equals(type, BasePushData.PUSH_TYPE_IRON_QT)) {
             Intent intent = MainActivity.getIntent(MainApplication.getContext());
             NotificationHelper.showNotification(message.getTitle(), message.getDescription(), intent);
         }

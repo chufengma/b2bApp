@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.OfferManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.manager.helpers.SystemHelper;
 import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
 import com.onefengma.taobuxiu.model.entities.OfferDetail;
 import com.onefengma.taobuxiu.model.events.ActionMissEvent;
@@ -77,6 +78,12 @@ public class OfferDetailActivity extends BaseActivity {
     TextView numbers;
     @BindView(R.id.totalMoney)
     TextView totalMoney;
+    @BindView(R.id.buy_company)
+    TextView buyCompany;
+    @BindView(R.id.buy_contact)
+    TextView buyContact;
+    @BindView(R.id.contact)
+    TextView contact;
 
     private ProgressDialog progressDialog;
     private static final String IRON_ID = "ironId";
@@ -190,7 +197,7 @@ public class OfferDetailActivity extends BaseActivity {
     }
 
 
-    private void setUpViews(OfferDetail offerDetail) {
+    private void setUpViews(final OfferDetail offerDetail) {
         IronBuyBrief buy = offerDetail.buy;
         type.setText(getString(R.string.offer_detail_type, offerDetail.buy.ironType));
         surface.setText(getString(R.string.offer_detail_surface, offerDetail.buy.surface));
@@ -213,6 +220,39 @@ public class OfferDetailActivity extends BaseActivity {
             buyTimes.setText(getString(R.string.offer_detail_buy_times, offerDetail.userBuyInfo.buyTimes));
             buyRate.setText(getString(R.string.offer_detail_buy_rate, NumbersUtils.getHS(offerDetail.userBuyInfo.buySuccessRate)));
         }
+
+        if (offerDetail.buyerSeller != null && offerDetail.buy.status == 4) {
+            buyContact.setVisibility(View.VISIBLE);
+            buyCompany.setVisibility(View.VISIBLE);
+            buyContact.setText(StringUtils.getString(R.string.buy_detail_buy_contact, offerDetail.buyerSeller.contact));
+            buyCompany.setText(StringUtils.getString(R.string.buy_detail_buy_company, offerDetail.buyerSeller.companyName));
+            contact.setVisibility(View.VISIBLE);
+        } else {
+            buyCompany.setVisibility(View.GONE);
+            buyContact.setVisibility(View.GONE);
+            contact.setVisibility(View.GONE);
+        }
+
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (offerDetail.buyerSeller == null) {
+                    DialogUtils.showAlertDialog(v.getContext(), "拨打电话:" + offerDetail.buyerMobile, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SystemHelper.call(offerDetail.buyerMobile);
+                        }
+                    });
+                } else {
+                    DialogUtils.showAlertDialog(v.getContext(), "拨打电话:" + offerDetail.buyerSeller.cantactTel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SystemHelper.call(offerDetail.buyerSeller.cantactTel);
+                        }
+                    });
+                }
+            }
+        });
 
         if (buy.status == 0) {
             offerEditLayout.setVisibility(View.VISIBLE);

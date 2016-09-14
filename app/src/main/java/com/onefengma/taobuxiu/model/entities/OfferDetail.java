@@ -9,4 +9,5 @@ public class OfferDetail {
     public IronBuyBrief buy;
     public SellerOffer myOffer;
     public UserBuyInfo userBuyInfo;
+    public Seller buyerSeller;
 }

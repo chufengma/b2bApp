@@ -303,7 +303,7 @@ public class EditBuyActivity extends BaseActivity {
             ToastUtils.showInfoTasty("数量不能为空");
             return false;
         }
-        if (StringUtils.isEmpty(toleranceFrom.getText().toString()) || StringUtils.isEmpty(width.getText().toString())) {
+        if (StringUtils.isEmpty(toleranceFrom.getText().toString()) || StringUtils.isEmpty(toleranceTo.getText().toString())) {
             ToastUtils.showInfoTasty("公差不能为空");
             return false;
         }
@@ -331,6 +331,7 @@ public class EditBuyActivity extends BaseActivity {
         BuyManager.instance().saveIronBuy(ironBuyPush);
         ToastUtils.showSuccessTasty("保存成功!");
         finish();
+        PushNewBuyActivity.start(this);
     }
 
     @OnClick(R.id.type)
