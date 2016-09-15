@@ -174,7 +174,6 @@
                     android:paddingBottom="4dip"
                     android:paddingLeft="20dip"
                     android:paddingRight="20dip"
-                    android:layout_toLeftOf="@+id/contact"
                     android:paddingTop="4dip"
                     android:visibility="gone"
                     android:text="买家公司名：风马似的发射点"
@@ -194,7 +193,7 @@
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@id/contact"
+                    android:id="@+id/contact"
                     android:text="联系对方"
                     android:clickable="true"
                     android:textColor="@color/white"
