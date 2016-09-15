@@ -203,7 +203,7 @@
                     android:paddingTop="2dip"
                     android:layout_marginRight="20dip"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                    android:layout_alignParentBottom="true"
                     android:paddingBottom="2dip"
                     android:background="@drawable/get_verify_code_bg"
                     android:layout_width="wrap_content"

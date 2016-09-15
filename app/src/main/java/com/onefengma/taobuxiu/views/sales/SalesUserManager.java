@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.BaseResponse;
 import com.onefengma.taobuxiu.model.Constant;
-import com.onefengma.taobuxiu.model.entities.MyIronsResponse;
 import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.BaseStatusEvent;
 import com.onefengma.taobuxiu.model.events.sales.SalesGetSellersEvent;
@@ -66,7 +65,7 @@ public class SalesUserManager {
 
     public void loadMoreBindUsers(String mobile) {
         EventBusHelper.post(new SalesGetUsers(BaseStatusEvent.STARTED, BaseListStatusEvent.LOAD_MORE));
-        HttpHelper.wrap(HttpHelper.create(SalesUserService.class).getBindUsers(mobile, salesBindUserResponse.currentPage, salesBindUserResponse.pageCount)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
+        HttpHelper.wrap(HttpHelper.create(SalesUserService.class).getBindUsers(mobile, salesBindUserResponse.currentPage + 1, salesBindUserResponse.pageCount)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse baseResponse) {
                 SalesBindUserResponse response = JSON.parseObject(baseResponse.data.toString(), SalesBindUserResponse.class);
@@ -115,7 +114,7 @@ public class SalesUserManager {
 
     public void loadMoreBindSellers(String mobile) {
         EventBusHelper.post(new SalesGetUsers(BaseStatusEvent.STARTED, BaseListStatusEvent.LOAD_MORE));
-        HttpHelper.wrap(HttpHelper.create(SalesUserService.class).getBindUsers(mobile, salesBindUserResponse.currentPage, salesBindUserResponse.pageCount)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
+        HttpHelper.wrap(HttpHelper.create(SalesUserService.class).getBindUsers(mobile, salesBindUserResponse.currentPage + 1, salesBindUserResponse.pageCount)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse baseResponse) {
                 SalesBindSellerResponse response = JSON.parseObject(baseResponse.data.toString(), SalesBindSellerResponse.class);

@@ -120,7 +120,7 @@ public class OfferManager {
         }
         MyOffersResponse myOffersResponseDoing = myOffersResponse[offerStatus.ordinal()];
         EventBusHelper.post(new MyOffersEvent(BaseListStatusEvent.STARTED, MyIronsEventDoing.RELOAD, offerStatus));
-        HttpHelper.wrap(HttpHelper.create(OfferService.class).myIronOffers(myOffersResponseDoing.currentPage, myOffersResponseDoing.pageCount, offerStatus.status)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
+        HttpHelper.wrap(HttpHelper.create(OfferService.class).myIronOffers(myOffersResponseDoing.currentPage + 1, myOffersResponseDoing.pageCount, offerStatus.status)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse data) {
                 MyOffersResponse offersResponse = JSONHelper.parse(data.data.toString(), MyOffersResponse.class);

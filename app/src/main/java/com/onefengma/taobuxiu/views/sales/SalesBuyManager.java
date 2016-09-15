@@ -1,17 +1,14 @@
 package com.onefengma.taobuxiu.views.sales;
 
-import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.BuyManager.BuyStatus;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.JSONHelper;
 import com.onefengma.taobuxiu.model.BaseResponse;
 import com.onefengma.taobuxiu.model.Constant;
-import com.onefengma.taobuxiu.model.entities.QtListResponse;
 import com.onefengma.taobuxiu.model.entities.SalesIronsBuyResponse;
 import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.MyIronsEventDoing;
 import com.onefengma.taobuxiu.model.events.sales.SalesBuyListEvent;
-import com.onefengma.taobuxiu.model.events.sales.SalesQtListEvent;
 import com.onefengma.taobuxiu.network.HttpHelper;
 import com.onefengma.taobuxiu.utils.SPHelper;
 
@@ -74,11 +71,13 @@ public class SalesBuyManager {
         EventBusHelper.post(new SalesBuyListEvent(BaseListStatusEvent.STARTED, MyIronsEventDoing.LOAD_MORE, status));
         final SalesIronsBuyResponse salesIronsBuyResponse = salesIronsBuyResponses[status.ordinal()];
 
-        HttpHelper.wrap(HttpHelper.create(SalesBuyService.class).getBuyList(salesIronsBuyResponse.currentPage, salesIronsBuyResponse.pageCount, status.getStatus())).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
+        HttpHelper.wrap(HttpHelper.create(SalesBuyService.class).getBuyList(salesIronsBuyResponse.currentPage + 1, salesIronsBuyResponse.pageCount, status.getStatus())).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse data) {
                 SalesIronsBuyResponse list = JSONHelper.parse(data.data.toString(), SalesIronsBuyResponse.class);
                 salesIronsBuyResponse.maxCount = list.maxCount;
+                salesIronsBuyResponse.currentPage = list.currentPage;
+                salesIronsBuyResponse.pageCount = list.pageCount;
                 if (salesIronsBuyResponse.buys == null) {
                     salesIronsBuyResponse.buys = list.buys;
                 } else  if (list.buys != null) {

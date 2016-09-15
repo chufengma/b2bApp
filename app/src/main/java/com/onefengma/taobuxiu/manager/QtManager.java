@@ -76,11 +76,13 @@ public class QtManager {
         EventBusHelper.post(new QtListEvent(BaseListStatusEvent.STARTED, MyIronsEventDoing.LOAD_MORE, status));
         final QtListResponse qtListResponse = qtListResponses[status.ordinal()];
 
-        HttpHelper.wrap(HttpHelper.create(QtService.class).qtList(qtListResponse.currentPage, qtListResponse.pageCount, status.status)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
+        HttpHelper.wrap(HttpHelper.create(QtService.class).qtList(qtListResponse.currentPage + 1, qtListResponse.pageCount, status.status)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse data) {
                 QtListResponse list = JSONHelper.parse(data.data.toString(), QtListResponse.class);
                 qtListResponse.maxCount = list.maxCount;
+                qtListResponse.pageCount = list.pageCount;
+                qtListResponse.currentPage = list.currentPage;
                 if (qtListResponse.qts == null) {
                     qtListResponse.qts = list.qts;
                 } else  if (list.qts != null) {

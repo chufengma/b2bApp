@@ -278,8 +278,9 @@ public class EditBuyActivity extends BaseActivity {
             return false;
         }
 
-        if (!StringUtils.isEmpty(ironBuyPush.message) && ironBuyPush.message.length() >= 35) {
-            ToastUtils.showInfoTasty("备注字数过多，请重新编辑");
+        if (!StringUtils.isEmpty(ironBuyPush.message) && ironBuyPush.message.length() > 30) {
+            ToastUtils.showInfoTasty("备注字数过多，请重新编辑！");
+            return false;
         }
 
         if (ironBuyPush.timeLimit == 0) {
