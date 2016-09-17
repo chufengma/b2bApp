@@ -6,10 +6,13 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.onefengma.taobuxiu.MainApplication;
+import com.onefengma.taobuxiu.manager.AuthManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.NotificationHelper;
+import com.onefengma.taobuxiu.model.entities.UserProfile;
 import com.onefengma.taobuxiu.model.push.BasePushData;
 import com.onefengma.taobuxiu.model.push.BuyPushData;
+import com.onefengma.taobuxiu.utils.SPHelper;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.views.MainActivity;
 import com.orhanobut.logger.Logger;
@@ -48,7 +51,16 @@ public class DemoMessageReceiver extends PushMessageReceiver {
         }
 
         String type = message.getExtra().get(BasePushData.PUSH_TYPE_KEY);
+
+        // filter
+        BasePushData data = JSON.parseObject(message.getContent(), BuyPushData.class);
+        UserProfile userProfile = AuthManager.instance().getUserProfile();
+        if (data != null && userProfile != null && !StringUtils.equals(data.userId, userProfile.userId)) {
+            return;
+        }
+
         Logger.d(message.getContent());
+
         if (StringUtils.equals(type, BasePushData.PUSH_TYPE_BUY) || StringUtils.equals(type, BasePushData.PUSH_TYPE_OFFER_MISS)) {
             if (MainApplication.getContext().isAppOnForeground()) {
                 EventBusHelper.post(JSON.parseObject(message.getContent(), BuyPushData.class));
