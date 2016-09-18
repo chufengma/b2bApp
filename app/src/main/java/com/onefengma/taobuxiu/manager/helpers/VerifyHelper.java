@@ -5,6 +5,9 @@ import android.text.TextUtils;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author yfchu
  * @date 2016/8/12
@@ -54,6 +57,17 @@ public class VerifyHelper {
 
     public static boolean checkMobileAndPassword(String mobile, String password) {
         return checkMobile(mobile) && checkPassword(password);
+    }
+
+    public static boolean isNumeric(String str) {
+        String regEx = "^-?[0-9]+$";
+        Pattern pat = Pattern.compile(regEx);
+        Matcher mat = pat.matcher(str);
+        if (mat.find()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

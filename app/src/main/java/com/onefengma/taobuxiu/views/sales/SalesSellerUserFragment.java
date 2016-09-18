@@ -2,6 +2,7 @@ package com.onefengma.taobuxiu.views.sales;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +62,8 @@ public class SalesSellerUserFragment extends SalesBaseUserFragment implements Te
         });
 
         SalesUserManager.instance().reloadBindSellers(searchBar.getText().toString());
+        searchBar.setInputType(InputType.TYPE_CLASS_TEXT);
+        searchBar.setHint("公司名/手机号搜索");
     }
 
     @Subscribe

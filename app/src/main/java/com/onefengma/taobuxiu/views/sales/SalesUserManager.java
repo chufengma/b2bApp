@@ -2,6 +2,7 @@ package com.onefengma.taobuxiu.views.sales;
 
 import com.alibaba.fastjson.JSON;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.manager.helpers.VerifyHelper;
 import com.onefengma.taobuxiu.model.BaseResponse;
 import com.onefengma.taobuxiu.model.Constant;
 import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
@@ -12,6 +13,7 @@ import com.onefengma.taobuxiu.model.sales.SalesBindSellerResponse;
 import com.onefengma.taobuxiu.model.sales.SalesBindUserResponse;
 import com.onefengma.taobuxiu.network.HttpHelper;
 import com.onefengma.taobuxiu.utils.SPHelper;
+import com.onefengma.taobuxiu.utils.StringUtils;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -92,11 +94,20 @@ public class SalesUserManager {
     }
 
 
-    public void reloadBindSellers(String mobile) {
+    public void reloadBindSellers(String text) {
         readFromDB();
         salesBindSellerResponse.currentPage = 0;
+        String mobile = null;
+        String companyName = null;
+        if (!StringUtils.isEmpty(text)) {
+            if (VerifyHelper.isNumeric(text)) {
+                mobile = text;
+            }  else {
+                companyName = text;
+            }
+        }
         EventBusHelper.post(new SalesGetSellersEvent(BaseStatusEvent.STARTED, BaseListStatusEvent.RELOAD));
-        HttpHelper.wrap(HttpHelper.create(SalesUserService.class).getBindSellers(mobile, salesBindUserResponse.currentPage, salesBindUserResponse.pageCount)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
+        HttpHelper.wrap(HttpHelper.create(SalesUserService.class).getBindSellers(mobile, companyName,  salesBindUserResponse.currentPage, salesBindUserResponse.pageCount)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse baseResponse) {
                 salesBindSellerResponse = JSON.parseObject(baseResponse.data.toString(), SalesBindSellerResponse.class);
@@ -165,7 +176,7 @@ public class SalesUserManager {
 
 
         @GET("sales/bindSellers")
-        Observable<BaseResponse> getBindSellers(@Query(("mobile")) String mobile, @Query(("currentPage")) int currentPage, @Query("pageCount") int pageCount);
+        Observable<BaseResponse> getBindSellers(@Query(("mobile")) String mobile, @Query(("companyName")) String companyName, @Query(("currentPage")) int currentPage, @Query("pageCount") int pageCount);
 
     }
 
