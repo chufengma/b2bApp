@@ -13,6 +13,7 @@ import com.onefengma.taobuxiu.MainApplication;
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.AuthManager;
 import com.onefengma.taobuxiu.manager.PushManager;
+import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.LoginEvent;
 import com.onefengma.taobuxiu.utils.StringUtils;
@@ -63,6 +64,14 @@ public class RegisterActivity extends BaseActivity implements CompoundButton.OnC
         mobile.addTextChangedListener(this);
         verify.addTextChangedListener(this);
         password.addTextChangedListener(this);
+
+        EventBusHelper.register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBusHelper.unregister(this);
     }
 
     @OnClick(R.id.verify_code_counter)
