@@ -15,6 +15,7 @@ import com.onefengma.taobuxiu.model.events.QtListEvent;
 import com.onefengma.taobuxiu.network.HttpHelper;
 import com.onefengma.taobuxiu.utils.DialogUtils;
 import com.onefengma.taobuxiu.utils.SPHelper;
+import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.sales.SalesQtManager.SalesQtStatus;
 
@@ -119,7 +120,7 @@ public class QtManager {
 
     public void cantactSalesMan(BaseActivity activity) {
         final UserProfile userProfile = AuthManager.instance().getUserProfile();
-        if (userProfile != null && userProfile.salesMan != null) {
+        if (userProfile != null && userProfile.salesMan != null && !StringUtils.isEmpty(userProfile.salesMan.tel)) {
             DialogUtils.showAlertDialog(activity, "确认拨打专员" + userProfile.salesMan.name + "的电话：\n" + userProfile.salesMan.tel + " ?", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
