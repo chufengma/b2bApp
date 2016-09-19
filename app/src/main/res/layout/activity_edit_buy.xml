@@ -400,7 +400,7 @@
                     android:background="@null"
                     android:clickable="true"
                     android:gravity="left"
-                    android:hint="填写备注"
+                    android:hint="填写备注(30字以内)"
                     android:padding="7dip"
                     android:singleLine="false"
                     android:textColor="@color/black"
