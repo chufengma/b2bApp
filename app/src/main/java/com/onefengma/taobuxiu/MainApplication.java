@@ -26,7 +26,7 @@ public class MainApplication extends Application {
     private boolean isClearAll = false;
     private BaseActivity currentActivity;
 
-    public static boolean FEGNMA_FALG = true;
+    public static boolean FEGNMA_FALG = false;
 
     public static boolean IS_SALES_APP = true;
 
@@ -41,7 +41,7 @@ public class MainApplication extends Application {
         ImageLoaderConfiguration configuration = (new ImageLoaderConfiguration.Builder(this).defaultDisplayImageOptions(new DisplayImageOptions.Builder().showImageOnFail(R.drawable.ic_detault_icon).build())).build();
         ImageLoader.getInstance().init(configuration);
 
-        IS_SALES_APP = SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_FLAG_SALES, true);
+        IS_SALES_APP = SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_FLAG_SALES, FEGNMA_FALG);
     }
 
     public void switchApp(BaseActivity context) {

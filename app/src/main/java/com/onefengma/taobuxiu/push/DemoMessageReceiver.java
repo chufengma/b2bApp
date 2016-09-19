@@ -28,6 +28,7 @@ import java.util.List;
  * Created by chufengma on 16/8/13.
  */
 public class DemoMessageReceiver extends PushMessageReceiver {
+    public static String currentUserId = "";
     private String mRegId;
     private long mResultCode = -1;
     private String mReason;
@@ -48,6 +49,9 @@ public class DemoMessageReceiver extends PushMessageReceiver {
             mAlias = message.getAlias();
         } else if (!TextUtils.isEmpty(message.getUserAccount())) {
             mUserAccount = message.getUserAccount();
+            if (!StringUtils.equals(mUserAccount, currentUserId)) {
+                return;
+            }
         }
 
         String type = message.getExtra().get(BasePushData.PUSH_TYPE_KEY);

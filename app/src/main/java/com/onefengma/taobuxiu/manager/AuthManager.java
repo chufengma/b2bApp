@@ -15,6 +15,7 @@ import com.onefengma.taobuxiu.model.entities.UserProfile;
 import com.onefengma.taobuxiu.model.events.BaseListStatusEvent;
 import com.onefengma.taobuxiu.model.events.LoginEvent;
 import com.onefengma.taobuxiu.model.events.OnGetMsgCodeEvent;
+import com.onefengma.taobuxiu.push.DemoMessageReceiver;
 import com.onefengma.taobuxiu.utils.SPHelper;
 import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.utils.ToastUtils;
@@ -52,6 +53,8 @@ public class AuthManager {
     }
 
     public static void quit() {
+        PushManager.instance().cleanCurrentUser();
+        DemoMessageReceiver.currentUserId = null;
         userProfile = null;
         SPHelper.top().save(Constant.StorageKeys.USER_PROFILE, "");
         startLoginActivity();
