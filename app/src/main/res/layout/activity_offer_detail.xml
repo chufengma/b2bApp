@@ -125,7 +125,7 @@
                     android:drawableLeft="@drawable/blue_dot"
                     android:drawablePadding="10dip"
                     android:padding="5dip"
-                    android:text="备注： 好好好好爱护"
+                    android:text="备注： 欢迎来到淘不锈"
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -176,7 +176,7 @@
                     android:paddingRight="20dip"
                     android:paddingTop="4dip"
                     android:visibility="gone"
-                    android:text="买家公司名：风马似的发射点"
+                    android:text="买家公司名：欢迎来到淘不锈"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -189,7 +189,7 @@
                     android:visibility="gone"
                     android:paddingRight="20dip"
                     android:paddingTop="4dip"
-                    android:text="买家联系人：风马"
+                    android:text="买家联系人：欢迎来到淘不锈"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -333,7 +333,7 @@
                     android:paddingLeft="20dip"
                     android:paddingRight="20dip"
                     android:paddingTop="4dip"
-                    android:text="备注：是的发送到发送到发asdf飞"
+                    android:text="备注：欢迎来到淘不锈"
                     android:textColor="@color/black" />
             </LinearLayout>
 

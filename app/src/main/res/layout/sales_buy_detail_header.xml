@@ -65,7 +65,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:paddingTop="4dip"
-            android:text="买家公司名：风马"
+            android:text="买家公司名：欢迎来到淘不锈"
             android:textSize="12dip" />
 
 
@@ -77,7 +77,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:paddingTop="4dip"
-            android:text="买家联系人：风马"
+            android:text="买家联系人：欢迎来到淘不锈"
             android:textSize="12dip" />
 
         <TextView
@@ -88,7 +88,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:paddingTop="4dip"
-            android:text="求购单号：123123123123"
+            android:text="求购单号：欢迎来到淘不锈"
             android:textSize="12dip" />
 
         <TextView
@@ -99,7 +99,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:paddingTop="4dip"
-            android:text="跟进专员： xxx 123311123"
+            android:text="跟进专员： 欢迎来到淘不锈"
             android:textSize="12dip" />
 
 

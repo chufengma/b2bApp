@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:id="@+id/message"
             android:paddingTop="4dip"
-            android:text="备注：是的发生大发阿斯蒂芬"
+            android:text="备注：欢迎来到淘不锈"
             android:singleLine="false"
             android:layout_below="@id/sub_title"
             android:layout_marginRight="50dip"
@@ -86,7 +86,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:paddingTop="4dip"
-            android:text="跟进专员： xxx 123311123"
+            android:text="跟进专员： 欢迎来到淘不锈"
             android:textSize="12dip" />
 
         <ImageView
