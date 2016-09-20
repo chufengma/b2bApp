@@ -38,9 +38,6 @@ captures/
 *.iml
 .idea/workspace.xml
 
-# Keystore files
-*.jks
-
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 

@@ -26,7 +26,7 @@ public class MainApplication extends Application {
     private boolean isClearAll = false;
     private BaseActivity currentActivity;
 
-    public static boolean FEGNMA_FALG = false;
+    public static boolean FEGNMA_FALG = true;
 
     public static boolean IS_SALES_APP = true;
 
