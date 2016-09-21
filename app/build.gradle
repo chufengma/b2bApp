@@ -15,12 +15,40 @@ android {
         versionCode 1
         versionName "1.0.0"
     }
+
+    signingConfigs {
+        releaseSign {
+            storeFile file("../taobuxiu_sign_window.jks")
+            storePassword "8686239"
+            keyAlias "taobuxiu"
+            keyPassword "8686239"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig  signingConfigs.releaseSign
+
+        }
+
+        debug {
+            signingConfig  signingConfigs.releaseSign
+        }
+
+    }
+
+    productFlavors {
+        taobuxiu {
+            manifestPlaceholders = [ SALES_FLAG : "close"]
+        }
+        taobuxiu_sales {
+            manifestPlaceholders = [ SALES_FLAG : "open" ]
         }
     }
+
+
 }
 
 dependencies {

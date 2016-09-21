@@ -3,6 +3,8 @@ package com.onefengma.taobuxiu;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -10,6 +12,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.onefengma.taobuxiu.manager.PushManager;
 import com.onefengma.taobuxiu.model.Constant;
 import com.onefengma.taobuxiu.utils.SPHelper;
+import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.views.SplashActivity;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 
@@ -41,7 +44,23 @@ public class MainApplication extends Application {
         ImageLoaderConfiguration configuration = (new ImageLoaderConfiguration.Builder(this).defaultDisplayImageOptions(new DisplayImageOptions.Builder().showImageOnFail(R.drawable.ic_detault_icon).build())).build();
         ImageLoader.getInstance().init(configuration);
 
+        initFlags();
+
         IS_SALES_APP = SPHelper.top().sp().getBoolean(Constant.StorageKeys.SETTING_FLAG_SALES, FEGNMA_FALG);
+    }
+
+    private void initFlags() {
+        try {
+            ApplicationInfo applicationInfo = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
+            String open = applicationInfo.metaData.getString("SALES_FLAG");
+            if (StringUtils.equalsIgnoreCase("open", open)) {
+                FEGNMA_FALG = true;
+            } else if (StringUtils.equalsIgnoreCase("close", open)) {
+                FEGNMA_FALG = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void switchApp(BaseActivity context) {

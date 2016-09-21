@@ -23,6 +23,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppThemeLight">
+
+        <meta-data
+            android:name="SALES_FLAG"
+            android:value="${SALES_FLAG}" />
+
         <activity
             android:name=".views.SplashActivity"
             android:configChanges="orientation"
