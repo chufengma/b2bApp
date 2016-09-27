@@ -11,7 +11,6 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
-import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.manager.helpers.SystemHelper;
 import com.onefengma.taobuxiu.model.events.sales.SalesGetUsers;
@@ -22,7 +21,6 @@ import com.onefengma.taobuxiu.views.widgets.listview.XListView;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -64,9 +62,7 @@ public class SalesNormalUserFragment extends SalesBaseUserFragment implements Te
 
     @Subscribe
     public void onLoadUserEvent(SalesGetUsers event) {
-        if (event.isLoadComplete()) {
-            list.onLoadMoreComplete();
-        }
+        list.onLoadMoreComplete();
 
         List<NormalUserInfo> data = SalesUserManager.instance().salesBindUserResponse.userInfos;
         list.enableLoadMore(data != null

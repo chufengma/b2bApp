@@ -8,17 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
-import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.BuyManager.BuyStatus;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.entities.IronBuyBrief;
-import com.onefengma.taobuxiu.model.entities.QtDetail;
 import com.onefengma.taobuxiu.model.events.sales.SalesBuyListEvent;
-import com.onefengma.taobuxiu.model.events.sales.SalesQtListEvent;
 import com.onefengma.taobuxiu.views.buys.BuyListAdapter;
 import com.onefengma.taobuxiu.views.core.BaseActivity;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
-import com.onefengma.taobuxiu.views.sales.SalesQtManager.SalesQtStatus;
 import com.onefengma.taobuxiu.views.widgets.listview.XListView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -102,9 +98,7 @@ public class SalesBaseBuyListFragment extends BaseFragment {
             listView.onRefreshComplete(false);
         }
 
-        if (event.isLoadComplete()) {
-            listView.onLoadMoreComplete();
-        }
+        listView.onLoadMoreComplete();
 
         List<IronBuyBrief> data = SalesBuyManager.instance().salesIronsBuyResponses[buyStatus.ordinal()].buys;
         listView.enableLoadMore(data != null

@@ -10,13 +10,11 @@ import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.AuthManager;
-import com.onefengma.taobuxiu.manager.BuyManager;
 import com.onefengma.taobuxiu.manager.OfferManager;
 import com.onefengma.taobuxiu.manager.OfferManager.OfferStatus;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.entities.MyOffersResponse;
 import com.onefengma.taobuxiu.model.events.MyOffersEvent;
-import com.onefengma.taobuxiu.views.buys.BuyListAdapter;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 import com.onefengma.taobuxiu.views.widgets.listview.XListView;
 
@@ -125,9 +123,7 @@ public class BaseOfferStatusFragment extends BaseFragment {
             recyclerView.onRefreshComplete(false);
         }
 
-        if (offersEvent.isLoadComplete()) {
-            recyclerView.onLoadMoreComplete();
-        }
+        recyclerView.onLoadMoreComplete();
 
         MyOffersResponse myOffersResponse = OfferManager.instance().myOffersResponse[offerStatus.ordinal()];
 

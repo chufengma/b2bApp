@@ -118,9 +118,7 @@ public class BuyFragmentForOutOfDate extends BaseFragment {
             recyclerView.onRefreshComplete(false);
         }
 
-        if (myIronsEvent.isLoadComplete()) {
-            recyclerView.onLoadMoreComplete();
-        }
+        recyclerView.onLoadMoreComplete();
 
         recyclerView.enableLoadMore(BuyManager.instance().myIronsResponseForOutOfDate.buys != null
                 && BuyManager.instance().myIronsResponseForOutOfDate.buys.size() > 0

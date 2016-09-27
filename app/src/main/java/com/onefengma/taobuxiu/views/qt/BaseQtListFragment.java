@@ -13,7 +13,6 @@ import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.entities.QtDetail;
 import com.onefengma.taobuxiu.model.events.QtListEvent;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
-import com.onefengma.taobuxiu.views.sales.SalesQtManager;
 import com.onefengma.taobuxiu.views.sales.SalesQtManager.SalesQtStatus;
 import com.onefengma.taobuxiu.views.widgets.listview.XListView;
 
@@ -91,9 +90,7 @@ public class BaseQtListFragment extends BaseFragment {
             listView.onRefreshComplete(false);
         }
 
-        if (event.isLoadComplete()) {
-            listView.onLoadMoreComplete();
-        }
+        listView.onLoadMoreComplete();
 
         List<QtDetail> qtList = QtManager.instance().qtListResponses[qtStatus.ordinal()].qts;
         listView.enableLoadMore(qtList != null
