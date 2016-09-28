@@ -107,7 +107,7 @@ public class SalesUserManager {
             }
         }
         EventBusHelper.post(new SalesGetSellersEvent(BaseStatusEvent.STARTED, BaseListStatusEvent.RELOAD));
-        HttpHelper.wrap(HttpHelper.create(SalesUserService.class).getBindSellers(mobile, companyName,  salesBindUserResponse.currentPage, salesBindUserResponse.pageCount)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
+        HttpHelper.wrap(HttpHelper.create(SalesUserService.class).getBindSellers(mobile, companyName,  salesBindSellerResponse.currentPage, salesBindSellerResponse.pageCount)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse baseResponse) {
                 salesBindSellerResponse = JSON.parseObject(baseResponse.data.toString(), SalesBindSellerResponse.class);
@@ -123,9 +123,18 @@ public class SalesUserManager {
         });
     }
 
-    public void loadMoreBindSellers(String mobile) {
+    public void loadMoreBindSellers(String text) {
+        String mobile = null;
+        String companyName = null;
+        if (!StringUtils.isEmpty(text)) {
+            if (VerifyHelper.isNumeric(text)) {
+                mobile = text;
+            }  else {
+                companyName = text;
+            }
+        }
         EventBusHelper.post(new SalesGetSellersEvent(BaseStatusEvent.STARTED, BaseListStatusEvent.LOAD_MORE));
-        HttpHelper.wrap(HttpHelper.create(SalesUserService.class).getBindUsers(mobile, salesBindUserResponse.currentPage + 1, salesBindUserResponse.pageCount)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
+        HttpHelper.wrap(HttpHelper.create(SalesUserService.class).getBindSellers(mobile, companyName, salesBindSellerResponse.currentPage + 1, salesBindSellerResponse.pageCount)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse baseResponse) {
                 SalesBindSellerResponse response = JSON.parseObject(baseResponse.data.toString(), SalesBindSellerResponse.class);
