@@ -124,7 +124,7 @@ public class SalesUserManager {
     }
 
     public void loadMoreBindSellers(String mobile) {
-        EventBusHelper.post(new SalesGetUsers(BaseStatusEvent.STARTED, BaseListStatusEvent.LOAD_MORE));
+        EventBusHelper.post(new SalesGetSellersEvent(BaseStatusEvent.STARTED, BaseListStatusEvent.LOAD_MORE));
         HttpHelper.wrap(HttpHelper.create(SalesUserService.class).getBindUsers(mobile, salesBindUserResponse.currentPage + 1, salesBindUserResponse.pageCount)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse baseResponse) {
@@ -140,13 +140,13 @@ public class SalesUserManager {
                 }
 
                 SPHelper.common().save(Constant.StorageKeys.SALES_USERS, salesBindUserResponse);
-                EventBusHelper.post(new SalesGetUsers(BaseListStatusEvent.SUCCESS, BaseListStatusEvent.LOAD_MORE));
+                EventBusHelper.post(new SalesGetSellersEvent(BaseListStatusEvent.SUCCESS, BaseListStatusEvent.LOAD_MORE));
             }
 
             @Override
             public void onFailed(BaseResponse baseResponse, Throwable e) {
                 super.onFailed(baseResponse, e);
-                EventBusHelper.post(new SalesGetUsers(BaseListStatusEvent.FAILED, BaseListStatusEvent.LOAD_MORE));
+                EventBusHelper.post(new SalesGetSellersEvent(BaseListStatusEvent.FAILED, BaseListStatusEvent.LOAD_MORE));
             }
         });
     }
