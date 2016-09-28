@@ -98,7 +98,9 @@ public class SalesBaseQtListFragment extends BaseFragment {
             listView.onRefreshComplete(false);
         }
 
-        listView.onLoadMoreComplete();
+        if (event.isLoadComplete()) {
+            listView.onLoadMoreComplete();
+        }
 
         List<QtDetail> qtList = SalesQtManager.instance().qtListResponses[qtStatus.ordinal()].qts;
         listView.enableLoadMore(qtList != null

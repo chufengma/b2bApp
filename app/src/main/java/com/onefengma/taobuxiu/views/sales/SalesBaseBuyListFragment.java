@@ -98,7 +98,9 @@ public class SalesBaseBuyListFragment extends BaseFragment {
             listView.onRefreshComplete(false);
         }
 
-        listView.onLoadMoreComplete();
+        if (event.isLoadComplete()) {
+            listView.onLoadMoreComplete();
+        }
 
         List<IronBuyBrief> data = SalesBuyManager.instance().salesIronsBuyResponses[buyStatus.ordinal()].buys;
         listView.enableLoadMore(data != null

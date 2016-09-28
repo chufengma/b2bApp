@@ -90,7 +90,9 @@ public class BaseQtListFragment extends BaseFragment {
             listView.onRefreshComplete(false);
         }
 
-        listView.onLoadMoreComplete();
+        if (event.isLoadComplete()) {
+            listView.onLoadMoreComplete();
+        }
 
         List<QtDetail> qtList = QtManager.instance().qtListResponses[qtStatus.ordinal()].qts;
         listView.enableLoadMore(qtList != null

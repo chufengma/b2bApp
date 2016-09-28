@@ -123,7 +123,9 @@ public class BaseOfferStatusFragment extends BaseFragment {
             recyclerView.onRefreshComplete(false);
         }
 
-        recyclerView.onLoadMoreComplete();
+        if (offersEvent.isLoadComplete()) {
+            recyclerView.onLoadMoreComplete();
+        }
 
         MyOffersResponse myOffersResponse = OfferManager.instance().myOffersResponse[offerStatus.ordinal()];
 

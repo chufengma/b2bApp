@@ -68,7 +68,9 @@ public class SalesSellerUserFragment extends SalesBaseUserFragment implements Te
 
     @Subscribe
     public void onLoadSellersEvent(SalesGetSellersEvent event) {
-        list.onLoadMoreComplete();
+        if (event.isLoadComplete()) {
+            list.onLoadMoreComplete();
+        }
 
         List<SalesSellerInfo> data = SalesUserManager.instance().salesBindSellerResponse.sellerInfos;
         list.enableLoadMore(data != null

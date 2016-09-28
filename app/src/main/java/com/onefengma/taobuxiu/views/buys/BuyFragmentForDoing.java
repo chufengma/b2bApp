@@ -123,7 +123,9 @@ public class BuyFragmentForDoing extends BaseFragment {
            recyclerView.onRefreshComplete(false);
         }
 
-        recyclerView.onLoadMoreComplete();
+        if (myIronsEvent.isLoadComplete()) {
+            recyclerView.onLoadMoreComplete();
+        }
 
         recyclerView.enableLoadMore(BuyManager.instance().myIronsResponseForDoing.buys != null
                 && BuyManager.instance().myIronsResponseForDoing.buys.size() > 0

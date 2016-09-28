@@ -139,12 +139,12 @@ public class OfferManager {
                 SPHelper.buy().save(dataKeyItem.dataNumKey, offersResponse.maxCount);
 
                 // event
-                EventBusHelper.post(new MyOffersEvent(BaseListStatusEvent.SUCCESS, MyIronsEventDoing.RELOAD, offerStatus));
+                EventBusHelper.post(new MyOffersEvent(BaseListStatusEvent.SUCCESS, MyIronsEventDoing.LOAD_MORE, offerStatus));
             }
 
             @Override
             public void onFailed(BaseResponse baseResponse, Throwable e) {
-                EventBusHelper.post(new MyOffersEvent(BaseListStatusEvent.FAILED, MyIronsEventDoing.RELOAD, offerStatus));
+                EventBusHelper.post(new MyOffersEvent(BaseListStatusEvent.FAILED, MyIronsEventDoing.LOAD_MORE, offerStatus));
                 super.onFailed(baseResponse, e);
             }
         });
