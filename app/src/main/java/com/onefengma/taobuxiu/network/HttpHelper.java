@@ -39,7 +39,7 @@ import rx.schedulers.Schedulers;
  */
 public class HttpHelper {
 //    118.178.17.15
-    public static final String BASE_URL = "http://118.178.17.15/";
+    public static final String BASE_URL = "http://118.178.17.15:9090/";
 
     private static Retrofit retrofit;
 
@@ -132,6 +132,7 @@ public class HttpHelper {
         public void onNext(T t) {
             if (t.status == 0) {
                 onSuccess(t);
+               // Logger.json(t.data.toString());
             } else if (t.status == 2) {
                 if (MainApplication.IS_SALES_APP) {
                     SalesAuthManager.startLoginActivity();

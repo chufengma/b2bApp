@@ -540,9 +540,9 @@ public class BuyManager {
         ironBuyPush.toleranceFrom = ironBuyBrief.tolerance.split("-")[0];
 
         ironBuyPush.unitIndex = IconDataCategory.get().units.indexOf(ironBuyPush.unit);
-        ironBuyPush.dayIndex = (int) (ironBuyBrief.timeLimit / (DateUtils.dayTime()));
-        ironBuyPush.hourIndex = (int) ((ironBuyBrief.timeLimit % DateUtils.dayTime()) / (DateUtils.hourTime()));
-        ironBuyPush.hourIndex = (int) (((ironBuyBrief.timeLimit % DateUtils.dayTime()) % DateUtils.hourTime() / (DateUtils.minuteTime())));
+        ironBuyPush.dayIndex = (int) (ironBuyBrief.timeLimit / (DateUtils.dayTime())) % 30;
+        ironBuyPush.hourIndex = (int) ((ironBuyBrief.timeLimit % DateUtils.dayTime()) / (DateUtils.hourTime())) % 12;
+        ironBuyPush.minuteIndex = (int) (((ironBuyBrief.timeLimit % DateUtils.dayTime()) % DateUtils.hourTime() / (DateUtils.minuteTime()))) % 59;
         return ironBuyPush;
     }
 
