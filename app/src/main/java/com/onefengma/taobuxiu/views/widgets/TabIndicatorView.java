@@ -76,6 +76,11 @@ public class TabIndicatorView extends RelativeLayout {
         return new TabIndicatorView(context, tabParams);
     }
 
+    public static TabIndicatorView newLogisticsTabIndicator(Context context) {
+        TabParams tabParams = new TabParams(R.drawable.ic_main_tab_home, "找物流", false);
+        return new TabIndicatorView(context, tabParams);
+    }
+
     public static TabIndicatorView newQTTabIndicator(Context context) {
         TabParams tabParams = new TabParams(R.drawable.ic_main_tab_qt, "找质检", false);
         return new TabIndicatorView(context, tabParams);

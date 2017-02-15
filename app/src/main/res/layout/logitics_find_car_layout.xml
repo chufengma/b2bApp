@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/edit_content"
+        android:layout_above="@+id/edit_btns"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dip"
+                android:background="#f4f4f4" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:paddingBottom="5dip"
+                android:paddingLeft="16dip"
+                android:paddingRight="16dip"
+                android:paddingTop="5dip">
+
+                <ImageView
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
+                    android:layout_marginRight="15dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/buy_doing_tab_normal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="起点"
+                    android:textColorHint="#cccccc"
+                    android:textSize="16dip" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_marginLeft="50dip"
+                android:layout_marginRight="16dip"
+                android:background="#f4f4f4" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:paddingBottom="5dip"
+                android:paddingLeft="16dip"
+                android:paddingRight="16dip"
+                android:paddingTop="5dip">
+
+                <ImageView
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
+                    android:layout_marginRight="15dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/buy_doing_tab_normal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="终点"
+                    android:textColorHint="#cccccc"
+                    android:textSize="16dip" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_marginLeft="50dip"
+                android:layout_marginRight="16dip"
+                android:background="#f4f4f4" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:paddingBottom="5dip"
+                android:paddingLeft="16dip"
+                android:paddingRight="16dip"
+                android:paddingTop="5dip">
+
+                <ImageView
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
+                    android:layout_marginRight="15dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/buy_doing_tab_normal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请选择货物"
+                    android:textColorHint="#cccccc"
+                    android:textSize="16dip" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dip"
+                android:background="#f4f4f4" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:padding="10dip"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/edit"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dip"
+                    android:src="@drawable/buy_done_tab_normal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="添加额外需求"
+                    android:textColor="@color/main_blue"
+                    android:textSize="16dip" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:background="#f4f4f4"
+                android:layout_height="1dip" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:padding="10dip"
+                android:gravity="center"
+                android:textColor="@color/main_blue"
+                android:textSize="16dip"
+                android:text="备注（如货物类别及跟车人数）"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:background="#f4f4f4"
+                android:layout_height="1dip" />
+
+            <TextView
+                android:id="@+id/time_limit"
+                android:layout_width="match_parent"
+                android:padding="10dip"
+                android:gravity="center"
+                android:clickable="true"
+                android:text="选择物流商报价有限期"
+                android:textColor="@color/main_blue"
+                android:textSize="16dip"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@id/edit_btns"
+        android:layout_alignParentBottom="true"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dip"
+            android:layout_weight="1"
+            android:background="#fbbc2d"
+            android:gravity="center"
+            android:padding="8dip"
+            android:text="电话找车"
+            android:textColor="@android:color/white"
+            android:textSize="16dip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dip"
+            android:layout_weight="1"
+            android:background="@color/main_blue"
+            android:gravity="center"
+            android:padding="8dip"
+            android:text="我要找车"
+            android:textColor="@android:color/white"
+            android:textSize="16dip" />
+
+    </LinearLayout>
+
+</RelativeLayout>

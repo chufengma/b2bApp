@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_choose_deadline"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#f4f4f4"
+    tools:context="com.onefengma.taobuxiu.views.logistics.ChooseDeadlineActivity">
+
+    <com.onefengma.taobuxiu.views.widgets.ToolBar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        app:tool_bar_title="输入有效日期"
+        android:layout_height="56dip" />
+
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/day"
+        android:layout_width="match_parent"
+        android:padding="8dip"
+        android:layout_marginTop="16dip"
+        android:layout_marginLeft="16dip"
+        android:layout_marginRight="16dip"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:entries="@array/day" />
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/hour"
+        android:layout_width="match_parent"
+        android:padding="8dip"
+        android:layout_marginTop="16dip"
+        android:layout_marginLeft="16dip"
+        android:layout_marginRight="16dip"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:entries="@array/hour" />
+
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/minute"
+        android:layout_width="match_parent"
+        android:padding="8dip"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dip"
+        android:layout_marginLeft="16dip"
+        android:layout_marginRight="16dip"
+        android:background="@android:color/white"
+        android:entries="@array/minute" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:background="#fbbd2d"
+        android:text="确定"
+        android:textSize="16dip"
+        android:gravity="center"
+        android:layout_marginLeft="16dip"
+        android:layout_marginRight="16dip"
+        android:layout_marginTop="16dip"
+        android:textColor="@color/white"
+        android:padding="10dip"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
