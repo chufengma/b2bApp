@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_edit_other_demand"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_message_edit"
+    android:layout_width="match_parent"
+    android:background="@color/main_gray_bg"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.onefengma.taobuxiu.views.logistics.EditOtherDemandActivity">
+    tools:context="com.onefengma.taobuxiu.views.logistics.MessageEditActivity">
 
     <com.onefengma.taobuxiu.views.widgets.ToolBar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        app:tool_bar_title="额外需求"
+        app:tool_bar_title="填写备注"
         android:layout_height="56dip" />
 
-    <CheckBox
+    <EditText
         android:layout_width="match_parent"
-        android:layout_marginLeft="16dip"
-        android:layout_marginRight="16dip"
+        android:minHeight="150dip"
+        android:layout_margin="16dip"
+        android:id="@+id/content"
+        android:hint="备注信息..."
+        android:gravity="left|top"
+        android:padding="10dip"
         android:background="@color/white"
-        android:text="含税"
-        android:id="@+id/taxi"
-        android:layout_marginTop="16dip"
-        android:layout_marginBottom="16dip"
-        android:paddingLeft="5dip"
         android:layout_height="wrap_content" />
 
     <TextView

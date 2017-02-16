@@ -5,6 +5,7 @@
     <color name="colorAccent">#1E7CBA</color>
 
     <color name="main_content_bg">#D2E7F2</color>
+    <color name="main_gray_bg">#f4f4f4</color>
     <color name="main_bg">#1E7CBA</color>
     <color name="main_bg_trans">#8f1E7CBA</color>
 

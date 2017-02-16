@@ -160,7 +160,8 @@
         <activity android:name=".views.mine.AboutUsActivity" />
         <activity android:name=".views.auth.WebViewActivity" />
         <activity android:name=".views.logistics.EditOtherDemandActivity" />
-        <activity android:name=".views.logistics.ChooseDeadlineActivity"></activity>
+        <activity android:name=".views.logistics.ChooseDeadlineActivity" />
+        <activity android:name=".views.logistics.MessageEditActivity"></activity>
     </application>
 
 </manifest>
