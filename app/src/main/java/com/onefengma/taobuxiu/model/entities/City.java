@@ -11,4 +11,5 @@ public class City {
     public int type = -1;
     public String id;
     public String fatherId;
+    public String pinyin;
 }

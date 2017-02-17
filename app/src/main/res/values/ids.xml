@@ -2,4 +2,8 @@
 <resources>
     <item name="top_city_mask" type="id"/>
     <item name="city_mask" type="id"/>
+    <item name="character" type="id"/>
+    <item name="tv_located_city" type="id"/>
+    <item name="recy_hot_city" type="id"/>
+    <item name="city_name" type="id"/>
 </resources>

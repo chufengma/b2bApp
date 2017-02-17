@@ -12,9 +12,14 @@ import android.widget.TextView;
 
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
+import com.onefengma.taobuxiu.model.CityCategory;
+import com.onefengma.taobuxiu.model.IconDataCategory;
 import com.onefengma.taobuxiu.model.events.logistics.ChooseDeadLineEvent;
 import com.onefengma.taobuxiu.model.events.logistics.EditMessageEvent;
 import com.onefengma.taobuxiu.model.events.logistics.EditOtherDemandEvent;
+import com.onefengma.taobuxiu.model.events.logistics.GoodsChooseEvent;
+import com.onefengma.taobuxiu.model.events.logistics.RegionChooseEvent;
+import com.onefengma.taobuxiu.utils.StringUtils;
 import com.onefengma.taobuxiu.views.core.BaseFragment;
 import com.onefengma.taobuxiu.views.widgets.GoodsAddView;
 
@@ -54,6 +59,14 @@ public class LogiticsFindCarFragment extends BaseFragment {
     LinearLayout editBtns;
     @BindView(R.id.goods_layout)
     LinearLayout goodsLayout;
+    @BindView(R.id.start_point)
+    LinearLayout startPoint;
+    @BindView(R.id.end_point)
+    LinearLayout endPoint;
+    @BindView(R.id.start_point_text)
+    TextView startPointText;
+    @BindView(R.id.end_point_text)
+    TextView endPointText;
 
     private int day;
     private int hour;
@@ -73,6 +86,27 @@ public class LogiticsFindCarFragment extends BaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         EventBusHelper.register(this);
+
+        startPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChooseCityActivity.start(getActivity(), "startPoint");
+            }
+        });
+
+        endPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChooseCityActivity.start(getActivity(), "endPoint");
+            }
+        });
+
+        goodsChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChooseGoodsActivity.start(getActivity(), "0");
+            }
+        });
     }
 
     @Override
@@ -88,27 +122,27 @@ public class LogiticsFindCarFragment extends BaseFragment {
 
     @OnClick(R.id.goods_add)
     public void onGoodsAdd() {
-        for(int i = 0;i < goodsLayout.getChildCount();i++) {
+        for (int i = 0; i < goodsLayout.getChildCount(); i++) {
             if (goodsLayout.getChildAt(i) instanceof GoodsAddView) {
-                if(((GoodsAddView) goodsLayout.getChildAt(i)).isEmpty()) {
+                if (((GoodsAddView) goodsLayout.getChildAt(i)).isEmpty()) {
                     return;
                 }
             }
         }
-        final GoodsAddView goodsAddView = new GoodsAddView(getContext());
-        goodsAddView.setOnGoodsDecreaseClickListener(new View.OnClickListener() {
+        final GoodsAddView goodsAddViewTmp = new GoodsAddView(getContext());
+        goodsAddViewTmp.setOnGoodsDecreaseClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goodsLayout.removeView(goodsAddView);
+                goodsLayout.removeView(goodsAddViewTmp);
             }
         });
-        goodsAddView.setOnGoodsChooseClickListener(new View.OnClickListener() {
+        goodsAddViewTmp.setOnGoodsChooseClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ChooseGoodsActivity.start(getActivity(), "" + goodsLayout.indexOfChild(goodsAddViewTmp));
             }
         });
-        goodsLayout.addView(goodsAddView);
+        goodsLayout.addView(goodsAddViewTmp);
     }
 
     @OnClick(R.id.other_message)
@@ -133,9 +167,29 @@ public class LogiticsFindCarFragment extends BaseFragment {
     }
 
     @Subscribe
+    public void onEvent(RegionChooseEvent event) {
+        if (event.requestId.equalsIgnoreCase("startPoint")) {
+            startPointText.setText(CityCategory.instance().getCityDesc2(event.city.id));
+        } else if (event.requestId.equalsIgnoreCase("endPoint")) {
+            endPointText.setText(CityCategory.instance().getCityDesc2(event.city.id));
+        }
+    }
+
+    @Subscribe
     public void onEvent(EditMessageEvent event) {
         message.setText(event.message);
         messageClean.setVisibility(View.VISIBLE);
+    }
+
+    @Subscribe
+    public void onEvent(GoodsChooseEvent event) {
+        if (StringUtils.equals(event.requestID, "0")) {
+            goodsChoose.setText(event.goodTitle + " " + event.goodContent);
+        } else {
+            int index = Integer.parseInt(event.requestID);
+            GoodsAddView goodsAddView = (GoodsAddView) goodsLayout.getChildAt(index);
+            goodsAddView.setGoods(event.goodTitle + " " + event.goodContent);
+        }
     }
 
     @Subscribe
@@ -152,7 +206,7 @@ public class LogiticsFindCarFragment extends BaseFragment {
             otherMessageDesc.setVisibility(View.VISIBLE);
             editOtherMessage.setVisibility(View.VISIBLE);
             StringBuilder stringBuilder = new StringBuilder();
-            for(String text : event.demands) {
+            for (String text : event.demands) {
                 stringBuilder.append(text);
                 if (event.demands.indexOf(text) != event.demands.size() - 1) {
                     stringBuilder.append("|");

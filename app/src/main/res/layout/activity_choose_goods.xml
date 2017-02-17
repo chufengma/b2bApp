@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.onefengma.taobuxiu.views.logistics.ChooseGoodsActivity">
+
+    <com.onefengma.taobuxiu.views.widgets.ToolBar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        app:tool_bar_title="选择运送货物"
+        android:layout_height="56dip" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/title_list"
+            android:background="@color/main_gray_bg"
+            android:layout_width="150dip"
+            android:layout_height="match_parent" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="0dip"
+            android:id="@+id/content_list"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

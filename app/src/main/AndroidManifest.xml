@@ -161,7 +161,10 @@
         <activity android:name=".views.auth.WebViewActivity" />
         <activity android:name=".views.logistics.EditOtherDemandActivity" />
         <activity android:name=".views.logistics.ChooseDeadlineActivity" />
-        <activity android:name=".views.logistics.MessageEditActivity"></activity>
+        <activity android:name=".views.logistics.MessageEditActivity" />
+        <activity android:name=".views.logistics.ChooseCityActivity" />
+        <activity android:name=".views.logistics.ChooseReginActivity" />
+        <activity android:name=".views.logistics.ChooseGoodsActivity"></activity>
     </application>
 
 </manifest>

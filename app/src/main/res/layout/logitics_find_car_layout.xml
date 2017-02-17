@@ -28,6 +28,8 @@
                 android:paddingBottom="8dip"
                 android:paddingLeft="16dip"
                 android:paddingRight="16dip"
+                android:clickable="true"
+                android:id="@+id/start_point"
                 android:paddingTop="8dip">
 
                 <ImageView
@@ -40,6 +42,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/start_point_text"
                     android:hint="起点"
                     android:textColorHint="#cccccc"
                     android:textSize="16dip" />
@@ -60,6 +63,8 @@
                 android:gravity="center_vertical"
                 android:paddingBottom="8dip"
                 android:paddingLeft="16dip"
+                android:id="@+id/end_point"
+                android:clickable="true"
                 android:paddingRight="16dip"
                 android:paddingTop="8dip">
 
@@ -73,6 +78,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/end_point_text"
                     android:hint="终点"
                     android:textColorHint="#cccccc"
                     android:textSize="16dip" />
