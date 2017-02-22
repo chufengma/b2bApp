@@ -77,7 +77,7 @@ public class TabIndicatorView extends RelativeLayout {
     }
 
     public static TabIndicatorView newLogisticsTabIndicator(Context context) {
-        TabParams tabParams = new TabParams(R.drawable.ic_main_tab_home, "找物流", false);
+        TabParams tabParams = new TabParams(R.drawable.ic_main_tab_logistics, "找物流", false);
         return new TabIndicatorView(context, tabParams);
     }
 

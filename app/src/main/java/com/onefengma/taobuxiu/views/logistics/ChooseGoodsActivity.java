@@ -135,7 +135,7 @@ public class ChooseGoodsActivity extends BaseActivity {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBusHelper.post(new GoodsChooseEvent(getIntent().getStringExtra("requestId"), titleAdapter.getCurrentTitle(), titles.get(position)));
+                    EditGoodCountActivity.start(ChooseGoodsActivity.this, titleAdapter.getCurrentTitle(), titles.get(position), getIntent().getStringExtra("requestId"));
                     finish();
                 }
             });

@@ -5,28 +5,30 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="200dp">
-
-        <ImageView
-            android:id="@+id/im_adv"
-            android:src="@drawable/account_guidance_bg_3"
-            android:scaleType="centerCrop"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
 
         <TextView
             android:layout_width="match_parent"
             android:text="淘不锈物流"
-            android:background="@color/main_blue"
+            android:background="#2684cf"
             android:gravity="center"
             android:textSize="18dip"
             android:textColor="@android:color/white"
             android:layout_height="@dimen/tool_bar_height" />
 
-    </RelativeLayout>
+        <ImageView
+            android:id="@+id/im_adv"
+            android:layout_marginTop="-1dip"
+            android:src="@drawable/ic_logistics_banner"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="120dp" />
+
+    </LinearLayout>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab"

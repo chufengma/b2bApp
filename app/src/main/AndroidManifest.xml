@@ -164,7 +164,8 @@
         <activity android:name=".views.logistics.MessageEditActivity" />
         <activity android:name=".views.logistics.ChooseCityActivity" />
         <activity android:name=".views.logistics.ChooseReginActivity" />
-        <activity android:name=".views.logistics.ChooseGoodsActivity"></activity>
+        <activity android:name=".views.logistics.ChooseGoodsActivity" />
+        <activity android:name=".views.logistics.EditGoodCountActivity"></activity>
     </application>
 
 </manifest>

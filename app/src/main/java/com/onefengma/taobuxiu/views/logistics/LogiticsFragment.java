@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.onefengma.taobuxiu.R;
@@ -27,7 +28,7 @@ public class LogiticsFragment extends BaseFragment {
     @BindView(R.id.im_adv)
     ImageView imAdv;
     @BindView(R.id.header)
-    RelativeLayout header;
+    LinearLayout header;
     @BindView(R.id.tab)
     TabLayout tabLayout;
     @BindView(R.id.qt_view_pager)

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="#f4f4f4"
     android:layout_height="match_parent" >
 
     <ScrollView
@@ -37,7 +38,7 @@
                     android:layout_height="25dip"
                     android:layout_marginRight="15dip"
                     android:scaleType="centerInside"
-                    android:src="@drawable/buy_doing_tab_normal" />
+                    android:src="@drawable/ic_start_point" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -73,7 +74,7 @@
                     android:layout_height="25dip"
                     android:layout_marginRight="15dip"
                     android:scaleType="centerInside"
-                    android:src="@drawable/buy_doing_tab_normal" />
+                    android:src="@drawable/ic_end_point" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -114,7 +115,7 @@
                         android:layout_height="25dip"
                         android:layout_marginRight="15dip"
                         android:scaleType="centerInside"
-                        android:src="@drawable/buy_doing_tab_normal" />
+                        android:src="@drawable/ic_goods" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -127,7 +128,7 @@
 
                     <ImageView
                         android:id="@+id/goods_add"
-                        android:src="@drawable/buy_item_icon_bg"
+                        android:src="@drawable/ic_goods_add"
                         android:layout_width="18dip"
                         android:layout_height="18dip" />
 
@@ -149,15 +150,23 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_centerInParent="true"
                     android:id="@+id/other_message"
-                    android:hint=" + 添加额外需求"
+                    android:hint="添加额外需求"
                     android:textColorHint="@color/main_blue"
                     android:textColor="@color/main_blue"
+                    android:layout_marginLeft="5dip"
                     android:textSize="16dip" />
+
+                <ImageView
+                    android:layout_width="20dip"
+                    android:id="@+id/other_message_add_icon"
+                    android:src="@drawable/ic_sepc_add"
+                    android:layout_toLeftOf="@id/other_message"
+                    android:layout_height="20dip" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -173,7 +182,7 @@
                     android:layout_width="20dip"
                     android:visibility="gone"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/buy_done_tab_normal"
+                    android:src="@drawable/ic_sepc_edit"
                     android:layout_height="20dip" />
 
             </RelativeLayout>

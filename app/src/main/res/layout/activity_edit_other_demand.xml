@@ -1,43 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_edit_other_demand"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.onefengma.taobuxiu.views.logistics.EditOtherDemandActivity">
 
     <com.onefengma.taobuxiu.views.widgets.ToolBar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        app:tool_bar_title="额外需求"
-        android:layout_height="56dip" />
+        android:layout_height="56dip"
+        app:tool_bar_title="额外需求" />
 
     <CheckBox
+        android:id="@+id/taxi"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dip"
+        android:layout_marginLeft="16dip"
+        android:layout_marginRight="16dip"
+        android:layout_marginTop="16dip"
+        android:background="@color/white"
+        android:paddingLeft="5dip"
+        android:text="含税" />
+
+    <CheckBox
+        android:id="@+id/self"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dip"
         android:layout_marginLeft="16dip"
         android:layout_marginRight="16dip"
         android:background="@color/white"
-        android:text="含税"
-        android:id="@+id/taxi"
-        android:layout_marginTop="16dip"
-        android:layout_marginBottom="16dip"
         android:paddingLeft="5dip"
-        android:layout_height="wrap_content" />
+        android:text="自卸车" />
 
-    <TextView
+    <CheckBox
+        android:id="@+id/store"
         android:layout_width="match_parent"
-        android:background="#fbbd2d"
-        android:text="确定"
-        android:id="@+id/done"
-        android:textSize="16dip"
-        android:gravity="center"
-        android:clickable="true"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dip"
         android:layout_marginLeft="16dip"
         android:layout_marginRight="16dip"
-        android:textColor="@color/white"
+        android:background="@color/white"
+        android:paddingLeft="5dip"
+        android:text="垫出库费" />
+
+    <TextView
+        android:id="@+id/done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dip"
+        android:layout_marginRight="16dip"
+        android:background="#fbbd2d"
+        android:clickable="true"
+        android:gravity="center"
         android:padding="10dip"
-        android:layout_height="wrap_content" />
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="16dip" />
 
 </LinearLayout>

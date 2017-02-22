@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.onefengma.taobuxiu.R;
 import com.onefengma.taobuxiu.manager.helpers.EventBusHelper;
 import com.onefengma.taobuxiu.model.CityCategory;
-import com.onefengma.taobuxiu.model.IconDataCategory;
 import com.onefengma.taobuxiu.model.events.logistics.ChooseDeadLineEvent;
 import com.onefengma.taobuxiu.model.events.logistics.EditMessageEvent;
 import com.onefengma.taobuxiu.model.events.logistics.EditOtherDemandEvent;
@@ -67,6 +66,8 @@ public class LogiticsFindCarFragment extends BaseFragment {
     TextView startPointText;
     @BindView(R.id.end_point_text)
     TextView endPointText;
+    @BindView(R.id.other_message_add_icon)
+    ImageView otherMessageAddIcon;
 
     private int day;
     private int hour;
@@ -184,11 +185,11 @@ public class LogiticsFindCarFragment extends BaseFragment {
     @Subscribe
     public void onEvent(GoodsChooseEvent event) {
         if (StringUtils.equals(event.requestID, "0")) {
-            goodsChoose.setText(event.goodTitle + " " + event.goodContent);
+            goodsChoose.setText(event.goodTitle + " " + event.goodContent + " " + event.count + "吨");
         } else {
             int index = Integer.parseInt(event.requestID);
             GoodsAddView goodsAddView = (GoodsAddView) goodsLayout.getChildAt(index);
-            goodsAddView.setGoods(event.goodTitle + " " + event.goodContent);
+            goodsAddView.setGoods(event.goodTitle + " " + event.goodContent + " " + event.count + "吨");
         }
     }
 
@@ -197,19 +198,21 @@ public class LogiticsFindCarFragment extends BaseFragment {
         if (event.demands.isEmpty()) {
             otherMessage.setVisibility(View.VISIBLE);
             otherMessageDesc.setVisibility(View.GONE);
+            otherMessageAddIcon.setVisibility(View.VISIBLE);
             otherMessageDesc.setText("");
             editOtherMessage.setVisibility(View.GONE);
             otherDemands = event.demands;
         } else {
             otherDemands = event.demands;
             otherMessage.setVisibility(View.GONE);
+            otherMessageAddIcon.setVisibility(View.GONE);
             otherMessageDesc.setVisibility(View.VISIBLE);
             editOtherMessage.setVisibility(View.VISIBLE);
             StringBuilder stringBuilder = new StringBuilder();
             for (String text : event.demands) {
                 stringBuilder.append(text);
                 if (event.demands.indexOf(text) != event.demands.size() - 1) {
-                    stringBuilder.append("|");
+                    stringBuilder.append(" | ");
                 }
             }
             otherMessageDesc.setText(stringBuilder);
