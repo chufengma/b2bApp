@@ -27,7 +27,6 @@
             android:baselineAligned="false"
             android:clickable="true"
             android:id="@+id/call_sales"
-            android:layout_marginRight="16dip"
             android:paddingRight="5dip"
             android:paddingLeft="1dip"
             android:background="@drawable/logistics_finding_car_call_bg"
@@ -43,6 +42,18 @@
                 android:textColor="@color/main_blue"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/order_status"
+            android:text="待提货"
+            android:textColor="@color/white"
+            android:padding="3dip"
+            android:layout_marginRight="16dip"
+            android:layout_marginLeft="10dip"
+            android:textSize="12dip"
+            android:background="@drawable/logistics_finding_car_offer_status_bg"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -64,7 +75,8 @@
         <ImageView
             android:layout_width="20dip"
             android:src="@drawable/ic_order_start"
-            android:layout_height="20dip" />
+            android:layout_height="20dip"
+            android:id="@+id/imageView" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -88,27 +100,6 @@
             android:textSize="16dip"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/offer_status"
-            android:text="已报价"
-            android:textColor="@color/white"
-            android:padding="3dip"
-            android:layout_marginLeft="10dip"
-            android:textSize="12dip"
-            android:background="@drawable/logistics_finding_car_offer_status_bg"
-            android:layout_height="wrap_content" />
-
-        <View
-            android:layout_width="0dip"
-            android:layout_weight="1"
-            android:layout_height="1dip" ></View>
-
-        <ImageView
-            android:layout_width="20dip"
-            android:src="@drawable/buy_item_arrow"
-            android:layout_height="15dip" />
-
     </LinearLayout>
 
     <View
@@ -124,7 +115,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="16dip"
         android:paddingTop="10dip"
-        android:paddingBottom="10dip"
+        android:paddingBottom="6dip"
         android:paddingRight="16dip"
         android:layout_height="wrap_content">
 
@@ -142,10 +133,40 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:paddingBottom="10dip"
+        android:paddingLeft="41dip"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="总额"
+            android:id="@+id/totalMoneyDesc"
+            android:textSize="16dip"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="￥50"
+            android:textColor="#ff7405"
+            android:id="@+id/totalMoney"
+            android:textSize="16dip"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="(含税 | 物流点自送)"
+            android:textColor="@color/gray"
+            android:id="@+id/sepcCommand"
+            android:textSize="12dip"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:background="#f4f4f4"
         android:layout_height="10dip" />
+
 
 </LinearLayout>
