@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:text="2017-02-20 19:20"
+            android:paddingLeft="16dip"
+            android:paddingRight="16dip"
+            android:paddingTop="10dip"
+            android:paddingBottom="10dip"
+            android:textSize="14dip"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:baselineAligned="false"
+            android:clickable="true"
+            android:id="@+id/call_sales"
+            android:layout_marginRight="16dip"
+            android:paddingRight="5dip"
+            android:paddingLeft="1dip"
+            android:background="@drawable/logistics_finding_car_call_bg"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="20dip"
+                android:src="@drawable/ic_phone"
+                android:layout_height="20dip" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="物流专员"
+                android:textSize="12dip"
+                android:textColor="@color/main_blue"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="#f4f4f4"
+        android:layout_height="1dip" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dip"
+        android:paddingTop="10dip"
+        android:paddingBottom="10dip"
+        android:paddingRight="16dip"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="20dip"
+            android:src="@drawable/ic_start_point"
+            android:layout_height="20dip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="无锡市"
+            android:id="@+id/start_point"
+            android:textSize="16dip"
+            android:layout_marginLeft="5dip"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_width="40dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="3dip"
+            android:src="@drawable/ic_logistics_arrow"
+            android:layout_height="10dip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="扬州市"
+            android:id="@+id/end_point"
+            android:textSize="16dip"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/offer_status"
+            android:text="已报价"
+            android:textColor="@color/white"
+            android:padding="3dip"
+            android:layout_marginLeft="10dip"
+            android:textSize="12dip"
+            android:background="@drawable/logistics_finding_car_offer_status_bg"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_height="1dip" ></View>
+
+        <ImageView
+            android:layout_width="20dip"
+            android:src="@drawable/buy_item_arrow"
+            android:layout_height="15dip" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="#f4f4f4"
+        android:layout_marginLeft="36dip"
+        android:layout_height="1dip" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dip"
+        android:paddingTop="10dip"
+        android:paddingBottom="10dip"
+        android:paddingRight="16dip"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="20dip"
+            android:src="@drawable/ic_start_point"
+            android:layout_height="20dip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="PC钢棒25吨 / 金属粉末1吨 / 线材25吨"
+            android:id="@+id/goods"
+            android:textSize="16dip"
+            android:layout_marginLeft="5dip"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:background="#f4f4f4"
+        android:layout_height="10dip" />
+
+</LinearLayout>

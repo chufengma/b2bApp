@@ -88,4 +88,8 @@
     <string name="setting_switch_app">切换至淘不锈App</string>
     <string name="setting_switch_sales">切换至专员App</string>
 
+
+    <string name="find_car_doing_tab">正在找车(%1$s)</string>
+    <string name="find_car_done_tab">已成交(%1$s)</string>
+    <string name="find_car_out_tab">已过期(%1$s)</string>
 </resources>
