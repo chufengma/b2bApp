@@ -151,6 +151,14 @@ public class HttpHelper {
         public abstract void onSuccess(T t);
     }
 
+    public static RequestBody imageBody(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            return null;
+        }
+        return RequestBody.create(MediaType.parse("image/*"), file);
+    }
+
     public abstract static class SimpleNetworkSubscriber<T extends BaseResponse> extends NetworkSubscriber<T> {
         @Override
         public void onFailed(BaseResponse baseResponse, Throwable e) {

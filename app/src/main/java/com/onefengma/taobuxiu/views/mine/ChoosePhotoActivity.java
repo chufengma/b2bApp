@@ -83,11 +83,7 @@ public class ChoosePhotoActivity extends TakePhotoActivity {
     private void showImg(ArrayList<TImage> images) {
         for(TImage image : images) {
             System.out.println("-------" + image.getCompressPath());
-
-            File file = new File(image.getCompressPath());
-            RequestBody fbody = RequestBody.create(MediaType.parse("image/*"), file);
-
-            HttpHelper.wrap(HttpHelper.create(ImageService.class).getBindUsers(fbody)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
+            HttpHelper.wrap(HttpHelper.create(ImageService.class).getBindUsers(HttpHelper.imageBody(image.getCompressPath()))).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
                 @Override
                 public void onSuccess(BaseResponse baseResponse) {
                     System.out.println("--------success");
@@ -99,7 +95,6 @@ public class ChoosePhotoActivity extends TakePhotoActivity {
                 }
             });
         }
-
 
     }
 
