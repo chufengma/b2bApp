@@ -3,6 +3,8 @@
     package="com.onefengma.taobuxiu">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -165,7 +167,8 @@
         <activity android:name=".views.logistics.ChooseCityActivity" />
         <activity android:name=".views.logistics.ChooseReginActivity" />
         <activity android:name=".views.logistics.ChooseGoodsActivity" />
-        <activity android:name=".views.logistics.EditGoodCountActivity"></activity>
+        <activity android:name=".views.logistics.EditGoodCountActivity" />
+        <activity android:name=".views.mine.ChoosePhotoActivity"></activity>
     </application>
 
 </manifest>

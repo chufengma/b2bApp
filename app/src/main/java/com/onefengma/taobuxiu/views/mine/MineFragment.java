@@ -2,6 +2,7 @@ package com.onefengma.taobuxiu.views.mine;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,9 @@ import com.onefengma.taobuxiu.views.offers.MySubscribeActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.File;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -138,6 +142,13 @@ public class MineFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onTabEvent(OnMineTabEvent onMineTabEvent) {
         System.out.println("-----------------onMineTabEvent");
+        ChoosePhotoActivity.start(getActivity());
+
+        try {
+            new File(Environment.getExternalStorageDirectory().getAbsoluteFile() + "/b.png").createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
