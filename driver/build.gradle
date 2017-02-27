@@ -1,9 +1,8 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'android-apt'
-apply plugin: 'realm-android'
-
 apply plugin: 'com.neenbedankt.android-apt'
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -27,29 +26,19 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig  signingConfigs.releaseSign
-
         }
 
         debug {
             signingConfig  signingConfigs.releaseSign
-            manifestPlaceholders = [ SALES_FLAG : "open" ]
-        }
-
-    }
-
-    productFlavors {
-        taobuxiu {
-            manifestPlaceholders = [ SALES_FLAG : "close"]
-        }
-        taobuxiu_sales {
-            manifestPlaceholders = [ SALES_FLAG : "open" ]
         }
     }
 
-
+    apt {
+        arguments {
+            eventBusIndex "com.taobuxiu.driver.MyEventBusIndex"
+        }
+    }
 }
 
 dependencies {
@@ -82,11 +71,4 @@ dependencies {
     compile 'com.panxw.imageindicator:library:1.0.2'
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
     compile project(':guider')
-}
-
-
-apt {
-    arguments {
-        eventBusIndex "com.onefengma.taobuxiu.TaoEventBusIndex"
-    }
 }

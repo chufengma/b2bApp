@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2783cf</color>
+    <color name="colorPrimaryDark">#2783cf</color>
+    <color name="colorAccent">#2783cf</color>
+    <color name="main">#2783cf</color>
+
+    <color name="main_content_bg">#f4f4f4</color>
+    <color name="main_gray_bg">#f4f4f4</color>
+    <color name="main_bg">#1E7CBA</color>
+    <color name="main_bg_trans">#8f1E7CBA</color>
+
+    <color name="gray">#cccccc</color>
+    <color name="dark_gray">#888888</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+
+    <color name="title_color">#ffffff</color>
+
+    <color name="login_bg">#213942</color>
+    <color name="login_bg_disable">#4f35A790</color>
+    <color name="login_btn_border">#35A790</color>
+    <color name="login_btn_border_a">#8f35A790</color>
+
+    <color name="light_green">#F5FDE4</color>
+
+    <color name="login_line">#8fcccccc</color>
+
+
+    <!-- XListView -->
+    <color name="xlist_view_hint_text">#313131</color>
+    <color name="main_yellow">#f39a16</color>
+    <color name="main_yellow_trans">#8ff39a16</color>
+    <color name="main_green">#009944</color>
+    <color name="main_red">#e60012</color>
+    <color name="main_blue">#1E7CBA</color>
+</resources>
