@@ -11,10 +11,20 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.taobuxiu.driver.MainActivity;
+import com.taobuxiu.driver.MainApplication;
 import com.taobuxiu.driver.R;
+import com.taobuxiu.driver.managers.AuthManager;
+import com.taobuxiu.driver.model.BaseResponse;
+import com.taobuxiu.driver.model.Constant;
+import com.taobuxiu.driver.model.Driver;
+import com.taobuxiu.driver.network.HttpHelper;
+import com.taobuxiu.driver.utils.SPHelper;
 import com.taobuxiu.driver.utils.StringUtils;
 import com.taobuxiu.driver.utils.ToastUtils;
+import com.taobuxiu.driver.utils.helpers.JSONHelper;
 import com.taobuxiu.driver.views.core.BaseActivity;
+import com.taobuxiu.driver.views.widgets.ProgressDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +43,9 @@ public class LoginActivity extends BaseActivity implements TextWatcher, Compound
     @BindView(R.id.activity_login)
     LinearLayout activityLogin;
 
+
+    ProgressDialog progressDialog;
+
     public static void start(Activity context) {
         Intent starter = new Intent(context, LoginActivity.class);
         context.startActivity(starter);
@@ -44,6 +57,7 @@ public class LoginActivity extends BaseActivity implements TextWatcher, Compound
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         login.setEnabled(false);
+        progressDialog = new ProgressDialog(this);
 
         mobileEdit.addTextChangedListener(this);
         passwordEdit.addTextChangedListener(this);
@@ -53,7 +67,26 @@ public class LoginActivity extends BaseActivity implements TextWatcher, Compound
 
     @OnClick(R.id.login)
     public void onClick() {
-        ToastUtils.showInfoTasty("dengluing");
+        String mobile = mobileEdit.getText().toString();
+        String password = passwordEdit.getText().toString();
+        progressDialog.show();
+        HttpHelper.wrap(HttpHelper.create(AuthManager.AuthService.class).login(mobile, password)).subscribe(new HttpHelper.SimpleNetworkSubscriber<BaseResponse>() {
+
+            @Override
+            public void onFailed(BaseResponse baseResponse, Throwable e) {
+                super.onFailed(baseResponse, e);
+                progressDialog.hide();
+            }
+
+            @Override
+            public void onSuccess(BaseResponse baseResponse) {
+                progressDialog.hide();
+                Driver userProfile = JSONHelper.parse(baseResponse.data.toString(), Driver.class);
+                SPHelper.top().save(Constant.StorageKeys.DRIVER_PROFILE, userProfile);
+                MainApplication.ins().finishActivities();
+                MainActivity.start(LoginActivity.this);
+            }
+        });
     }
 
 
