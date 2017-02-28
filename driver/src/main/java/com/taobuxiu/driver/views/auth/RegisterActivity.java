@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -12,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.taobuxiu.driver.R;
+import com.taobuxiu.driver.utils.StringUtils;
+import com.taobuxiu.driver.utils.ToastUtils;
 import com.taobuxiu.driver.views.core.BaseActivity;
 import com.taobuxiu.driver.views.widgets.CountDownTextView;
 
@@ -19,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RegisterActivity extends BaseActivity {
+public class RegisterActivity extends BaseActivity  implements TextWatcher, CompoundButton.OnCheckedChangeListener {
 
     @BindView(R.id.left_image_view)
     ImageView leftImageView;
@@ -54,6 +59,11 @@ public class RegisterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
+
+        mobileEdit.addTextChangedListener(this);
+        passwordEdit.addTextChangedListener(this);
+        codeEdit.addTextChangedListener(this);
+        agreeBtn.setOnCheckedChangeListener(this);
     }
 
     @OnClick(R.id.goto_login)
@@ -61,4 +71,41 @@ public class RegisterActivity extends BaseActivity {
         finish();
     }
 
+    @OnClick(R.id.login)
+    public void onClick() {
+        String mobile = mobileEdit.getText().toString();
+        String password = passwordEdit.getText().toString();
+        String code = codeEdit.getText().toString();
+
+    }
+
+    private void check() {
+        String mobile = mobileEdit.getText().toString();
+        String password = passwordEdit.getText().toString();
+        String code = codeEdit.getText().toString();
+        login.setEnabled(!StringUtils.isEmpty(mobile)
+                && !StringUtils.isEmpty(password)
+                && !StringUtils.isEmpty(code)
+                && agreeBtn.isChecked());
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        check();
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        check();
+    }
 }
