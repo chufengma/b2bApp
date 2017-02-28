@@ -33,6 +33,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainApplication.ins().addActivity(this);
     }
 
     @Override
@@ -43,5 +44,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        MainApplication.ins().removeActivity(this);
     }
 }
