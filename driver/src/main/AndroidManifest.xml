@@ -29,7 +29,10 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".views.auth.LoginActivity" />
         <activity android:name=".views.auth.RegisterActivity" />
-        <activity android:name=".views.auth.FindPasswordActivity"></activity>
+        <activity android:name=".views.auth.FindPasswordActivity" />
+        <activity android:name=".views.widgets.ChoosePhotoActivity" />
+        <activity android:name=".views.auth.FillCompanyNameActivity" />
+        <activity android:name=".views.auth.FillCerActivity"></activity>
     </application>
 
 </manifest>

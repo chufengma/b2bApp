@@ -143,12 +143,6 @@ public class MineFragment extends BaseFragment {
     public void onTabEvent(OnMineTabEvent onMineTabEvent) {
         System.out.println("-----------------onMineTabEvent");
         ChoosePhotoActivity.start(getActivity());
-
-        try {
-            new File(Environment.getExternalStorageDirectory().getAbsoluteFile() + "/b.png").createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 
